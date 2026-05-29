@@ -158,14 +158,13 @@ async function loadProfile(){
   if(!app.profile){await new Promise(function(res){setTimeout(res,800)});var r2=await SB.from('profiles').select('*').eq('id',app.session.user.id).maybeSingle();app.profile=r2.data||null;}
 }
 async function doAuth(){
+  var email=val('f_email'),pass=val('f_pass'),name=val('f_name'),role=val('f_role')||'sourcing';
   app.err='';app.info='';app.busy=true;render();
-  var email=val('f_email'),pass=val('f_pass');
   try{
     if(app.authMode==='in'){
       var r=await SB.auth.signInWithPassword({email:email,password:pass});
       if(r.error){app.err=r.error.message;app.busy=false;return render();}
     }else{
-      var name=val('f_name'),role=val('f_role')||'sourcing';
       if(!name||!email||!pass){app.err=t('fill')||'Champs requis';app.busy=false;return render();}
       var s=await SB.auth.signUp({email:email,password:pass,options:{data:{full_name:name,role:role,lang:lang}}});
       if(s.error){app.err=s.error.message;app.busy=false;return render();}
