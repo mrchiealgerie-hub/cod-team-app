@@ -164,14 +164,16 @@ var PLATFORMS=['meta','tiktok','snap'];
 var NICHES=['Maison','Cuisine','Beaute','Mode','Sante','Bebe','Animaux','Auto','Bricolage','Gadget','Sport','Tech'];
 
 var NAV={
- admin:['pipeline','products','research','validate','sourcing','tests','tasks','kpis','team','settings'],
- media_buyer:['pipeline','products','research','tests','tasks','kpis'],
+ admin:['pipeline','products','research','validate','sourcing','tests','orders','tasks','kpis','team','blacklist','trash','settings'],
+ media_buyer:['pipeline','products','research','tests','orders','tasks','kpis'],
  sourcing:['pipeline','products','research','sourcing','tasks'],
  production:['pipeline','products','sourcing','production','tasks'],
  video_editor:['pipeline','products','video','tasks'],
- confirmatrice:['pipeline','products','tasks']
+ confirmatrice:['pipeline','orders','products','tasks']
 };
-var ICON={pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',team:'👥',settings:'⚙'};
+var ICON={pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',orders:'📞',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',team:'👥',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
+var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
 var I18N={
  fr:{
@@ -205,7 +207,15 @@ var I18N={
   killed:'Tue',
   scoringIntro:'Notez le produit sur 4 criteres (0-10). La note finale est calculee automatiquement.',
   step1:'1. Recherche',step2:'2. Valider',step3:'3. Atelier',step4:'4. Test',step5:'5. Production',step6:'6. Scaling',step7:'7. Video',
-  yes:'Oui',no:'Non',date:'Date',dragHint:'Astuce: glissez les cartes pour changer le statut.',inlineHint:'Cliquez une cellule pour la modifier directement.'
+  yes:'Oui',no:'Non',date:'Date',dragHint:'Astuce: glissez les cartes pour changer le statut.',inlineHint:'Cliquez une cellule pour la modifier directement.',
+  nav_orders:'Commandes COD',nav_blacklist:'Blacklist',nav_trash:'Corbeille',
+  ordersTitle:'File d\'appels',ordersSub:'File de confirmation auto-assignee.',newOrder:'Nouvelle commande',customer:'Client',phone:'Telephone',wilaya:'Wilaya',address:'Adresse',quantity:'Qte',unitPrice:'Prix unit.',totalPrice:'Total',disposition:'Disposition',callAttempts:'Tentatives',myQueue:'Ma file',allQueue:'Toutes',blacklisted:'⚠ Blacklist',addToBlacklist:'Ajouter blacklist',blacklistReason:'Motif',blacklistTitle:'Blacklist clients',customerHistory:'Historique client',
+  os_queued:'En attente',os_calling:'En appel',os_confirmed:'Confirme',os_reschedule:'A rappeler',os_no_answer:'Pas de reponse',os_refused:'Refuse',os_fake:'Faux',os_cancelled:'Annule',os_delivered:'Livre',os_returned:'Retour',
+  comments:'Commentaires',addComment:'Ajouter un commentaire...',send:'Envoyer',noComments:'Aucun commentaire.',
+  notifications:'Notifications',markAllRead:'Tout marquer lu',noNotif:'Aucune notification.',
+  trashTitle:'Corbeille',restore:'Restaurer',permaDelete:'Supprimer definitivement',deletedAt:'Supprime le',trashEmpty:'Corbeille vide.',
+  weightsTitle:'Poids du scoring (4 criteres)',darkMode:'Mode sombre',selected:'selectionne(s)',bulkAdvance:'Faire avancer',bulkDelete:'Supprimer',confirmDelete:'Supprimer ?',confirmKill:'Tuer ce produit ?',
+  auditLog:'Journal d\'activite',tabComments:'Commentaires',tabAudit:'Historique'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -238,7 +248,15 @@ var I18N={
   killed:'موقوف',
   scoringIntro:'قيّم المنتج على 4 معايير (0-10). النتيجة النهائية تُحسب تلقائيًا.',
   step1:'1. بحث',step2:'2. مصادقة',step3:'3. ورشة',step4:'4. اختبار',step5:'5. إنتاج',step6:'6. توسيع',step7:'7. فيديو',
-  yes:'نعم',no:'لا',date:'التاريخ',dragHint:'نصيحة: اسحب البطاقات لتغيير المرحلة.',inlineHint:'انقر خلية لتعديلها مباشرة.'
+  yes:'نعم',no:'لا',date:'التاريخ',dragHint:'نصيحة: اسحب البطاقات لتغيير المرحلة.',inlineHint:'انقر خلية لتعديلها مباشرة.',
+  nav_orders:'الطلبات COD',nav_blacklist:'القائمة السوداء',nav_trash:'سلة المحذوفات',
+  ordersTitle:'قائمة المكالمات',ordersSub:'قائمة التأكيد بتوزيع تلقائي.',newOrder:'طلب جديد',customer:'العميل',phone:'الهاتف',wilaya:'الولاية',address:'العنوان',quantity:'الكمية',unitPrice:'سعر الوحدة',totalPrice:'الإجمالي',disposition:'القرار',callAttempts:'محاولات',myQueue:'قائمتي',allQueue:'الكل',blacklisted:'⚠ في القائمة السوداء',addToBlacklist:'إضافة إلى القائمة السوداء',blacklistReason:'السبب',blacklistTitle:'القائمة السوداء',customerHistory:'سجل العميل',
+  os_queued:'في الانتظار',os_calling:'قيد الاتصال',os_confirmed:'مؤكد',os_reschedule:'إعادة الاتصال',os_no_answer:'لا رد',os_refused:'مرفوض',os_fake:'مزيف',os_cancelled:'ملغى',os_delivered:'مسلَّم',os_returned:'مرتجع',
+  comments:'التعليقات',addComment:'أضف تعليقًا...',send:'إرسال',noComments:'لا توجد تعليقات.',
+  notifications:'الإشعارات',markAllRead:'تعليم الكل كمقروء',noNotif:'لا توجد إشعارات.',
+  trashTitle:'سلة المحذوفات',restore:'استعادة',permaDelete:'حذف نهائيًا',deletedAt:'حُذف في',trashEmpty:'السلة فارغة.',
+  weightsTitle:'أوزان التقييم (4 معايير)',darkMode:'الوضع الداكن',selected:'محدد',bulkAdvance:'تقديم',bulkDelete:'حذف',confirmDelete:'حذف؟',confirmKill:'إيقاف هذا المنتج؟',
+  auditLog:'سجل النشاط',tabComments:'التعليقات',tabAudit:'السجل'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -251,8 +269,13 @@ function num(v){var x=parseFloat(String(v==null?'':v).replace(',','.').replace(/
 var app={
  session:null,profile:null,view:'pipeline',productId:null,tab:'info',pview:'kanban',modal:null,modalData:null,authMode:'in',
  err:'',info:'',busy:false,saved:false,mob:false,kpimsg:'',q:'',filterStage:'',filterNiche:'',filterPrio:'',
- cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null}
+ selected:{},dark:localStorage.getItem('cod_dark')==='1',notifsOpen:false,filterQueue:'mine',
+ cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null,orders:[],blacklist:[],notifs:[],comments:[],audit:[],trash:[]}
 };
+function toast(msg,kind){var d=document.createElement('div');d.style.cssText='position:fixed;bottom:20px;inset-inline-end:20px;background:'+(kind==='err'?'#c2384b':kind==='warn'?'#b45309':'#157f4a')+';color:#fff;padding:11px 18px;border-radius:9px;font-size:13.5px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:200;animation:toastIn .25s';d.textContent=msg;document.body.appendChild(d);setTimeout(function(){d.style.opacity='0';d.style.transition='.3s';setTimeout(function(){d.remove()},300)},2400)}
+function confirmIt(msg){return confirm(msg)}
+function applyDark(){document.documentElement.classList.toggle('dark',app.dark);if(app.dark){document.body.style.background='#0f172a';document.body.style.color='#e2e8f0'}else{document.body.style.background='';document.body.style.color=''}}
+function toggleDark(){app.dark=!app.dark;localStorage.setItem('cod_dark',app.dark?'1':'0');applyDark();render()}
 
 function applyDir(){document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang}
 function setLang(l){lang=l;localStorage.setItem('cod_lang',l);applyDir();render()}
@@ -292,11 +315,11 @@ async function refresh(){
  var v=app.view;
  try{
   if(v==='pipeline'){
-   var p=await SB.from('products').select('*').order('updated_at',{ascending:false});
+   var p=await SB.from('products').select('*').is('deleted_at',null).order('updated_at',{ascending:false});
    var t=await SB.from('tasks').select('id,status,assignee_id');
    app.cache.products=p.data||[];app.cache.tasks=t.data||[];
   } else if(v==='products'||v==='research'){
-   var p=await SB.from('products').select('*').order('created_at',{ascending:false});
+   var p=await SB.from('products').select('*').is('deleted_at',null).order('created_at',{ascending:false});
    var pr=await SB.from('profiles').select('id,full_name,role');
    app.cache.products=p.data||[];app.cache.profiles=pr.data||[];
   } else if(v==='validate'){
@@ -333,8 +356,17 @@ async function refresh(){
   } else if(v==='settings'){
    await loadSettings();
   } else if(v==='product'){
-   await loadProduct();
+   await loadProduct();await loadComments(app.productId);await loadAudit(app.productId);
+  } else if(v==='orders'){
+   await loadOrders();await loadBlacklist();
+   var pr=await SB.from('profiles').select('id,full_name');var pd=await SB.from('products').select('id,name');
+   app.cache.profiles=pr.data||[];app.cache.products=pd.data||[];
+  } else if(v==='blacklist'){
+   await loadBlacklist();
+  } else if(v==='trash'){
+   await loadTrash();
   }
+  if(app.session)await loadNotifs();
  }catch(e){console.error(e)}
  render();
 }
@@ -460,6 +492,110 @@ async function createTask(){
 async function setTaskStatus(id,st){await SB.from('tasks').update({status:st}).eq('id',id);refresh()}
 async function setRole(id,role){await SB.from('profiles').update({role:role}).eq('id',id);refresh()}
 
+/* === Audit log === */
+async function auditLog(table,recordId,action,details){
+ try{await SB.from('audit_log').insert({user_id:uid(),table_name:table,record_id:recordId,action:action,details:details||{}})}catch(e){}
+}
+/* === Notifications === */
+async function notify(userId,kind,title,body,link){
+ try{await SB.from('notifications').insert({user_id:userId,kind:kind,title:title,body:body||'',link:link||''})}catch(e){}
+}
+async function loadNotifs(){
+ var r=await SB.from('notifications').select('*').eq('user_id',uid()).order('created_at',{ascending:false}).limit(30);
+ app.cache.notifs=r.data||[];
+}
+async function markAllRead(){
+ await SB.from('notifications').update({read:true}).eq('user_id',uid()).eq('read',false);
+ await loadNotifs();render();
+}
+async function markNotifRead(id){await SB.from('notifications').update({read:true}).eq('id',id);await loadNotifs();render()}
+function toggleNotifs(){app.notifsOpen=!app.notifsOpen;if(app.notifsOpen)loadNotifs();render()}
+
+/* === Comments === */
+async function loadComments(pid){var r=await SB.from('comments').select('*').eq('product_id',pid).order('created_at',{ascending:true});app.cache.comments=r.data||[]}
+async function addComment(){
+ var body=val('cm_body');if(!body||!app.productId)return;
+ await SB.from('comments').insert({product_id:app.productId,user_id:uid(),body:body});
+ await auditLog('comments',app.productId,'comment',{body:body.slice(0,80)});
+ var el=document.getElementById('cm_body');if(el)el.value='';
+ await loadComments(app.productId);render();
+}
+async function delComment(id){await SB.from('comments').delete().eq('id',id);await loadComments(app.productId);render()}
+
+/* === Soft delete === */
+async function softDeleteProduct(id){
+ if(!confirmIt(t('confirmDelete')))return;
+ await SB.from('products').update({deleted_at:new Date().toISOString()}).eq('id',id);
+ await auditLog('products',id,'soft_delete',{});
+ toast('🗑️ Mis en corbeille');refresh();
+}
+async function restoreProduct(id){await SB.from('products').update({deleted_at:null}).eq('id',id);toast('♻️ Restaure');refresh()}
+async function permaDeleteProduct(id){if(!confirmIt('Supprimer DEFINITIVEMENT ?'))return;await SB.from('products').delete().eq('id',id);toast('Supprime');refresh()}
+async function loadTrash(){var r=await SB.from('products').select('*').not('deleted_at','is',null).order('deleted_at',{ascending:false});app.cache.trash=r.data||[]}
+
+/* === Audit log loader === */
+async function loadAudit(pid){
+ var r=await SB.from('audit_log').select('*').eq('record_id',pid).order('created_at',{ascending:false}).limit(50);
+ app.cache.audit=r.data||[];
+}
+
+/* === Orders / Call center === */
+async function loadOrders(){
+ var r=await SB.from('orders').select('*').order('created_at',{ascending:false}).limit(200);
+ app.cache.orders=r.data||[];
+}
+async function loadBlacklist(){var r=await SB.from('customer_blacklist').select('*').order('created_at',{ascending:false});app.cache.blacklist=r.data||[]}
+async function createOrder(){
+ var phone=val('o_phone');if(!phone){toast('Telephone requis','err');return}
+ var bl=(app.cache.blacklist||[]).find(function(b){return b.phone===phone});
+ if(bl&&!confirmIt('⚠ '+t('blacklisted')+' : '+bl.reason+'. Continuer ?'))return;
+ app.busy=true;render();
+ var qty=num(val('o_qty'))||1,unit=num(val('o_unit_price'));
+ var data={customer_name:val('o_name'),customer_phone:phone,customer_wilaya:val('o_wilaya'),customer_address:val('o_address'),quantity:qty,unit_price:unit,total_price:qty*unit,product_id:val('o_product')||null,notes:val('o_notes'),status:'queued'};
+ var r=await SB.from('orders').insert(data).select().single();
+ if(r.data)await auditLog('orders',r.data.id,'created',{phone:phone});
+ app.busy=false;app.modal=null;refresh();
+}
+async function claimOrder(id){
+ await SB.from('orders').update({assignee_id:uid(),status:'calling',last_call_at:new Date().toISOString()}).eq('id',id);
+ await auditLog('orders',id,'claimed',{});refresh();
+}
+async function setOrderStatus(id,status){
+ var u={status:status};
+ if(status==='calling'){u.last_call_at=new Date().toISOString()}
+ await SB.from('orders').update(u).eq('id',id);
+ await auditLog('orders',id,'status_'+status,{});refresh();
+}
+async function addToBlacklist(phone,reason){
+ if(!phone)return;
+ await SB.from('customer_blacklist').upsert({phone:phone,reason:reason||'',added_by:uid()});
+ await auditLog('customer_blacklist',null,'blacklist_add',{phone:phone});
+ toast('⛔ Ajoute a la blacklist');refresh();
+}
+async function delBlacklist(phone){await SB.from('customer_blacklist').delete().eq('phone',phone);refresh()}
+
+/* === Bulk actions === */
+function toggleSelect(id){app.selected[id]=!app.selected[id];render()}
+function selectedIds(){return Object.keys(app.selected).filter(function(k){return app.selected[k]})}
+function clearSelection(){app.selected={};render()}
+async function bulkSoftDelete(){
+ var ids=selectedIds();if(!ids.length)return;
+ if(!confirmIt('Supprimer '+ids.length+' produit(s) ?'))return;
+ await SB.from('products').update({deleted_at:new Date().toISOString()}).in('id',ids);
+ toast('🗑️ '+ids.length+' supprime(s)');clearSelection();refresh();
+}
+async function bulkAdvance(){
+ var ids=selectedIds();if(!ids.length)return;
+ await SB.from('products').update({current_stage:'tovalidate'}).in('id',ids);
+ toast('→ '+ids.length+' envoye(s) a l\'admin');clearSelection();refresh();
+}
+
+/* === Wrap adminKill with confirmation === */
+var _adminKill=adminKill;
+adminKill=async function(id){if(!confirmIt(t('confirmKill')))return;await _adminKill(id)};
+var _delProduct=delProduct;
+delProduct=async function(id){await softDeleteProduct(id)};
+
 /* Drag & drop */
 var dragId=null;
 function dragStart(id){dragId=id}
@@ -494,6 +630,9 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'workshop_offers'},function(){if(app.view==='sourcing'||app.view==='product')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'product_tests'},function(){if(app.view==='tests'||app.view==='product')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'cod_kpis'},function(){if(app.view==='kpis')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'orders'},function(){if(app.view==='orders')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
 }
 
@@ -539,6 +678,8 @@ function renderShell(inner){
  '<div class="main"><header class="top"><button class="burger" onclick="toggleMob()">☰</button>'+
  '<input class="gsearch" placeholder="'+t('search')+'" value="'+esc(app.q)+'" oninput="app.q=this.value;render()">'+
  '<div class="sp"></div>'+
+ notifBell()+
+ '<button class="btn btn-g" onclick="toggleDark()" style="padding:6px 9px" title="'+t('darkMode')+'">'+(app.dark?'☀️':'🌙')+'</button>'+
  '<button class="btn btn-g" onclick="toggleLang()" style="padding:6px 10px">🌐 '+(lang==='ar'?'FR':'AR')+'</button>'+
  '<div class="who"><div><div class="nm">'+esc(u.full_name||'')+'</div><div class="rl">'+t('r_'+u.role)+'</div></div><div class="av">'+esc((u.full_name||'?').charAt(0).toUpperCase())+'</div><button class="btn btn-g" onclick="logout()" style="padding:6px 9px" title="'+t('logout')+'">⎋</button></div></header>'+
  '<main class="content"><div class="inner">'+inner+'</div></main></div></div>'+(app.modal?renderModal():'');
@@ -557,9 +698,68 @@ function renderView(){
   case 'tasks':return viewTasks();
   case 'kpis':return viewKpis();
   case 'team':return viewTeam();
+  case 'orders':return viewOrders();
+  case 'blacklist':return viewBlacklist();
+  case 'trash':return viewTrash();
   case 'settings':return viewSettings();
   default:return viewPipeline();
  }
+}
+
+/* === Cloche notifications === */
+function notifBell(){
+ var unread=(app.cache.notifs||[]).filter(function(n){return !n.read}).length;
+ var bell='<button class="btn btn-g" onclick="toggleNotifs()" style="padding:6px 9px;position:relative" title="'+t('notifications')+'">🔔'+(unread?'<span style="position:absolute;top:-3px;inset-inline-end:-3px;background:#dc2626;color:#fff;border-radius:999px;font-size:9px;font-weight:800;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 4px">'+unread+'</span>':'')+'</button>';
+ if(!app.notifsOpen)return bell;
+ var notifs=app.cache.notifs||[];
+ var list=notifs.length?notifs.slice(0,15).map(function(n){return '<div style="padding:9px 13px;border-bottom:1px solid #f1f2f5;background:'+(n.read?'#fff':'#fbfaff')+';cursor:pointer" onclick="markNotifRead(\''+n.id+'\')"><div style="font-weight:700;font-size:13px">'+esc(n.title)+'</div>'+(n.body?'<div style="font-size:12px;color:var(--ink2);margin-top:2px">'+esc(n.body)+'</div>':'')+'<div style="font-size:10.5px;color:var(--ink2);margin-top:3px">'+esc((n.created_at||'').slice(0,16).replace('T',' '))+'</div></div>'}).join(''):'<div style="padding:24px;text-align:center;color:var(--ink2);font-size:13px">'+t('noNotif')+'</div>';
+ var panel='<div style="position:fixed;top:60px;inset-inline-end:14px;width:340px;max-height:480px;background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 12px 40px rgba(0,0,0,.2);z-index:90;overflow:hidden"><div style="padding:11px 13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><b style="font-size:14px">'+t('notifications')+'</b><button class="pill" onclick="markAllRead()">'+t('markAllRead')+'</button></div><div style="max-height:400px;overflow:auto">'+list+'</div></div>';
+ return bell+panel;
+}
+
+/* === ORDERS / Call center === */
+function viewOrders(){
+ var orders=app.cache.orders||[];var bl=app.cache.blacklist||[];
+ var nm={};(app.cache.profiles||[]).forEach(function(p){nm[p.id]=p.full_name});
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p.name});
+ var blPhones={};bl.forEach(function(b){blPhones[b.phone]=b.reason});
+ var mine=orders;
+ if(app.filterQueue==='mine'&&!isAdmin())mine=orders.filter(function(o){return o.assignee_id===uid()||(!o.assignee_id&&o.status==='queued')});
+ if(app.q){var q=app.q.toLowerCase();mine=mine.filter(function(o){return (o.customer_name||'').toLowerCase().indexOf(q)>=0||(o.customer_phone||'').indexOf(q)>=0||(pn[o.product_id]||'').toLowerCase().indexOf(q)>=0})}
+ var head='<div class="pghead"><div><h1 class="pg">📞 '+t('ordersTitle')+'</h1><div class="sub">'+t('ordersSub')+'</div></div><div class="acts">'+
+  '<div style="display:flex;gap:4px;background:#f1f2f5;border-radius:8px;padding:2px"><button class="pill" style="background:'+(app.filterQueue==='mine'?'var(--brand)':'transparent')+';color:'+(app.filterQueue==='mine'?'#fff':'var(--ink2)')+'" onclick="app.filterQueue=\'mine\';render()">'+t('myQueue')+'</button><button class="pill" style="background:'+(app.filterQueue==='all'?'var(--brand)':'transparent')+';color:'+(app.filterQueue==='all'?'#fff':'var(--ink2)')+'" onclick="app.filterQueue=\'all\';render()">'+t('allQueue')+'</button></div>'+
+  '<button class="btn btn-p" onclick="openModal(\'newOrder\')">+ '+t('newOrder')+'</button>'+
+ '</div></div>';
+ if(mine.length===0)return head+'<div class="empty">'+t('empty')+'</div>';
+ var rows=mine.map(function(o){
+  var sameP=orders.filter(function(x){return x.customer_phone===o.customer_phone}).length;
+  var isB=blPhones[o.customer_phone];
+  var statusOpts=ORDER_STATUSES.map(function(s){return '<option value="'+s+'" '+(o.status===s?'selected':'')+'>'+t('os_'+s)+'</option>'}).join('');
+  return '<div class="card" style="padding:11px 13px;margin-bottom:8px;'+(isB?'border-left:4px solid #dc2626':'')+'">'+
+   '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">'+
+   '<div style="flex:1;min-width:200px"><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><b>'+esc(o.customer_name||'-')+'</b><a href="tel:'+esc(o.customer_phone)+'" class="lnk">📱 '+esc(o.customer_phone)+'</a>'+(isB?'<span class="badge b-killed" title="'+esc(isB)+'">⛔</span>':'')+(sameP>1?'<span class="niche-chip">📊 '+sameP+' cmd</span>':'')+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+esc(o.customer_wilaya||'')+' · '+esc((pn[o.product_id]||'-'))+' · '+o.quantity+'× = '+fmt(o.total_price)+' '+t('cur')+(o.notes?' · '+esc(o.notes.slice(0,40)):'')+'</div></div>'+
+   '<select class="input sm" style="width:auto" onchange="setOrderStatus(\''+o.id+'\',this.value)">'+statusOpts+'</select>'+
+   (!o.assignee_id?'<button class="btn btn-p btn-s" onclick="claimOrder(\''+o.id+'\')">📞 '+t('os_calling')+'</button>':'<span style="font-size:11px;color:var(--ink2)">👤 '+esc(nm[o.assignee_id]||'?')+'</span>')+
+   (!isB&&isAdmin()?'<button class="pill del" onclick="addToBlacklist(\''+o.customer_phone+'\',prompt(\''+t('blacklistReason')+' :\')||\'\')" title="'+t('addToBlacklist')+'">⛔</button>':'')+
+   '</div></div>';
+ }).join('');
+ return head+rows;
+}
+
+function viewBlacklist(){
+ var bl=app.cache.blacklist||[];
+ var head='<div class="pghead"><div><h1 class="pg">⛔ '+t('blacklistTitle')+'</h1><div class="sub">Numeros de telephone interdits.</div></div></div>';
+ if(bl.length===0)return head+'<div class="empty">'+t('empty')+'</div>';
+ var rows=bl.map(function(b){return '<tr><td><b>'+esc(b.phone)+'</b></td><td>'+esc(b.reason||'-')+'</td><td>'+esc((b.created_at||'').slice(0,10))+'</td><td><button class="pill del" onclick="delBlacklist(\''+b.phone+'\')">✕</button></td></tr>'}).join('');
+ return head+'<div class="card scroll-x"><table><thead><tr><th>'+t('phone')+'</th><th>'+t('blacklistReason')+'</th><th>'+t('date')+'</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+function viewTrash(){
+ var items=app.cache.trash||[];
+ var head='<div class="pghead"><div><h1 class="pg">🗑️ '+t('trashTitle')+'</h1><div class="sub">Produits supprimes (restaurables).</div></div></div>';
+ if(items.length===0)return head+'<div class="empty">'+t('trashEmpty')+'</div>';
+ var rows=items.map(function(p){return '<tr><td><b>'+esc(p.name)+'</b></td><td>'+badge(SCOLOR[p.current_stage]||'b-idea',t('s_'+(p.current_stage||'idea')))+'</td><td style="font-size:11.5px;color:var(--ink2)">'+esc((p.deleted_at||'').slice(0,16).replace('T',' '))+'</td><td><div style="display:flex;gap:5px"><button class="pill" onclick="restoreProduct(\''+p.id+'\')">♻️ '+t('restore')+'</button>'+(isAdmin()?'<button class="pill del" onclick="permaDeleteProduct(\''+p.id+'\')">'+t('permaDelete')+'</button>':'')+'</div></td></tr>'}).join('');
+ return head+'<div class="card scroll-x"><table><thead><tr><th>'+t('name')+'</th><th>'+t('status')+'</th><th>'+t('deletedAt')+'</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
 /* === PIPELINE (dashboard global) === */
@@ -798,7 +998,7 @@ function viewVideoGlobal(){
 /* === PRODUCT DETAIL === */
 function viewProduct(){
  var p=app.cache.product;if(!p)return '<div class="center"><span class="spin"></span></div>';
- var tabs=['info','scoring','costs','sourcing','tests','sheet'];
+ var tabs=['info','scoring','costs','sourcing','tests','sheet','comments','audit'];
  var canEdit=canEditP();
  var marg=marginDzd(p);
  var tabbar='<div class="tabs">'+tabs.map(function(tb){var lab='tab'+tb.charAt(0).toUpperCase()+tb.slice(1);return '<span class="'+(app.tab===tb?'on':'')+'" onclick="setTab(\''+tb+'\')">'+t(lab)+'</span>'}).join('')+'</div>';
@@ -849,6 +1049,14 @@ function viewProduct(){
   var ce=isAdmin()||app.profile.role==='sourcing';var sh=app.cache.sheet||{};
   var ta=function(id,lab,v){return '<div style="margin-bottom:11px"><label class="lb">'+lab+'</label><textarea id="'+id+'" class="input" style="min-height:80px" '+(ce?'':'readonly')+'>'+esc(v||'')+'</textarea></div>'};
   body='<div style="max-width:680px"><div class="note">'+t('sheetIntro')+'</div>'+ta('sh_script',t('callScript'),sh.call_script)+ta('sh_obj',t('objections'),sh.objections)+ta('sh_up',t('upsells'),sh.upsells)+ta('sh_faq',t('faq'),sh.faq)+(ce?'<button class="btn btn-p" onclick="saveSheet()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':(app.saved?t('saved'):t('save')))+'</button>':'')+'</div>';
+ } else if(app.tab==='comments'){
+  var cms=app.cache.comments||[];var nm={};(app.cache.profiles||[]).forEach(function(x){nm[x.id]=x.full_name});
+  var cmList=cms.length?cms.map(function(c){return '<div style="background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:7px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><b style="font-size:12.5px;color:var(--brand)">👤 '+esc(nm[c.user_id]||'?')+'</b><div style="display:flex;gap:7px;align-items:center"><span style="font-size:11px;color:var(--ink2)">'+esc((c.created_at||'').slice(0,16).replace('T',' '))+'</span>'+(c.user_id===uid()||isAdmin()?'<button class="pill del" onclick="delComment(\''+c.id+'\')">✕</button>':'')+'</div></div><div style="white-space:pre-wrap;font-size:13px">'+esc(c.body)+'</div></div>'}).join(''):'<div class="empty" style="padding:20px">'+t('noComments')+'</div>';
+  body='<div style="max-width:680px">'+cmList+'<div class="card" style="padding:11px;margin-top:10px;display:flex;gap:7px"><input id="cm_body" class="input" placeholder="'+t('addComment')+'" onkeydown="if(event.key===\'Enter\')addComment()"><button class="btn btn-p" onclick="addComment()">'+t('send')+'</button></div></div>';
+ } else if(app.tab==='audit'){
+  var au=app.cache.audit||[];var nm2={};(app.cache.profiles||[]).forEach(function(x){nm2[x.id]=x.full_name});
+  var list=au.length?au.map(function(a){return '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f2f5"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand);margin-top:5px;flex:none"></div><div style="flex:1"><div style="font-size:13px"><b>'+esc(nm2[a.user_id]||'?')+'</b> · <span style="color:var(--brand);font-weight:700">'+esc(a.action)+'</span></div><div style="font-size:11px;color:var(--ink2)">'+esc((a.created_at||'').slice(0,16).replace('T',' '))+(a.details&&Object.keys(a.details).length?' · '+esc(JSON.stringify(a.details).slice(0,80)):'')+'</div></div></div>'}).join(''):'<div class="empty" style="padding:20px">'+t('empty')+'</div>';
+  body='<div style="max-width:680px"><div class="card" style="padding:14px">'+list+'</div></div>';
  }
  return head+tabbar+body;
 }
@@ -896,7 +1104,20 @@ function viewSettings(){
   '<div class="row2" style="margin-top:10px"><div><label class="lb">'+t('defaultConfirm')+'</label><input id="s_default_confirm_rate" type="number" class="input" value="'+(s.default_confirm_rate||70)+'"></div><div><label class="lb">'+t('defaultDeliver')+'</label><input id="s_default_deliver_rate" type="number" class="input" value="'+(s.default_deliver_rate||60)+'"></div></div>'+
   '<button class="btn btn-p" style="margin-top:12px" onclick="saveSettings()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':(app.saved?t('saved'):t('saveSettings')))+'</button>'+
  '</div>';
- return head+settingsCard+profileCard+langCard;
+ var weightsCard='<div class="card" style="padding:16px;max-width:520px;margin-bottom:12px"><div style="font-weight:700;margin-bottom:9px">⚖️ '+t('weightsTitle')+'</div>'+
+  '<div class="row2"><div><label class="lb">'+t('wow')+'</label><input id="s_weight_wow" type="number" step="0.1" min="0" class="input" value="'+(s.weight_wow||1)+'"></div><div><label class="lb">'+t('problem')+'</label><input id="s_weight_problem" type="number" step="0.1" min="0" class="input" value="'+(s.weight_problem||1)+'"></div></div>'+
+  '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('beforeAfter')+'</label><input id="s_weight_before_after" type="number" step="0.1" min="0" class="input" value="'+(s.weight_before_after||1)+'"></div><div><label class="lb">'+t('innovation')+'</label><input id="s_weight_innovation" type="number" step="0.1" min="0" class="input" value="'+(s.weight_innovation||1)+'"></div></div>'+
+  '<button class="btn btn-p" style="margin-top:11px" onclick="saveWeights()" '+(app.busy?'disabled':'')+'>'+t('save')+'</button>'+
+ '</div>';
+ return head+settingsCard+weightsCard+profileCard+langCard;
+}
+async function saveWeights(){
+ app.busy=true;render();
+ var keys=['weight_wow','weight_problem','weight_before_after','weight_innovation'];
+ for(var i=0;i<keys.length;i++){var v=val('s_'+keys[i]);await SB.from('settings').upsert({key:keys[i],value:v,updated_at:new Date().toISOString(),updated_by:uid()})}
+ await loadSettings();
+ await SB.from('products').update({updated_at:new Date().toISOString()}).is('deleted_at',null);
+ toast('⚖️ Poids sauves. Recalcul en cours...');app.busy=false;render();
 }
 
 /* === MODALS === */
@@ -926,6 +1147,14 @@ function renderModal(){
    '<div style="margin-top:9px"><label class="lb">'+t('notes')+'</label><textarea id="t_notes" class="input" style="min-height:60px"></textarea></div>';
   return modalWrap(t('newTest'),b,'createTest()');
  }
+ if(app.modal==='newOrder'){
+  b='<div class="row2"><div><label class="lb">'+t('customer')+'</label><input id="o_name" class="input" autofocus></div><div><label class="lb">'+t('phone')+' *</label><input id="o_phone" class="input" placeholder="0555..."></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('wilaya')+'</label><input id="o_wilaya" class="input" placeholder="Alger, Oran..."></div><div><label class="lb">'+t('product')+'</label><select id="o_product" class="input"><option value="">-</option>'+(app.cache.products||[]).map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>'}).join('')+'</select></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('quantity')+'</label><input id="o_qty" type="number" min="1" class="input" value="1"></div><div><label class="lb">'+t('unitPrice')+' ('+t('cur')+')</label><input id="o_unit_price" type="number" class="input"></div></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('address')+'</label><textarea id="o_address" class="input" style="min-height:50px"></textarea></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('notes')+'</label><textarea id="o_notes" class="input" style="min-height:50px"></textarea></div>';
+  return modalWrap(t('newOrder'),b,'createOrder()');
+ }
  if(app.modal==='newTask'){
   b='<div><label class="lb">'+t('title')+'</label><input id="nt_title" class="input" autofocus></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('priority2')+'</label><select id="nt_prio" class="input">'+PRIOS.map(function(p){return '<option value="'+p+'"'+(p==='normal'?' selected':'')+'>'+t('pr_'+p)+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('due')+'</label><input id="nt_due" type="date" class="input"></div></div>'+
@@ -938,14 +1167,15 @@ function modalWrap(title,body,action){return '<div class="modal" onclick="if(eve
 
 /* === Init === */
 async function init(){
- applyDir();
+ applyDir();applyDark();
  try{
   var s=await SB.auth.getSession();app.session=s.data.session;
-  if(app.session){await loadProfile();await loadSettings()}
+  if(app.session){await loadProfile();await loadSettings();await loadNotifs()}
   render();
   if(app.session)afterLogin();
  }catch(e){console.error(e);render()}
- SB.auth.onAuthStateChange(async function(_e,sess){app.session=sess;if(sess){await loadProfile();await loadSettings();render();afterLogin()}else{app.profile=null;render()}});
+ SB.auth.onAuthStateChange(async function(_e,sess){app.session=sess;if(sess){await loadProfile();await loadSettings();await loadNotifs();render();afterLogin()}else{app.profile=null;render()}});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(app.modal){closeModal()}else if(app.notifsOpen){app.notifsOpen=false;render()}}});
 }
 init();
 </script>
