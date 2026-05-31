@@ -164,14 +164,14 @@ var PLATFORMS=['meta','tiktok','snap'];
 var NICHES=['Maison','Cuisine','Beaute','Mode','Sante','Bebe','Animaux','Auto','Bricolage','Gadget','Sport','Tech'];
 
 var NAV={
- admin:['pipeline','products','research','validate','sourcing','tests','orders','tasks','kpis','team','blacklist','trash','settings'],
- media_buyer:['pipeline','products','research','tests','orders','tasks','kpis'],
+ admin:['cockpit','pipeline','products','research','validate','sourcing','tests','orders','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['cockpit','pipeline','products','research','tests','orders','tasks','kpis','perf'],
  sourcing:['pipeline','products','research','sourcing','tasks'],
- production:['pipeline','products','sourcing','production','tasks'],
+ production:['pipeline','products','sourcing','stock','production','tasks'],
  video_editor:['pipeline','products','video','tasks'],
  confirmatrice:['pipeline','orders','products','tasks']
 };
-var ICON={pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',orders:'📞',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',team:'👥',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={cockpit:'💰',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',orders:'📞',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
 var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
@@ -215,7 +215,13 @@ var I18N={
   notifications:'Notifications',markAllRead:'Tout marquer lu',noNotif:'Aucune notification.',
   trashTitle:'Corbeille',restore:'Restaurer',permaDelete:'Supprimer definitivement',deletedAt:'Supprime le',trashEmpty:'Corbeille vide.',
   weightsTitle:'Poids du scoring (4 criteres)',darkMode:'Mode sombre',selected:'selectionne(s)',bulkAdvance:'Faire avancer',bulkDelete:'Supprimer',confirmDelete:'Supprimer ?',confirmKill:'Tuer ce produit ?',
-  auditLog:'Journal d\'activite',tabComments:'Commentaires',tabAudit:'Historique'
+  auditLog:'Journal d\'activite',tabComments:'Commentaires',tabAudit:'Historique',
+  nav_cockpit:'Cockpit CFO',nav_stock:'Stock SKU',nav_perf:'Performance',nav_wilayas:'Wilayas',
+  cockpitTitle:'Cockpit financier',cockpitSub:'Vraie marge nette : KPI publicitaires + commandes livrees.',cashIn:'Encaisse (livre)',adSpendTotal:'Depense pub',netMargin:'Marge nette',deliveryRevenue:'Revenu livraisons',pendingOrders:'Commandes en cours',cashProjected:'Cash projete 30j',topProfitable:'Top 5 rentables',topLosing:'Top 5 perdants',
+  stockTitle:'Inventaire SKU',stockSub:'Stock courant, alertes seuil, mouvements.',stockIn:'Entree',stockOut:'Sortie',stockAdjust:'Ajuster',stockCurrent:'Stock actuel',stockMin:'Seuil min',stockMovementsList:'Derniers mouvements',mvType:'Type',mvQty:'Qte',mvReason:'Raison',lowStock:'⚠ Stock faible',outOfStock:'❌ Rupture',
+  perfTitle:'Performance equipe',perfSub:'KPI par membre selon role.',confirmRate:'Taux conf',deliverRate:'Taux livr',avgCallTime:'Tps moyen',ordersHandled:'Cmd traitees',productsValidated:'Produits valides',avgRoas:'ROAS moyen',avgCpa:'CPA moyen',productsScaled:'Scales',marginAvg:'Marge moyenne',
+  wilayasTitle:'Wilayas et tarifs',wilayasSub:'Tarif livraison par wilaya et par transporteur.',zoneN:'Nord',zoneHP:'Hauts-plateaux',zoneS:'Sud',zoneG:'Grand Sud',
+  totalCostReal:'Cout total reel',realMargin:'Marge reelle',shippingCost:'Frais livraison',suggestionsTitle:'💡 Suggestions IA',sugScale:'🟢 SCALER',sugWatch:'🔴 SURVEILLER/TUER',sugTest:'🟡 ITERER',sugReason:'Raison',applyAction:'Appliquer'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -256,7 +262,13 @@ var I18N={
   notifications:'الإشعارات',markAllRead:'تعليم الكل كمقروء',noNotif:'لا توجد إشعارات.',
   trashTitle:'سلة المحذوفات',restore:'استعادة',permaDelete:'حذف نهائيًا',deletedAt:'حُذف في',trashEmpty:'السلة فارغة.',
   weightsTitle:'أوزان التقييم (4 معايير)',darkMode:'الوضع الداكن',selected:'محدد',bulkAdvance:'تقديم',bulkDelete:'حذف',confirmDelete:'حذف؟',confirmKill:'إيقاف هذا المنتج؟',
-  auditLog:'سجل النشاط',tabComments:'التعليقات',tabAudit:'السجل'
+  auditLog:'سجل النشاط',tabComments:'التعليقات',tabAudit:'السجل',
+  nav_cockpit:'لوحة المالية',nav_stock:'المخزون',nav_perf:'الأداء',nav_wilayas:'الولايات',
+  cockpitTitle:'لوحة المالية',cockpitSub:'الهامش الصافي الحقيقي: KPI + الطلبات المسلَّمة.',cashIn:'محصَّل (مسلَّم)',adSpendTotal:'إنفاق الإعلانات',netMargin:'الهامش الصافي',deliveryRevenue:'إيراد التسليم',pendingOrders:'طلبات قيد التنفيذ',cashProjected:'تدفق نقدي متوقع 30ي',topProfitable:'أكثر 5 ربحية',topLosing:'أكثر 5 خسارة',
+  stockTitle:'المخزون SKU',stockSub:'المخزون الحالي، تنبيهات، الحركات.',stockIn:'دخول',stockOut:'خروج',stockAdjust:'تعديل',stockCurrent:'المخزون',stockMin:'حد أدنى',stockMovementsList:'آخر الحركات',mvType:'النوع',mvQty:'الكمية',mvReason:'السبب',lowStock:'⚠ منخفض',outOfStock:'❌ نفد',
+  perfTitle:'أداء الفريق',perfSub:'مؤشرات حسب الدور.',confirmRate:'نسبة التأكيد',deliverRate:'نسبة التسليم',avgCallTime:'متوسط المدة',ordersHandled:'طلبات',productsValidated:'منتجات مُعتمدة',avgRoas:'ROAS متوسط',avgCpa:'CPA متوسط',productsScaled:'موسَّعة',marginAvg:'هامش متوسط',
+  wilayasTitle:'الولايات والتعريفات',wilayasSub:'تكلفة التوصيل حسب الولاية والناقل.',zoneN:'الشمال',zoneHP:'الهضاب',zoneS:'الجنوب',zoneG:'الجنوب الكبير',
+  totalCostReal:'التكلفة الإجمالية الحقيقية',realMargin:'الهامش الحقيقي',shippingCost:'تكلفة التوصيل',suggestionsTitle:'💡 اقتراحات الذكاء',sugScale:'🟢 توسيع',sugWatch:'🔴 مراقبة/إيقاف',sugTest:'🟡 إعادة',sugReason:'السبب',applyAction:'تطبيق'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -270,7 +282,7 @@ var app={
  session:null,profile:null,view:'pipeline',productId:null,tab:'info',pview:'kanban',modal:null,modalData:null,authMode:'in',
  err:'',info:'',busy:false,saved:false,mob:false,kpimsg:'',q:'',filterStage:'',filterNiche:'',filterPrio:'',
  selected:{},dark:localStorage.getItem('cod_dark')==='1',notifsOpen:false,filterQueue:'mine',
- cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null,orders:[],blacklist:[],notifs:[],comments:[],audit:[],trash:[]}
+ cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null,orders:[],blacklist:[],notifs:[],comments:[],audit:[],trash:[],wilayas:[],stockMoves:[]}
 };
 function toast(msg,kind){var d=document.createElement('div');d.style.cssText='position:fixed;bottom:20px;inset-inline-end:20px;background:'+(kind==='err'?'#c2384b':kind==='warn'?'#b45309':'#157f4a')+';color:#fff;padding:11px 18px;border-radius:9px;font-size:13.5px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:200;animation:toastIn .25s';d.textContent=msg;document.body.appendChild(d);setTimeout(function(){d.style.opacity='0';d.style.transition='.3s';setTimeout(function(){d.remove()},300)},2400)}
 function confirmIt(msg){return confirm(msg)}
@@ -365,10 +377,58 @@ async function refresh(){
    await loadBlacklist();
   } else if(v==='trash'){
    await loadTrash();
+  } else if(v==='cockpit'){
+   var pAll=await SB.from('products').select('*').is('deleted_at',null);
+   var oAll=await SB.from('orders').select('*');
+   var kAll=await SB.from('cod_kpis').select('*');
+   app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];
+  } else if(v==='stock'){
+   var ps=await SB.from('products').select('id,name,image_url,stock_current,stock_min,current_stage,capacity').is('deleted_at',null).order('stock_current',{ascending:true});
+   var sm=await SB.from('stock_movements').select('*').order('created_at',{ascending:false}).limit(50);
+   app.cache.products=ps.data||[];app.cache.stockMoves=sm.data||[];
+  } else if(v==='perf'){
+   var pp=await SB.from('profiles').select('*');
+   var po=await SB.from('orders').select('id,assignee_id,status,product_id,total_price');
+   var pt=await SB.from('product_tests').select('id,tester_id,calculated_margin,verdict,product_id');
+   var pr=await SB.from('products').select('id,created_by,current_stage,final_score');
+   app.cache.profiles=pp.data||[];app.cache.orders=po.data||[];app.cache.tests=pt.data||[];app.cache.products=pr.data||[];
+  } else if(v==='wilayas'){
+   await loadWilayas();
   }
   if(app.session)await loadNotifs();
  }catch(e){console.error(e)}
  render();
+}
+async function loadWilayas(){var r=await SB.from('wilayas').select('*').order('code');app.cache.wilayas=r.data||[]}
+async function updateWilayaRate(code,field,value){await SB.from('wilayas').update({[field]:value}).eq('code',code);refresh()}
+async function addStockMovement(productId,type,qty,reason){
+ if(!productId||!qty)return;
+ await SB.from('stock_movements').insert({product_id:productId,movement_type:type,quantity:qty,reason:reason||'',created_by:uid()});
+ await auditLog('stock_movements',productId,'stock_'+type,{qty:qty,reason:reason});
+ toast(type==='in'?'📦 +'+qty+' entree':type==='out'?'📤 -'+qty+' sortie':'⚙ ajuste a '+qty);
+ refresh();
+}
+
+/* Shipping & marge avec wilaya */
+function wilayaShipping(code){var w=(app.cache.wilayas||[]).find(function(x){return x.code===code});return w?Number(w.yalidine_rate||0):0}
+function avgShippingForProduct(){if(!app.cache.wilayas||!app.cache.wilayas.length)return 600;var s=0,n=0;app.cache.wilayas.forEach(function(w){s+=Number(w.yalidine_rate||0);n++});return n?Math.round(s/n):600}
+function realMargin(p){var rate=Number(p.usd_to_dzd||app.cache.settings.usd_to_dzd||260);var ship=avgShippingForProduct();var cost=((Number(p.cost_product_usd)||0)+(Number(p.ship_cost_usd)||0))*rate+ship;return (Number(p.price_final)||0)-cost}
+
+/* Auto-suggestions scaling/kill */
+function buildSuggestions(){
+ var suggestions=[];var minMargin=Number(app.cache.settings.min_margin_threshold||500);
+ (app.cache.products||[]).filter(function(p){return ['testing','validated','scaling','live'].indexOf(p.current_stage)>=0}).forEach(function(p){
+  var m=realMargin(p);
+  var pTests=(app.cache.tests||[]).filter(function(tx){return tx.product_id===p.id});
+  var pKpis=(app.cache.kpis||[]).filter(function(k){return k.product_id===p.id});
+  var net=0,cr=0,dr=0,orders=0;
+  pKpis.forEach(function(k){net+=Number(k.revenue||0)-Number(k.ad_spend||0);orders+=k.orders||0;cr+=k.confirmed||0;dr+=k.delivered||0});
+  var crPct=orders>0?cr/orders:0;var drPct=cr>0?dr/cr:0;
+  if(p.current_stage==='testing'&&net>0&&drPct>=0.5&&m>minMargin){suggestions.push({type:'scale',product:p,reason:'Net +'+fmt(net)+' DA, livraison '+Math.round(drPct*100)+'%, marge '+fmt(m)+' DA'})}
+  else if(p.current_stage==='testing'&&(net<-minMargin||crPct<0.3)){suggestions.push({type:'watch',product:p,reason:'Net '+fmt(net)+' DA, confirmation '+Math.round(crPct*100)+'%'})}
+  else if(p.current_stage==='scaling'&&net<0){suggestions.push({type:'watch',product:p,reason:'Scaling en perte: '+fmt(net)+' DA'})}
+ });
+ return suggestions.slice(0,10);
 }
 async function loadProduct(){
  var id=app.productId;
@@ -551,9 +611,12 @@ async function createOrder(){
  if(bl&&!confirmIt('⚠ '+t('blacklisted')+' : '+bl.reason+'. Continuer ?'))return;
  app.busy=true;render();
  var qty=num(val('o_qty'))||1,unit=num(val('o_unit_price'));
- var data={customer_name:val('o_name'),customer_phone:phone,customer_wilaya:val('o_wilaya'),customer_address:val('o_address'),quantity:qty,unit_price:unit,total_price:qty*unit,product_id:val('o_product')||null,notes:val('o_notes'),status:'queued'};
+ var wCode=parseInt(val('o_wilaya_code'))||null;
+ var wName=wCode?((app.cache.wilayas||[]).find(function(w){return w.code===wCode})||{name_fr:''}).name_fr:'';
+ var ship=num(val('o_ship'))||(wCode?wilayaShipping(wCode):0);
+ var data={customer_name:val('o_name'),customer_phone:phone,customer_wilaya:wName,wilaya_code:wCode,shipping_cost:ship,customer_address:val('o_address'),quantity:qty,unit_price:unit,total_price:qty*unit+ship,product_id:val('o_product')||null,notes:val('o_notes'),status:'queued'};
  var r=await SB.from('orders').insert(data).select().single();
- if(r.data)await auditLog('orders',r.data.id,'created',{phone:phone});
+ if(r.data)await auditLog('orders',r.data.id,'created',{phone:phone,wilaya:wName,ship:ship});
  app.busy=false;app.modal=null;refresh();
 }
 async function claimOrder(id){
@@ -622,7 +685,7 @@ function downloadTemplate(){var csv='produit,date,commandes,confirmees,livrees,r
 /* Realtime */
 var rtDone=false;
 function afterLogin(){
- loadSettings();refresh();
+ loadSettings();loadWilayas();refresh();
  if(rtDone)return;rtDone=true;
  SB.channel('rt')
   .on('postgres_changes',{event:'*',schema:'public',table:'products'},function(){refresh()})
@@ -701,9 +764,108 @@ function renderView(){
   case 'orders':return viewOrders();
   case 'blacklist':return viewBlacklist();
   case 'trash':return viewTrash();
+  case 'cockpit':return viewCockpit();
+  case 'stock':return viewStock();
+  case 'perf':return viewPerf();
+  case 'wilayas':return viewWilayas();
   case 'settings':return viewSettings();
   default:return viewPipeline();
  }
+}
+
+/* === COCKPIT CFO === */
+function viewCockpit(){
+ var orders=app.cache.orders||[];var kpis=app.cache.kpis||[];var prods=app.cache.products||[];
+ var revKpi=0,adSpend=0;kpis.forEach(function(k){revKpi+=Number(k.revenue||0);adSpend+=Number(k.ad_spend||0)});
+ var revOrders=0,pendingValue=0,nOrders=0,nPending=0,deliveredCount=0;
+ orders.forEach(function(o){var tot=Number(o.total_price||0);if(o.status==='delivered'){revOrders+=tot;deliveredCount++}else if(['queued','calling','confirmed','reschedule'].indexOf(o.status)>=0){pendingValue+=tot;nPending++}nOrders++});
+ var revTotal=revKpi+revOrders;var netMarg=revTotal-adSpend;
+ var pname={};prods.forEach(function(p){pname[p.id]=p.name});
+ var profitByP={};kpis.forEach(function(k){var id=k.product_id;if(!id)return;if(!profitByP[id])profitByP[id]={revenue:0,ad:0};profitByP[id].revenue+=Number(k.revenue||0);profitByP[id].ad+=Number(k.ad_spend||0)});
+ orders.filter(function(o){return o.status==='delivered'}).forEach(function(o){if(!o.product_id)return;if(!profitByP[o.product_id])profitByP[o.product_id]={revenue:0,ad:0};profitByP[o.product_id].revenue+=Number(o.total_price||0)});
+ var ranked=Object.keys(profitByP).map(function(id){return {id:id,name:pname[id]||'?',net:profitByP[id].revenue-profitByP[id].ad}}).sort(function(a,b){return b.net-a.net});
+ var top5=ranked.slice(0,5);var bot5=ranked.slice().reverse().slice(0,5);
+ var conf=Number(app.cache.settings.default_confirm_rate||70)/100;
+ var deliv=Number(app.cache.settings.default_deliver_rate||60)/100;
+ var projected=Math.round(pendingValue*conf*deliv);
+ var sugg=buildSuggestions();
+ var head='<div class="pghead"><div><h1 class="pg">💰 '+t('cockpitTitle')+'</h1><div class="sub">'+t('cockpitSub')+'</div></div></div>';
+ var stats='<div class="grid g4">'+
+  '<div class="card stat"><div class="ic">💵</div><div class="v">'+fmt(revOrders)+'</div><div class="l">'+t('cashIn')+' ('+t('cur')+')</div></div>'+
+  '<div class="card stat"><div class="ic">📣</div><div class="v">'+fmt(adSpend)+'</div><div class="l">'+t('adSpendTotal')+' ('+t('cur')+')</div></div>'+
+  '<div class="card stat" style="background:'+(netMarg>=0?'#e9f7ef':'#fee2e2')+'"><div class="ic">'+(netMarg>=0?'📈':'📉')+'</div><div class="v" style="color:'+(netMarg>=0?'var(--good)':'var(--bad)')+'">'+fmt(netMarg)+'</div><div class="l">'+t('netMargin')+' ('+t('cur')+')</div></div>'+
+  '<div class="card stat"><div class="ic">⏳</div><div class="v">'+fmt(projected)+'</div><div class="l">'+t('cashProjected')+' ('+t('cur')+')</div></div>'+
+ '</div>';
+ var orderStats='<div class="grid g3" style="margin-top:13px">'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('pendingOrders')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+nPending+' / '+nOrders+'</div><div style="font-size:11px;color:var(--ink2)">'+fmt(pendingValue)+' '+t('cur')+'</div></div>'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('deliveryRevenue')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:var(--good)">'+fmt(revOrders)+' '+t('cur')+'</div><div style="font-size:11px;color:var(--ink2)">'+deliveredCount+' livrees</div></div>'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">KPI revenu pub</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+fmt(revKpi)+' '+t('cur')+'</div></div>'+
+ '</div>';
+ var topCard='<div class="grid g2" style="margin-top:13px">'+
+  '<div class="card" style="padding:14px"><b>🏆 '+t('topProfitable')+'</b>'+(top5.length?top5.map(function(x){return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f1f2f5;font-size:13px"><span>'+esc(x.name)+'</span><b style="color:var(--good)">+'+fmt(x.net)+'</b></div>'}).join(''):'<div style="font-size:12px;color:var(--ink2);margin-top:6px">'+t('empty')+'</div>')+'</div>'+
+  '<div class="card" style="padding:14px"><b>📉 '+t('topLosing')+'</b>'+(bot5.length?bot5.filter(function(x){return x.net<0}).map(function(x){return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f1f2f5;font-size:13px"><span>'+esc(x.name)+'</span><b style="color:var(--bad)">'+fmt(x.net)+'</b></div>'}).join('')||'<div style="font-size:12px;color:var(--ink2);margin-top:6px">Aucun produit en perte ✨</div>':'<div style="font-size:12px;color:var(--ink2);margin-top:6px">'+t('empty')+'</div>')+'</div>'+
+ '</div>';
+ var sugCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('suggestionsTitle')+'</b>'+(sugg.length?sugg.map(function(s){var c=s.type==='scale'?'b-validated':s.type==='watch'?'b-killed':'b-research';var lab=s.type==='scale'?t('sugScale'):s.type==='watch'?t('sugWatch'):t('sugTest');return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f2f5"><div><span class="badge '+c+'">'+lab+'</span> <b style="margin-inline-start:6px;font-size:13px"><a class="tile" onclick="openProduct(\''+s.product.id+'\')">'+esc(s.product.name)+'</a></b><div style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+esc(s.reason)+'</div></div>'+(isAdmin()?'<button class="pill" onclick="'+(s.type==='scale'?'setStage(\''+s.product.id+'\',\'scaling\')':'adminKill(\''+s.product.id+'\')')+'">'+t('applyAction')+'</button>':'')+'</div>'}).join(''):'<div style="font-size:12px;color:var(--ink2);margin-top:7px">Aucune suggestion (donnees insuffisantes).</div>')+'</div>';
+ return head+stats+orderStats+topCard+sugCard;
+}
+
+/* === STOCK === */
+function viewStock(){
+ var ps=(app.cache.products||[]).filter(function(p){return ['validated','production','scaling','live','testing'].indexOf(p.current_stage)>=0});
+ var sm=app.cache.stockMoves||[];
+ var head='<div class="pghead"><div><h1 class="pg">📦 '+t('stockTitle')+'</h1><div class="sub">'+t('stockSub')+'</div></div></div>';
+ if(ps.length===0)return head+'<div class="empty">'+t('empty')+'</div>';
+ var canStock=isAdmin()||(app.profile&&app.profile.role==='production');
+ var pname={};ps.forEach(function(p){pname[p.id]=p.name});
+ var rows=ps.map(function(p){
+  var sc=Number(p.stock_current||0),sm2=Number(p.stock_min||0);
+  var status=sc<=0?'<span class="badge b-killed">'+t('outOfStock')+'</span>':sc<sm2?'<span class="badge b-tovalidate">'+t('lowStock')+'</span>':'<span class="badge b-validated">OK</span>';
+  return '<tr><td><div style="display:flex;align-items:center;gap:8px">'+(p.image_url?'<img src="'+esc(p.image_url)+'" style="width:30px;height:30px;border-radius:5px;object-fit:cover">':'')+'<a class="tile" onclick="openProduct(\''+p.id+'\')"><b>'+esc(p.name)+'</b></a></div></td><td style="text-align:center"><b style="font-size:16px;color:'+(sc<=0?'var(--bad)':sc<sm2?'var(--warn)':'var(--good)')+'">'+sc+'</b></td><td style="text-align:center">'+sm2+'</td><td>'+status+'</td>'+(canStock?'<td><div style="display:flex;gap:3px"><button class="pill" onclick="var q=parseInt(prompt(\''+t('mvQty')+' (entree) :\'))||0;if(q>0)addStockMovement(\''+p.id+'\',\'in\',q,prompt(\''+t('mvReason')+' :\')||\'\')" title="'+t('stockIn')+'">⬆</button><button class="pill del" onclick="var q=parseInt(prompt(\''+t('mvQty')+' (sortie) :\'))||0;if(q>0)addStockMovement(\''+p.id+'\',\'out\',q,prompt(\''+t('mvReason')+' :\')||\'\')" title="'+t('stockOut')+'">⬇</button><button class="pill" onclick="var q=parseInt(prompt(\''+t('mvQty')+' (ajuster a) :\'));if(q>=0)addStockMovement(\''+p.id+'\',\'adjustment\',q,\'manuel\')" title="'+t('stockAdjust')+'">⚙</button></div></td>':'<td></td>')+'</tr>';
+ }).join('');
+ var moves=sm.length?'<div class="card" style="padding:14px;margin-top:14px"><b>'+t('stockMovementsList')+'</b><div class="scroll-x" style="margin-top:8px"><table><thead><tr><th>'+t('date')+'</th><th>'+t('product')+'</th><th>'+t('mvType')+'</th><th style="text-align:end">'+t('mvQty')+'</th><th>'+t('mvReason')+'</th></tr></thead><tbody>'+sm.slice(0,30).map(function(m){var ico=m.movement_type==='in'?'⬆':m.movement_type==='out'?'⬇':'⚙';var c=m.movement_type==='in'?'var(--good)':m.movement_type==='out'?'var(--bad)':'var(--ink2)';return '<tr><td style="font-size:11.5px;color:var(--ink2)">'+esc((m.created_at||'').slice(0,16).replace('T',' '))+'</td><td><b>'+esc(pname[m.product_id]||'?')+'</b></td><td><span style="color:'+c+';font-weight:700">'+ico+' '+m.movement_type+'</span></td><td style="text-align:end;font-weight:800">'+m.quantity+'</td><td style="font-size:11.5px">'+esc(m.reason||'')+'</td></tr>'}).join('')+'</tbody></table></div></div>':'';
+ return head+'<div class="card scroll-x"><table><thead><tr><th>'+t('product')+'</th><th style="text-align:center">'+t('stockCurrent')+'</th><th style="text-align:center">'+t('stockMin')+'</th><th>'+t('status')+'</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>'+moves;
+}
+
+/* === PERFORMANCE === */
+function viewPerf(){
+ var profs=app.cache.profiles||[];var orders=app.cache.orders||[];var tests=app.cache.tests||[];var prods=app.cache.products||[];
+ var head='<div class="pghead"><div><h1 class="pg">🏆 '+t('perfTitle')+'</h1><div class="sub">'+t('perfSub')+'</div></div></div>';
+ var rows=profs.filter(function(p){return p.role!=='admin'}).map(function(p){
+  var stats='';
+  if(p.role==='confirmatrice'){
+   var myOrders=orders.filter(function(o){return o.assignee_id===p.id});
+   var conf=myOrders.filter(function(o){return o.status==='confirmed'||o.status==='delivered'}).length;
+   var deliv=myOrders.filter(function(o){return o.status==='delivered'}).length;
+   var cr=myOrders.length?Math.round(conf/myOrders.length*100):0;
+   var dr=conf?Math.round(deliv/conf*100):0;
+   stats='<span class="niche-chip">'+t('confirmRate')+': <b>'+cr+'%</b></span><span class="niche-chip">'+t('deliverRate')+': <b>'+dr+'%</b></span><span class="niche-chip">'+t('ordersHandled')+': <b>'+myOrders.length+'</b></span>';
+  } else if(p.role==='media_buyer'){
+   var myTests=tests.filter(function(tx){return tx.tester_id===p.id});
+   var validated=myTests.filter(function(tx){return tx.verdict==='validate'}).length;
+   var avgM=myTests.length?Math.round(myTests.reduce(function(a,b){return a+Number(b.calculated_margin||0)},0)/myTests.length):0;
+   stats='<span class="niche-chip">Tests: <b>'+myTests.length+'</b></span><span class="niche-chip">'+t('productsValidated')+': <b>'+validated+'</b></span><span class="niche-chip">'+t('marginAvg')+': <b>'+fmt(avgM)+' '+t('cur')+'</b></span>';
+  } else if(p.role==='sourcing'){
+   var myP=prods.filter(function(x){return x.created_by===p.id});
+   var val=myP.filter(function(x){return ['validated','scaling','live','production'].indexOf(x.current_stage)>=0}).length;
+   var pct=myP.length?Math.round(val/myP.length*100):0;
+   var avgS=myP.length?(myP.reduce(function(a,b){return a+Number(b.final_score||0)},0)/myP.length).toFixed(1):'0.0';
+   stats='<span class="niche-chip">Soumis: <b>'+myP.length+'</b></span><span class="niche-chip">'+t('productsValidated')+': <b>'+val+' ('+pct+'%)</b></span><span class="niche-chip">Note moyenne: <b>'+avgS+'/10</b></span>';
+  } else {
+   stats='<span class="niche-chip">Role: '+t('r_'+p.role)+'</span>';
+  }
+  return '<div class="card" style="padding:13px;margin-bottom:9px;display:flex;align-items:center;gap:12px"><div class="who"><div class="av">'+esc((p.full_name||'?').charAt(0).toUpperCase())+'</div></div><div style="flex:1"><b>'+esc(p.full_name||'-')+'</b> <span style="font-size:11px;color:var(--ink2)">'+t('r_'+p.role)+'</span><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">'+stats+'</div></div></div>';
+ }).join('');
+ return head+(rows||'<div class="empty">'+t('empty')+'</div>');
+}
+
+/* === WILAYAS === */
+function viewWilayas(){
+ var ws=app.cache.wilayas||[];
+ var head='<div class="pghead"><div><h1 class="pg">🗺️ '+t('wilayasTitle')+'</h1><div class="sub">'+t('wilayasSub')+'</div></div></div>';
+ if(ws.length===0)return head+'<div class="card" style="padding:16px;background:#fef9c3;border-color:#fde047"><b>⚠ Migration v5 requise</b><div style="margin-top:6px;font-size:13px">Pour activer les wilayas, demandez a votre admin d\'executer le SQL <code>v5_migration.sql</code> dans Supabase Dashboard.</div></div>';
+ var ZNAME={1:t('zoneN'),2:'Est',3:t('zoneHP'),4:t('zoneG')};
+ var rows=ws.map(function(w){var zn=ZNAME[w.zone]||'';return '<tr><td><b>'+w.code+'</b></td><td><b>'+esc(w.name_fr)+'</b><div style="font-size:11px;color:var(--ink2)">'+esc(w.name_ar)+'</div></td><td><span class="niche-chip">'+zn+'</span></td>'+['yalidine_rate','zrexpress_rate','maystro_rate'].map(function(f){return '<td><input type="number" class="cell-input num" style="width:80px" value="'+(w[f]||0)+'" '+(isAdmin()?'':'disabled')+' onchange="updateWilayaRate('+w.code+',\''+f+'\',parseFloat(this.value)||0)"></td>'}).join('')+'</tr>'}).join('');
+ return head+'<div class="card scroll-x"><table><thead><tr><th>#</th><th>Wilaya</th><th>Zone</th><th>Yalidine</th><th>ZRexpress</th><th>Maystro</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
 /* === Cloche notifications === */
@@ -1148,8 +1310,10 @@ function renderModal(){
   return modalWrap(t('newTest'),b,'createTest()');
  }
  if(app.modal==='newOrder'){
+  var wOpts=(app.cache.wilayas||[]).map(function(w){return '<option value="'+w.code+'" data-rate="'+(w.yalidine_rate||0)+'">'+w.code+' - '+esc(w.name_fr)+' ('+w.yalidine_rate+' '+t('cur')+')</option>'}).join('');
   b='<div class="row2"><div><label class="lb">'+t('customer')+'</label><input id="o_name" class="input" autofocus></div><div><label class="lb">'+t('phone')+' *</label><input id="o_phone" class="input" placeholder="0555..."></div></div>'+
-   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('wilaya')+'</label><input id="o_wilaya" class="input" placeholder="Alger, Oran..."></div><div><label class="lb">'+t('product')+'</label><select id="o_product" class="input"><option value="">-</option>'+(app.cache.products||[]).map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>'}).join('')+'</select></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('wilaya')+'</label><select id="o_wilaya_code" class="input" onchange="document.getElementById(\'o_ship\').value=this.options[this.selectedIndex].dataset.rate||0"><option value="">-</option>'+(wOpts||'<option disabled>Aucune wilaya (executer SQL v5)</option>')+'</select></div><div><label class="lb">'+t('shippingCost')+' ('+t('cur')+')</label><input id="o_ship" type="number" class="input" placeholder="auto"></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('product')+'</label><select id="o_product" class="input"><option value="">-</option>'+(app.cache.products||[]).map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>'}).join('')+'</select></div></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('quantity')+'</label><input id="o_qty" type="number" min="1" class="input" value="1"></div><div><label class="lb">'+t('unitPrice')+' ('+t('cur')+')</label><input id="o_unit_price" type="number" class="input"></div></div>'+
    '<div style="margin-top:9px"><label class="lb">'+t('address')+'</label><textarea id="o_address" class="input" style="min-height:50px"></textarea></div>'+
    '<div style="margin-top:9px"><label class="lb">'+t('notes')+'</label><textarea id="o_notes" class="input" style="min-height:50px"></textarea></div>';
