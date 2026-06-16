@@ -162,6 +162,32 @@ var TST=['todo','doing','done'],TCOLOR={todo:'b-todo',doing:'b-doing',done:'b-do
 var PRIOS=['low','normal','high','urgent'];
 var PLATFORMS=['meta','tiktok','snap'];
 var NICHES=['Maison','Cuisine','Beaute','Mode','Sante','Bebe','Animaux','Auto','Bricolage','Gadget','Sport','Tech'];
+/* === Templates par niche (valeurs typiques marche DZ COD) === */
+var NICHE_TEMPLATES={
+ 'Beaute':{icon:'💄',cost_product_usd:8,ship_cost_usd:3,price_min:2500,price_final:3500,multiplier:3,stock_min:80,call_script:'Bonjour, je vous appelle de [Marque] pour confirmer votre commande [produit] au prix de [prix] DA, paiement a la livraison. Pouvez-vous me confirmer votre adresse et wilaya ?',objections:'Trop cher -> souligner la qualite premium et l\'avant/apres. Doute -> rassurer : paiement uniquement a la reception.',upsells:'Proposer un 2e produit complementaire a -20% / pack beaute complet.',faq:'Delai livraison 48-72h. Si pas satisfait, echange possible sous 24h.',wow_score:8,problem_score:6,before_after_score:9,innovation_score:6,keywords:'beaute soin peau anti-age cosmetique'},
+ 'Maison':{icon:'🏠',cost_product_usd:10,ship_cost_usd:4,price_min:2200,price_final:3200,multiplier:2.5,stock_min:100,call_script:'Bonjour, c\'est [Marque]. Je confirme votre commande [produit] a [prix] DA, paiement a la livraison. Adresse et wilaya s\'il vous plait ?',objections:'Trop cher -> mettre en avant la duree de vie et l\'utilite quotidienne. Hesitation -> rassurer sur le paiement a reception.',upsells:'Proposer le pack famille (x2) avec -15%.',faq:'Livraison 48-72h selon wilaya. Garantie remplacement si defectueux.',wow_score:6,problem_score:9,before_after_score:7,innovation_score:6,keywords:'maison rangement decoration menage'},
+ 'Cuisine':{icon:'🍳',cost_product_usd:7,ship_cost_usd:3,price_min:1800,price_final:2800,multiplier:3,stock_min:120,call_script:'Bonjour, je vous appelle de [Marque] pour confirmer votre [produit cuisine] au prix de [prix] DA, paiement a la livraison. Adresse et wilaya ?',objections:'Trop cher -> rappeler les economies de temps et d\'argent. Hesitation -> exemples concrets d\'utilisation.',upsells:'Pack famille / pack 2 produits cuisine a -20%.',faq:'Livraison 48-72h. Echange si defectueux sous 48h.',wow_score:7,problem_score:9,before_after_score:7,innovation_score:7,keywords:'cuisine ustensile gain temps innovation'},
+ 'Mode':{icon:'👗',cost_product_usd:12,ship_cost_usd:4,price_min:2500,price_final:4000,multiplier:3,stock_min:60,call_script:'Bonjour, [Marque] a l\'appareil. Confirmation de votre commande [produit] [taille/couleur] au prix de [prix] DA, paiement a la livraison.',objections:'Taille -> verifier guide taille. Couleur -> proposer alternative si rupture. Prix -> souligner qualite premium.',upsells:'Proposer un 2e article complementaire (sac, ceinture).',faq:'Livraison 48-72h. Echange taille possible sous 48h apres reception.',wow_score:8,problem_score:5,before_after_score:8,innovation_score:6,keywords:'mode style tendance vetement'},
+ 'Sante':{icon:'💊',cost_product_usd:15,ship_cost_usd:5,price_min:3500,price_final:5500,multiplier:3,stock_min:60,call_script:'Bonjour, je vous appelle pour confirmer votre commande [produit sante] au prix de [prix] DA, paiement a la livraison. Pouvez-vous confirmer votre adresse ?',objections:'Cher -> insister sur les benefices sante a long terme et les economies vs medecin/medicaments. Doute efficacite -> temoignages.',upsells:'Cure 1 mois supplementaire a -25%.',faq:'Livraison 48-72h. Resultats visibles en 2-4 semaines selon usage.',wow_score:7,problem_score:10,before_after_score:9,innovation_score:7,keywords:'sante bien-etre douleur soulagement'},
+ 'Bebe':{icon:'👶',cost_product_usd:10,ship_cost_usd:4,price_min:2500,price_final:3800,multiplier:3,stock_min:80,call_script:'Bonjour Madame, [Marque] pour confirmer votre commande [produit bebe] au prix de [prix] DA, paiement a la livraison. Adresse de livraison ?',objections:'Securite -> rassurer normes/qualite. Age recommande -> verifier.',upsells:'Pack bebe complet a -20%.',faq:'Livraison 48-72h. Echange si non conforme.',wow_score:6,problem_score:8,before_after_score:6,innovation_score:7,keywords:'bebe enfant securite confort'},
+ 'Animaux':{icon:'🐾',cost_product_usd:8,ship_cost_usd:3,price_min:1800,price_final:2800,multiplier:3,stock_min:80,call_script:'Bonjour, c\'est [Marque] pour confirmer votre commande [produit animaux] au prix de [prix] DA, paiement a la livraison.',objections:'Taille de l\'animal -> verifier. Securite -> rassurer.',upsells:'Pack soin animal complet.',faq:'Livraison 48-72h.',wow_score:7,problem_score:7,before_after_score:7,innovation_score:6,keywords:'animaux chien chat soin'},
+ 'Auto':{icon:'🚗',cost_product_usd:15,ship_cost_usd:5,price_min:3000,price_final:4500,multiplier:2.5,stock_min:50,call_script:'Bonjour, [Marque] pour confirmer votre commande accessoire auto au prix de [prix] DA, paiement a la livraison.',objections:'Compatibilite vehicule -> verifier modele. Prix -> qualite et duree de vie.',upsells:'Pack accessoires auto complet.',faq:'Livraison 48-72h. Compatibilite verifiable sur demande.',wow_score:7,problem_score:8,before_after_score:7,innovation_score:7,keywords:'auto voiture accessoire gadget'},
+ 'Bricolage':{icon:'🔧',cost_product_usd:15,ship_cost_usd:5,price_min:2500,price_final:4000,multiplier:2.5,stock_min:60,call_script:'Bonjour, [Marque] pour confirmer votre commande outil [produit] au prix de [prix] DA, paiement a la livraison.',objections:'Utilite -> exemples concrets. Qualite -> garantie.',upsells:'Pack outils complet a -20%.',faq:'Livraison 48-72h. Garantie remplacement.',wow_score:6,problem_score:9,before_after_score:7,innovation_score:7,keywords:'bricolage outil reparation maison'},
+ 'Gadget':{icon:'📱',cost_product_usd:10,ship_cost_usd:3,price_min:2000,price_final:3500,multiplier:3,stock_min:100,call_script:'Bonjour, [Marque] pour confirmer votre commande gadget [produit] au prix de [prix] DA, paiement a la livraison.',objections:'Utilite -> demo cas d\'usage. Qualite -> garantie.',upsells:'Pack 2 gadgets a -25%.',faq:'Livraison 48-72h. Garantie 30 jours.',wow_score:9,problem_score:6,before_after_score:6,innovation_score:8,keywords:'gadget innovation tech'},
+ 'Sport':{icon:'⚽',cost_product_usd:12,ship_cost_usd:4,price_min:2500,price_final:4000,multiplier:3,stock_min:70,call_script:'Bonjour, [Marque] pour confirmer votre commande sport [produit] au prix de [prix] DA, paiement a la livraison.',objections:'Resultats -> temoignages avant/apres. Securite -> garantie.',upsells:'Pack sport complet -20%.',faq:'Livraison 48-72h. Resultats en 4 semaines.',wow_score:7,problem_score:7,before_after_score:9,innovation_score:7,keywords:'sport fitness musculation perte poids'},
+ 'Tech':{icon:'💻',cost_product_usd:25,ship_cost_usd:5,price_min:4000,price_final:6500,multiplier:2.5,stock_min:40,call_script:'Bonjour, [Marque] pour confirmer votre commande tech [produit] au prix de [prix] DA, paiement a la livraison.',objections:'Compatibilite -> verifier appareil. Prix -> qualite premium et garantie.',upsells:'Pack accessoires tech complet.',faq:'Livraison 48-72h. Garantie 6 mois.',wow_score:8,problem_score:7,before_after_score:6,innovation_score:9,keywords:'tech high-tech smart wireless'}
+};
+/* === Tour guide steps === */
+var TOUR_STEPS=[
+ {title:'👋 Bienvenue sur COD Team !',body:'Cette plateforme va vous accompagner du sourcing produit jusqu\'au scaling final. Laissez-moi vous montrer en 8 etapes.'},
+ {title:'🔥 Pipeline (votre tableau de bord)',body:'C\'est ici que vous voyez TOUS vos produits, classes par etape (Idee, Recherche, Test, Scaling...). Glissez-deposez les cartes pour faire avancer un produit.'},
+ {title:'🔍 Recherche produit',body:'Saisissez vos produits ici sous forme de tableur (comme Google Sheets). Toutes les colonnes : niche, scoring WOW/Probleme/Avant-Apres/Innovant, couts, prix...'},
+ {title:'✓ Validation Admin',body:'Quand un sourcer soumet un produit, il apparait ici. L\'admin valide ou tue d\'un clic. Seuls les produits valides passent en sourcing atelier.'},
+ {title:'🏭 Sourcing ateliers',body:'Plusieurs ateliers peuvent proposer leur prix, delai, facilite, capacite. L\'admin compare et choisit la meilleure offre.'},
+ {title:'🧪 Tests pubs',body:'Pour chaque produit, lancez des tests Meta/TikTok/Snap. La marge est calculee en direct (USD->DZD, % conf, % livraison).'},
+ {title:'📞 Commandes & Confirmatrices',body:'File d\'appels auto-assignee. Les confirmatrices voient les commandes a confirmer, marquent le statut, et l\'historique client (anti-fraude) est visible.'},
+ {title:'💰 Cockpit CFO',body:'Vue financiere complete : encaisse, depense pub, marge nette, cash projete 30 jours, top produits rentables/perdants, suggestions IA.'}
+];
 
 var NAV={
  admin:['cockpit','pipeline','products','research','validate','sourcing','tests','orders','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
@@ -221,7 +247,9 @@ var I18N={
   stockTitle:'Inventaire SKU',stockSub:'Stock courant, alertes seuil, mouvements.',stockIn:'Entree',stockOut:'Sortie',stockAdjust:'Ajuster',stockCurrent:'Stock actuel',stockMin:'Seuil min',stockMovementsList:'Derniers mouvements',mvType:'Type',mvQty:'Qte',mvReason:'Raison',lowStock:'⚠ Stock faible',outOfStock:'❌ Rupture',
   perfTitle:'Performance equipe',perfSub:'KPI par membre selon role.',confirmRate:'Taux conf',deliverRate:'Taux livr',avgCallTime:'Tps moyen',ordersHandled:'Cmd traitees',productsValidated:'Produits valides',avgRoas:'ROAS moyen',avgCpa:'CPA moyen',productsScaled:'Scales',marginAvg:'Marge moyenne',
   wilayasTitle:'Wilayas et tarifs',wilayasSub:'Tarif livraison par wilaya et par transporteur.',zoneN:'Nord',zoneHP:'Hauts-plateaux',zoneS:'Sud',zoneG:'Grand Sud',
-  totalCostReal:'Cout total reel',realMargin:'Marge reelle',shippingCost:'Frais livraison',suggestionsTitle:'💡 Suggestions IA',sugScale:'🟢 SCALER',sugWatch:'🔴 SURVEILLER/TUER',sugTest:'🟡 ITERER',sugReason:'Raison',applyAction:'Appliquer'
+  totalCostReal:'Cout total reel',realMargin:'Marge reelle',shippingCost:'Frais livraison',suggestionsTitle:'💡 Suggestions IA',sugScale:'🟢 SCALER',sugWatch:'🔴 SURVEILLER/TUER',sugTest:'🟡 ITERER',sugReason:'Raison',applyAction:'Appliquer',
+  tour:'Tour guide',replayTour:'Revoir le tour',tourNext:'Suivant →',tourPrev:'← Precedent',tourSkip:'Passer',tourFinish:'Terminer 🎉',tourStep:'Etape',
+  template:'Template',applyTemplate:'Appliquer un template'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -268,7 +296,9 @@ var I18N={
   stockTitle:'المخزون SKU',stockSub:'المخزون الحالي، تنبيهات، الحركات.',stockIn:'دخول',stockOut:'خروج',stockAdjust:'تعديل',stockCurrent:'المخزون',stockMin:'حد أدنى',stockMovementsList:'آخر الحركات',mvType:'النوع',mvQty:'الكمية',mvReason:'السبب',lowStock:'⚠ منخفض',outOfStock:'❌ نفد',
   perfTitle:'أداء الفريق',perfSub:'مؤشرات حسب الدور.',confirmRate:'نسبة التأكيد',deliverRate:'نسبة التسليم',avgCallTime:'متوسط المدة',ordersHandled:'طلبات',productsValidated:'منتجات مُعتمدة',avgRoas:'ROAS متوسط',avgCpa:'CPA متوسط',productsScaled:'موسَّعة',marginAvg:'هامش متوسط',
   wilayasTitle:'الولايات والتعريفات',wilayasSub:'تكلفة التوصيل حسب الولاية والناقل.',zoneN:'الشمال',zoneHP:'الهضاب',zoneS:'الجنوب',zoneG:'الجنوب الكبير',
-  totalCostReal:'التكلفة الإجمالية الحقيقية',realMargin:'الهامش الحقيقي',shippingCost:'تكلفة التوصيل',suggestionsTitle:'💡 اقتراحات الذكاء',sugScale:'🟢 توسيع',sugWatch:'🔴 مراقبة/إيقاف',sugTest:'🟡 إعادة',sugReason:'السبب',applyAction:'تطبيق'
+  totalCostReal:'التكلفة الإجمالية الحقيقية',realMargin:'الهامش الحقيقي',shippingCost:'تكلفة التوصيل',suggestionsTitle:'💡 اقتراحات الذكاء',sugScale:'🟢 توسيع',sugWatch:'🔴 مراقبة/إيقاف',sugTest:'🟡 إعادة',sugReason:'السبب',applyAction:'تطبيق',
+  tour:'الجولة التوضيحية',replayTour:'إعادة الجولة',tourNext:'التالي ←',tourPrev:'→ السابق',tourSkip:'تخطي',tourFinish:'إنهاء 🎉',tourStep:'الخطوة',
+  template:'قالب',applyTemplate:'تطبيق قالب'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -282,8 +312,34 @@ var app={
  session:null,profile:null,view:'pipeline',productId:null,tab:'info',pview:'kanban',modal:null,modalData:null,authMode:'in',
  err:'',info:'',busy:false,saved:false,mob:false,kpimsg:'',q:'',filterStage:'',filterNiche:'',filterPrio:'',
  selected:{},dark:localStorage.getItem('cod_dark')==='1',notifsOpen:false,filterQueue:'mine',
+ tourStep:-1,tourDone:localStorage.getItem('cod_tour_done')==='1',
  cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null,orders:[],blacklist:[],notifs:[],comments:[],audit:[],trash:[],wilayas:[],stockMoves:[]}
 };
+/* === Tour guide === */
+function startTour(){app.tourStep=0;render()}
+function tourNext(){if(app.tourStep<TOUR_STEPS.length-1){app.tourStep++}else{finishTour()}render()}
+function tourPrev(){if(app.tourStep>0)app.tourStep--;render()}
+function finishTour(){app.tourStep=-1;app.tourDone=true;localStorage.setItem('cod_tour_done','1');render();toast('🎉 Tour termine ! Bonne aventure COD');}
+function skipTour(){app.tourStep=-1;app.tourDone=true;localStorage.setItem('cod_tour_done','1');render()}
+
+/* === Template helper === */
+function applyTemplate(niche){
+ var tpl=NICHE_TEMPLATES[niche];if(!tpl)return;
+ var setVal=function(id,v){var e=document.getElementById(id);if(e&&v!==undefined)e.value=v};
+ setVal('np_niche',niche);
+ setVal('np_cost_product_usd',tpl.cost_product_usd);
+ setVal('np_ship_cost_usd',tpl.ship_cost_usd);
+ setVal('np_price_min',tpl.price_min);
+ setVal('np_price_final',tpl.price_final);
+ setVal('np_multiplier',tpl.multiplier);
+ setVal('np_stock_min',tpl.stock_min);
+ setVal('np_keyword',tpl.keywords);
+ setVal('np_wow',tpl.wow_score);
+ setVal('np_problem',tpl.problem_score);
+ setVal('np_ba',tpl.before_after_score);
+ setVal('np_innovation',tpl.innovation_score);
+ toast('📋 Template '+niche+' applique');
+}
 function toast(msg,kind){var d=document.createElement('div');d.style.cssText='position:fixed;bottom:20px;inset-inline-end:20px;background:'+(kind==='err'?'#c2384b':kind==='warn'?'#b45309':'#157f4a')+';color:#fff;padding:11px 18px;border-radius:9px;font-size:13.5px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:200;animation:toastIn .25s';d.textContent=msg;document.body.appendChild(d);setTimeout(function(){d.style.opacity='0';d.style.transition='.3s';setTimeout(function(){d.remove()},300)},2400)}
 function confirmIt(msg){return confirm(msg)}
 function applyDark(){document.documentElement.classList.toggle('dark',app.dark);if(app.dark){document.body.style.background='#0f172a';document.body.style.color='#e2e8f0'}else{document.body.style.background='';document.body.style.color=''}}
@@ -472,8 +528,14 @@ async function createProductSimple(){
  var name=val('np_name');if(!name)return;
  app.busy=true;render();
  var r=app.cache.settings.usd_to_dzd?Number(app.cache.settings.usd_to_dzd):260;
- await SB.from('products').insert({name:name,current_stage:'research',status:'idea',niche:val('np_niche'),priority:val('np_prio')||'normal',source:val('np_source'),link_alibaba:val('np_link_alibaba'),link_site:val('np_link_site'),image_url:val('np_image'),usd_to_dzd:r,created_by:uid()});
+ var data={name:name,current_stage:'research',status:'idea',niche:val('np_niche'),priority:val('np_prio')||'normal',source:val('np_source'),keyword:val('np_keyword'),link_alibaba:val('np_link_alibaba'),link_site:val('np_link_site'),image_url:val('np_image'),usd_to_dzd:r,created_by:uid()};
+ var nums=['cost_product_usd','ship_cost_usd','price_min','price_final','multiplier','stock_min','wow_score','problem_score','before_after_score','innovation_score'];
+ var ids={cost_product_usd:'np_cost_product_usd',ship_cost_usd:'np_ship_cost_usd',price_min:'np_price_min',price_final:'np_price_final',multiplier:'np_multiplier',stock_min:'np_stock_min',wow_score:'np_wow',problem_score:'np_problem',before_after_score:'np_ba',innovation_score:'np_innovation'};
+ nums.forEach(function(k){var v=num(val(ids[k]));if(v)data[k]=v});
+ var r2=await SB.from('products').insert(data).select().single();
+ if(r2.data)await auditLog('products',r2.data.id,'created',{name:name,niche:data.niche});
  app.busy=false;app.modal=null;refresh();
+ toast('✨ Produit cree');
 }
 async function updateCell(id,field,value){
  var u={};u[field]=value;await SB.from('products').update(u).eq('id',id);
@@ -686,6 +748,7 @@ function downloadTemplate(){var csv='produit,date,commandes,confirmees,livrees,r
 var rtDone=false;
 function afterLogin(){
  loadSettings();loadWilayas();refresh();
+ if(!app.tourDone&&app.tourStep<0){setTimeout(function(){if(app.session&&!app.tourDone)startTour()},1200)}
  if(rtDone)return;rtDone=true;
  SB.channel('rt')
   .on('postgres_changes',{event:'*',schema:'public',table:'products'},function(){refresh()})
@@ -741,11 +804,18 @@ function renderShell(inner){
  '<div class="main"><header class="top"><button class="burger" onclick="toggleMob()">☰</button>'+
  '<input class="gsearch" placeholder="'+t('search')+'" value="'+esc(app.q)+'" oninput="app.q=this.value;render()">'+
  '<div class="sp"></div>'+
+ '<button class="btn btn-g" onclick="startTour()" style="padding:6px 9px" title="'+t('replayTour')+'">❓</button>'+
  notifBell()+
  '<button class="btn btn-g" onclick="toggleDark()" style="padding:6px 9px" title="'+t('darkMode')+'">'+(app.dark?'☀️':'🌙')+'</button>'+
  '<button class="btn btn-g" onclick="toggleLang()" style="padding:6px 10px">🌐 '+(lang==='ar'?'FR':'AR')+'</button>'+
  '<div class="who"><div><div class="nm">'+esc(u.full_name||'')+'</div><div class="rl">'+t('r_'+u.role)+'</div></div><div class="av">'+esc((u.full_name||'?').charAt(0).toUpperCase())+'</div><button class="btn btn-g" onclick="logout()" style="padding:6px 9px" title="'+t('logout')+'">⎋</button></div></header>'+
- '<main class="content"><div class="inner">'+inner+'</div></main></div></div>'+(app.modal?renderModal():'');
+ '<main class="content"><div class="inner">'+inner+'</div></main></div></div>'+(app.modal?renderModal():'')+(app.tourStep>=0?renderTour():'');
+}
+
+function renderTour(){
+ var step=TOUR_STEPS[app.tourStep];if(!step)return '';
+ var isLast=app.tourStep===TOUR_STEPS.length-1;
+ return '<div class="modal" style="z-index:90;background:rgba(15,23,42,.85)"><div class="bx" style="max-width:480px"><div class="mb" style="padding:24px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="font-size:11px;font-weight:800;color:var(--brand);text-transform:uppercase;letter-spacing:.05em">'+t('tourStep')+' '+(app.tourStep+1)+' / '+TOUR_STEPS.length+'</span><button class="x" onclick="skipTour()" title="'+t('tourSkip')+'">×</button></div><h2 style="font-size:22px;font-weight:800;margin-bottom:10px">'+esc(step.title)+'</h2><p style="font-size:14.5px;line-height:1.55;color:var(--ink2)">'+esc(step.body)+'</p><div style="display:flex;gap:4px;margin:20px 0 10px">'+TOUR_STEPS.map(function(_,i){return '<div style="flex:1;height:4px;border-radius:3px;background:'+(i<=app.tourStep?'var(--brand)':'#e7e9ef')+'"></div>'}).join('')+'</div></div><div class="mf"><button class="btn btn-g" onclick="skipTour()">'+t('tourSkip')+'</button>'+(app.tourStep>0?'<button class="btn btn-g" onclick="tourPrev()">'+t('tourPrev')+'</button>':'')+'<button class="btn btn-p" onclick="tourNext()">'+(isLast?t('tourFinish'):t('tourNext'))+'</button></div></div></div>';
 }
 
 function renderView(){
@@ -1286,11 +1356,17 @@ async function saveWeights(){
 function renderModal(){
  var b='';
  if(app.modal==='newProduct'){
-  b='<div><label class="lb">'+t('name')+'</label><input id="np_name" class="input" autofocus></div>'+
+  var tplBtns=Object.keys(NICHE_TEMPLATES).map(function(n){var ic=NICHE_TEMPLATES[n].icon;return '<button type="button" class="pill" onclick="applyTemplate(\''+n+'\')" style="padding:5px 11px">'+ic+' '+n+'</button>'}).join('');
+  b='<div style="background:var(--soft);padding:9px 11px;border-radius:9px;margin-bottom:11px"><div style="font-size:11.5px;font-weight:800;color:var(--brand);margin-bottom:5px">📋 '+t('applyTemplate')+'</div><div style="display:flex;gap:4px;flex-wrap:wrap">'+tplBtns+'</div></div>'+
+   '<div><label class="lb">'+t('name')+'</label><input id="np_name" class="input" autofocus></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('niche')+'</label><select id="np_niche" class="input"><option value="">-</option>'+NICHES.map(function(n){return '<option value="'+n+'">'+n+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('priority')+'</label><select id="np_prio" class="input">'+PRIOS.map(function(p){return '<option value="'+p+'"'+(p==='normal'?' selected':'')+'>'+t('pr_'+p)+'</option>'}).join('')+'</select></div></div>'+
-   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('source')+'</label><input id="np_source" class="input" placeholder="Tiktok, Insta, etc."></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('source')+'</label><input id="np_source" class="input" placeholder="Tiktok, Insta, etc."></div><div><label class="lb">'+t('keyword')+'</label><input id="np_keyword" class="input"></div></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('linkAlibaba')+'</label><input id="np_link_alibaba" class="input" placeholder="https://"></div><div><label class="lb">'+t('linkSite')+'</label><input id="np_link_site" class="input" placeholder="https://"></div></div>'+
-   '<div style="margin-top:9px"><label class="lb">'+t('imageUrl')+'</label><input id="np_image" class="input" placeholder="https://..."></div>';
+   '<div style="margin-top:9px"><label class="lb">'+t('imageUrl')+'</label><input id="np_image" class="input" placeholder="https://..."></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('costProduct')+' ($)</label><input id="np_cost_product_usd" type="number" step="0.01" class="input"></div><div><label class="lb">'+t('shipCost')+' ($)</label><input id="np_ship_cost_usd" type="number" step="0.01" class="input"></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('priceMin')+' ('+t('cur')+')</label><input id="np_price_min" type="number" class="input"></div><div><label class="lb">'+t('priceFinal')+' ('+t('cur')+')</label><input id="np_price_final" type="number" class="input"></div></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('multiplier')+'</label><input id="np_multiplier" type="number" step="0.1" class="input"></div><div><label class="lb">'+t('stockMin')+'</label><input id="np_stock_min" type="number" class="input"></div></div>'+
+   '<div style="margin-top:9px;padding:9px 11px;background:#f8f9fb;border-radius:8px"><div style="font-size:11px;font-weight:700;color:var(--ink2);margin-bottom:6px">⭐ Scoring (0-10)</div><div class="row2"><div><label class="lb" style="font-size:11px">'+t('wow')+'</label><input id="np_wow" type="number" min="0" max="10" class="input sm" value="5"></div><div><label class="lb" style="font-size:11px">'+t('problem')+'</label><input id="np_problem" type="number" min="0" max="10" class="input sm" value="5"></div><div><label class="lb" style="font-size:11px">'+t('beforeAfter')+'</label><input id="np_ba" type="number" min="0" max="10" class="input sm" value="5"></div><div><label class="lb" style="font-size:11px">'+t('innovation')+'</label><input id="np_innovation" type="number" min="0" max="10" class="input sm" value="5"></div></div></div>';
   return modalWrap(t('new')+' '+t('nav_products').toLowerCase(),b,'createProductSimple()');
  }
  if(app.modal==='newOffer'){
