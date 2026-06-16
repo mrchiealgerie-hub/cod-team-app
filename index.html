@@ -191,14 +191,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['cockpit','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
- media_buyer:['cockpit','pipeline','products','research','tests','creatives','orders','clients','tasks','kpis','perf'],
+ admin:['cockpit','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['cockpit','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
  sourcing:['pipeline','products','research','sourcing','tasks'],
  production:['pipeline','products','sourcing','stock','production','tasks'],
  video_editor:['pipeline','products','video','creatives','tasks'],
- confirmatrice:['pipeline','orders','clients','products','tasks']
+ confirmatrice:['pipeline','orders','clients','wacrm','products','tasks']
 };
-var ICON={cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
 var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
@@ -266,7 +266,19 @@ var I18N={
   abHintWinner:'Marquer comme gagnant: ROAS > 1.5x du concurrent ET 100+ impressions',abHintLoser:'Perdant: CTR < 0.5% avec 1000+ impressions OU CPA > 3x cible',abMissingTable:'⚠ Table creative_tests absente. Demandez a l\'admin d\'appliquer v6_migration.sql.',
   whatsApp:'WhatsApp',waClient:'📲 WhatsApp client',waPing:'🔔 Ping confirmer',waTplCustomer:'Template message client',waTplConfirmer:'Template ping confirmer',waVars:'Variables disponibles : {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'Numero WhatsApp',waPhoneHint:'Format international: +213... ou 213...',waNotConfigured:'⚠ Le confirmateur n\'a pas de WhatsApp. Demandez-lui de le renseigner dans Equipe.',waCopied:'Message copie. Ouvrez WhatsApp et collez-le.',notifyOrders:'Recevoir notifs commandes',waSaveTpl:'Enregistrer template',
   fcTitle:'📊 Forecast cashflow 30 jours',fcSub:'Projection basee sur les commandes en cours + tendance pub.',fcCashIn:'Encaissement estime',fcCashOut:'Sortie estimee',fcNetExpected:'Net estime',fcDay:'Jour',fcConfidence:'Confiance',fcConfHigh:'🟢 Elevee',fcConfMed:'🟡 Moyenne',fcConfLow:'🔴 Faible',fcAssumptions:'Hypotheses',fcPendingValue:'Valeur du pipeline',fcDailyAvgRev:'Revenu moyen / jour',fcDailyAvgAd:'Pub moyenne / jour',fcRiskStock:'⚠ Risque stock',fcRiskCash:'⚠ Cashflow critique J+##',fcScenario:'Scenario',fcScConservative:'Conservateur',fcScExpected:'Attendu',fcScOptimistic:'Optimiste',fcDeliveryTime:'Delai livraison moyen (jours)',fcCumulative:'Cumul',
-  nav_report:'Rapport hebdo',reportTitle:'📑 Rapport hebdomadaire',reportSub:'Synthese de la semaine, prete a partager.',reportPdf:'📥 Telecharger PDF',reportEmail:'📧 Envoyer par email',reportPrint:'🖨 Imprimer',reportWeekOf:'Semaine du',reportSummary:'Resume',reportHighlights:'Faits marquants',reportRevenue:'Revenu net',reportOrders:'Commandes traitees',reportConvRate:'Taux conversion',reportTopProducts:'Top 5 produits',reportTopCreas:'Top creas',reportWinners:'Gagnants',reportLosers:'Perdants',reportActions:'A faire la semaine prochaine',reportGeneratedAt:'Genere le',reportEmailSubject:'Rapport hebdo COD Team',reportNoData:'Pas assez de donnees pour cette semaine.',reportWeekPrev:'← Semaine precedente',reportWeekNext:'Semaine suivante →',reportWeekCurr:'Cette semaine',reportRoasAvg:'ROAS moyen',reportCash30:'Cash projete 30j',reportNew:'Nouveaux',reportLost:'Perdus',reportVip:'VIP',reportLowStock:'Stock faible',reportPipeline:'Pipeline actif'
+  nav_report:'Rapport hebdo',reportTitle:'📑 Rapport hebdomadaire',reportSub:'Synthese de la semaine, prete a partager.',reportPdf:'📥 Telecharger PDF',reportEmail:'📧 Envoyer par email',reportPrint:'🖨 Imprimer',reportWeekOf:'Semaine du',reportSummary:'Resume',reportHighlights:'Faits marquants',reportRevenue:'Revenu net',reportOrders:'Commandes traitees',reportConvRate:'Taux conversion',reportTopProducts:'Top 5 produits',reportTopCreas:'Top creas',reportWinners:'Gagnants',reportLosers:'Perdants',reportActions:'A faire la semaine prochaine',reportGeneratedAt:'Genere le',reportEmailSubject:'Rapport hebdo COD Team',reportNoData:'Pas assez de donnees pour cette semaine.',reportWeekPrev:'← Semaine precedente',reportWeekNext:'Semaine suivante →',reportWeekCurr:'Cette semaine',reportRoasAvg:'ROAS moyen',reportCash30:'Cash projete 30j',reportNew:'Nouveaux',reportLost:'Perdus',reportVip:'VIP',reportLowStock:'Stock faible',reportPipeline:'Pipeline actif',
+  nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'Broadcasts en masse + agent IA de confirmation. Envoi gratuit via wa.me.',
+  wacrmTab_campaigns:'📢 Broadcasts',wacrmTab_inbox:'💬 Inbox',wacrmTab_agent:'🤖 Agent IA',
+  wacNew:'+ Nouvelle campagne',wacName:'Nom campagne',wacAudience:'Audience',wacMessage:'Message',wacPreview:'Preview',wacSend:'Envoi',wacStatus:'Statut',wacRecipients:'Destinataires',wacSent:'Envoyes',wacFailed:'Echecs',wacProgress:'Progression',wacCreated:'Cree le',
+  wacAud_segment:'Par segment client',wacAud_all_clients:'Tous les clients',wacAud_phones:'Numeros manuels',wacAud_csv:'Import CSV',
+  wacSt_draft:'📝 Brouillon',wacSt_running:'⏳ En cours',wacSt_paused:'⏸ Pause',wacSt_completed:'✓ Termine',wacSt_cancelled:'✗ Annule',
+  wacRecSt_queued:'En attente',wacRecSt_sent:'Envoye',wacRecSt_failed:'Echec',wacRecSt_replied:'Repondu',wacRecSt_skipped:'Ignore',
+  wacStep1:'1. Audience',wacStep2:'2. Message',wacStep3:'3. Preview',wacStep4:'4. Envoyer',wacNext:'Suivant →',wacBack:'← Retour',wacLaunch:'🚀 Lancer la campagne',
+  wacMessageHelper:'Utilisez les variables : {name} {phone} {wilaya} {product} {price} {qty}',wacRecipientsPreview:'Apercu des destinataires',wacAudienceSegments:'Segments',wacPhonesList:'Liste de numeros (un par ligne)',wacCsvUpload:'Coller le CSV (phone,name par ligne)',
+  wacQueueTitle:'File d\'envoi',wacQueueSub:'Cliquez « Ouvrir WhatsApp » pour chaque destinataire, puis « Envoye » apres confirmation.',wacOpenWa:'📲 Ouvrir WhatsApp',wacMarkSent:'✓ Envoye',wacMarkFailed:'✗ Echec',wacMarkSkip:'Ignorer',wacAutoOpen:'Auto-ouvrir suivant',wacWait:'Attente entre 2 envois (s)',
+  wacInboxEmpty:'Aucune conversation. Les conversations apparaissent quand un client repond a une campagne.',wacAddConv:'+ Nouvelle conversation',wacSendMsg:'Envoyer message',wacAiSuggestion:'💡 Suggestion IA',wacUseAi:'Utiliser',wacReply:'Repondre',
+  wacAgentTitle:'🤖 Agent IA de confirmation',wacAgentSub:'Configurez les reponses automatiques aux mots-cles. Variables : {name} {product} {price}.',wacFlowName:'Nom du flow',wacTrigger:'Declencheur (mots-cles)',wacMatch:'Type de match',wacMatch_contains:'Contient',wacMatch_equals:'Egal',wacMatch_starts_with:'Commence par',wacMatch_regex:'Regex',wacResponse:'Reponse',wacAction:'Action suggeree',wacAct_confirm_order:'✓ Confirmer commande',wacAct_mark_refused:'✗ Marquer refusee',wacAct_mark_reschedule:'🔁 Reporter',wacAct_request_info:'❓ Demander info',wacAct_send_faq:'📋 Envoyer FAQ',wacAct_none:'Aucune',wacPriority:'Priorite',wacFlowAddNew:'+ Nouveau flow',wacFlowActive:'Actif',wacFlowInactive:'Inactif',
+  wacMissingTable:'⚠ Tables WhatsApp absentes. Demandez a l\'admin d\'appliquer v8_migration.sql.'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -331,7 +343,19 @@ var I18N={
   abHintWinner:'تعيين كرابح: ROAS > 1.5× من المنافس و100+ ظهور',abHintLoser:'خاسر: CTR < 0.5% مع 1000+ ظهور أو CPA > 3× الهدف',abMissingTable:'⚠ جدول creative_tests غير موجود. اطلب من المدير تنفيذ v6_migration.sql.',
   whatsApp:'واتساب',waClient:'📲 واتساب العميل',waPing:'🔔 تنبيه المؤكِّدة',waTplCustomer:'قالب رسالة العميل',waTplConfirmer:'قالب تنبيه المؤكِّدة',waVars:'المتغيرات المتاحة: {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'رقم واتساب',waPhoneHint:'صيغة دولية: 213+... أو 213...',waNotConfigured:'⚠ المؤكِّدة بدون رقم واتساب. اطلب منها إضافته في صفحة الفريق.',waCopied:'تم نسخ الرسالة. افتح واتساب والصقها.',notifyOrders:'استقبال إشعارات الطلبات',waSaveTpl:'حفظ القالب',
   fcTitle:'📊 توقّع التدفق النقدي 30 يومًا',fcSub:'توقعات بناءً على الطلبات الجارية واتجاه الإعلانات.',fcCashIn:'الإيراد المتوقع',fcCashOut:'المصاريف المتوقعة',fcNetExpected:'الصافي المتوقع',fcDay:'يوم',fcConfidence:'الثقة',fcConfHigh:'🟢 عالية',fcConfMed:'🟡 متوسطة',fcConfLow:'🔴 منخفضة',fcAssumptions:'الفرضيات',fcPendingValue:'قيمة الطلبات المعلّقة',fcDailyAvgRev:'الإيراد اليومي المتوسط',fcDailyAvgAd:'الإعلانات اليومية المتوسطة',fcRiskStock:'⚠ خطر المخزون',fcRiskCash:'⚠ تدفق نقدي حرج في يوم ##',fcScenario:'السيناريو',fcScConservative:'متحفظ',fcScExpected:'متوقع',fcScOptimistic:'متفائل',fcDeliveryTime:'متوسط زمن التسليم (أيام)',fcCumulative:'الإجمالي التراكمي',
-  nav_report:'تقرير أسبوعي',reportTitle:'📑 التقرير الأسبوعي',reportSub:'ملخص الأسبوع، جاهز للمشاركة.',reportPdf:'📥 تحميل PDF',reportEmail:'📧 إرسال بالبريد',reportPrint:'🖨 طباعة',reportWeekOf:'أسبوع',reportSummary:'الملخص',reportHighlights:'الأبرز',reportRevenue:'الإيراد الصافي',reportOrders:'الطلبات المعالجة',reportConvRate:'نسبة التحويل',reportTopProducts:'أفضل 5 منتجات',reportTopCreas:'أفضل الإعلانات',reportWinners:'الفائزون',reportLosers:'الخاسرون',reportActions:'مهام الأسبوع القادم',reportGeneratedAt:'تم التوليد في',reportEmailSubject:'التقرير الأسبوعي COD Team',reportNoData:'لا توجد بيانات كافية لهذا الأسبوع.',reportWeekPrev:'← الأسبوع السابق',reportWeekNext:'الأسبوع التالي →',reportWeekCurr:'هذا الأسبوع',reportRoasAvg:'متوسط ROAS',reportCash30:'تدفق 30 يوم',reportNew:'جدد',reportLost:'ضائعون',reportVip:'مميزون',reportLowStock:'مخزون منخفض',reportPipeline:'الأنابيب النشطة'
+  nav_report:'تقرير أسبوعي',reportTitle:'📑 التقرير الأسبوعي',reportSub:'ملخص الأسبوع، جاهز للمشاركة.',reportPdf:'📥 تحميل PDF',reportEmail:'📧 إرسال بالبريد',reportPrint:'🖨 طباعة',reportWeekOf:'أسبوع',reportSummary:'الملخص',reportHighlights:'الأبرز',reportRevenue:'الإيراد الصافي',reportOrders:'الطلبات المعالجة',reportConvRate:'نسبة التحويل',reportTopProducts:'أفضل 5 منتجات',reportTopCreas:'أفضل الإعلانات',reportWinners:'الفائزون',reportLosers:'الخاسرون',reportActions:'مهام الأسبوع القادم',reportGeneratedAt:'تم التوليد في',reportEmailSubject:'التقرير الأسبوعي COD Team',reportNoData:'لا توجد بيانات كافية لهذا الأسبوع.',reportWeekPrev:'← الأسبوع السابق',reportWeekNext:'الأسبوع التالي →',reportWeekCurr:'هذا الأسبوع',reportRoasAvg:'متوسط ROAS',reportCash30:'تدفق 30 يوم',reportNew:'جدد',reportLost:'ضائعون',reportVip:'مميزون',reportLowStock:'مخزون منخفض',reportPipeline:'الأنابيب النشطة',
+  nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'بث جماعي + وكيل ذكاء اصطناعي للتأكيد. إرسال مجاني عبر wa.me.',
+  wacrmTab_campaigns:'📢 البث',wacrmTab_inbox:'💬 الرسائل',wacrmTab_agent:'🤖 الوكيل الذكي',
+  wacNew:'+ حملة جديدة',wacName:'اسم الحملة',wacAudience:'الجمهور',wacMessage:'الرسالة',wacPreview:'معاينة',wacSend:'الإرسال',wacStatus:'الحالة',wacRecipients:'المستلمون',wacSent:'تم الإرسال',wacFailed:'فشل',wacProgress:'التقدم',wacCreated:'تاريخ الإنشاء',
+  wacAud_segment:'حسب فئة العميل',wacAud_all_clients:'جميع العملاء',wacAud_phones:'أرقام يدوية',wacAud_csv:'استيراد CSV',
+  wacSt_draft:'📝 مسودة',wacSt_running:'⏳ جارٍ',wacSt_paused:'⏸ متوقف',wacSt_completed:'✓ منتهٍ',wacSt_cancelled:'✗ ملغى',
+  wacRecSt_queued:'في الانتظار',wacRecSt_sent:'مُرسل',wacRecSt_failed:'فشل',wacRecSt_replied:'تم الرد',wacRecSt_skipped:'متخطى',
+  wacStep1:'1. الجمهور',wacStep2:'2. الرسالة',wacStep3:'3. المعاينة',wacStep4:'4. الإرسال',wacNext:'التالي ←',wacBack:'→ رجوع',wacLaunch:'🚀 إطلاق الحملة',
+  wacMessageHelper:'استخدم المتغيرات: {name} {phone} {wilaya} {product} {price} {qty}',wacRecipientsPreview:'معاينة المستلمين',wacAudienceSegments:'الفئات',wacPhonesList:'قائمة الأرقام (واحد في كل سطر)',wacCsvUpload:'الصق CSV (phone,name في كل سطر)',
+  wacQueueTitle:'قائمة الإرسال',wacQueueSub:'اضغط « فتح WhatsApp » لكل مستلم، ثم « تم الإرسال » بعد التأكيد.',wacOpenWa:'📲 فتح WhatsApp',wacMarkSent:'✓ تم الإرسال',wacMarkFailed:'✗ فشل',wacMarkSkip:'تخطٍّ',wacAutoOpen:'فتح تلقائي للتالي',wacWait:'الانتظار بين إرسالين (ث)',
+  wacInboxEmpty:'لا توجد محادثات. تظهر المحادثات عندما يرد العميل على حملة.',wacAddConv:'+ محادثة جديدة',wacSendMsg:'إرسال رسالة',wacAiSuggestion:'💡 اقتراح الذكاء',wacUseAi:'استخدم',wacReply:'رد',
+  wacAgentTitle:'🤖 وكيل ذكاء اصطناعي للتأكيد',wacAgentSub:'اضبط الردود التلقائية على الكلمات المفتاحية. المتغيرات: {name} {product} {price}.',wacFlowName:'اسم التدفق',wacTrigger:'المحفّز (كلمات مفتاحية)',wacMatch:'نوع المطابقة',wacMatch_contains:'يحتوي',wacMatch_equals:'يساوي',wacMatch_starts_with:'يبدأ بـ',wacMatch_regex:'Regex',wacResponse:'الرد',wacAction:'الإجراء المقترح',wacAct_confirm_order:'✓ تأكيد الطلب',wacAct_mark_refused:'✗ تعليم كمرفوض',wacAct_mark_reschedule:'🔁 تأجيل',wacAct_request_info:'❓ طلب معلومات',wacAct_send_faq:'📋 إرسال الأسئلة',wacAct_none:'لا شيء',wacPriority:'الأولوية',wacFlowAddNew:'+ تدفق جديد',wacFlowActive:'نشط',wacFlowInactive:'غير نشط',
+  wacMissingTable:'⚠ جداول WhatsApp غير موجودة. اطلب من المدير تطبيق v8_migration.sql.'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -554,6 +578,13 @@ async function refresh(){
    var creas=await loadCreatives(null);
    var pds=await SB.from('products').select('id,name,image_url,current_stage').is('deleted_at',null);
    app.cache.creatives=creas;app.cache.products=pds.data||[];
+  } else if(v==='wacrm'){
+   var oAll=await SB.from('orders').select('*');
+   var pAll=await SB.from('products').select('id,name,price_final').is('deleted_at',null);
+   await loadBlacklist();
+   app.cache.orders=oAll.data||[];app.cache.products=pAll.data||[];
+   await loadWacrm();
+   if(app.wacCampaign)await loadCampaign(app.wacCampaign);
   } else if(v==='blacklist'){
    await loadBlacklist();
   } else if(v==='trash'){
@@ -891,6 +922,9 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'orders'},function(){if(app.view==='orders'||app.view==='clients'||app.view==='client')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'customer_blacklist'},function(){if(app.view==='clients'||app.view==='client'||app.view==='orders'||app.view==='blacklist')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'creative_tests'},function(){if(app.view==='creatives'||app.view==='product')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'wa_campaigns'},function(){if(app.view==='wacrm')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'wa_campaign_recipients'},function(){if(app.view==='wacrm'&&app.wacCampaign)loadCampaign(app.wacCampaign).then(render)})
+  .on('postgres_changes',{event:'*',schema:'public',table:'wa_agent_flows'},function(){if(app.view==='wacrm')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -970,6 +1004,7 @@ function renderView(){
   case 'clients':return viewClients();
   case 'client':return viewClient();
   case 'report':return viewReport();
+  case 'wacrm':return viewWacrm();
   case 'blacklist':return viewBlacklist();
   case 'trash':return viewTrash();
   case 'cockpit':return viewCockpit();
@@ -1366,6 +1401,138 @@ function viewReport(){
  return head+nav+actions+renderReportHtml(r);
 }
 
+/* === WhatsApp CRM helpers === */
+var WAC_AUD_TYPES=['segment','all_clients','phones','csv'];
+var WAC_STATUSES=['draft','running','paused','completed','cancelled'];
+var WAC_REC_STATUSES=['queued','sent','failed','replied','skipped'];
+var WAC_REC_COLOR={queued:'b-todo',sent:'b-validated',failed:'b-killed',replied:'b-live',skipped:'b-arch'};
+var WAC_ACTIONS=['','confirm_order','mark_refused','mark_reschedule','request_info','send_faq'];
+var WAC_MATCH_TYPES=['contains','equals','starts_with','regex'];
+var DEFAULT_FLOWS=[
+ {name:'Confirmation positive',trigger_type:'keyword',trigger_value:'oui|d\'accord|ok|confirme|nam|na3am|yes',match_type:'regex',language:'fr',response_template:"Parfait {name} ! Votre commande de {product} ({price} DA) est confirmee. Le livreur passera dans 48-72h. Merci !",suggested_action:'confirm_order',priority:10,active:true},
+ {name:'Refus',trigger_type:'keyword',trigger_value:'non|pas|refus|no|maranich|maandich',match_type:'regex',language:'fr',response_template:"D'accord {name}, nous annulons la commande. Si vous changez d'avis, n'hesitez pas. Bonne journee.",suggested_action:'mark_refused',priority:9,active:true},
+ {name:'Reporter',trigger_type:'keyword',trigger_value:'plus tard|demain|rappel|after|baada',match_type:'regex',language:'fr',response_template:"Pas de probleme {name}, je vous rappelle plus tard. Quel moment vous convient ?",suggested_action:'mark_reschedule',priority:8,active:true},
+ {name:'Question prix',trigger_type:'keyword',trigger_value:'prix|combien|tarif|cher|cost',match_type:'regex',language:'fr',response_template:"Le prix total est de {price} DA avec livraison comprise. Paiement uniquement a la livraison ({wilaya}).",suggested_action:'',priority:7,active:true},
+ {name:'Question livraison',trigger_type:'keyword',trigger_value:'livraison|quand|delai|when',match_type:'regex',language:'fr',response_template:"La livraison prend 48-72h. Le livreur vous appellera avant de passer.",suggested_action:'',priority:7,active:true}
+];
+function renderTemplate(tpl,vars){return (tpl||'').replace(/\{(\w+)\}/g,function(_,k){return vars[k]!=null?String(vars[k]):''})}
+function setWacTab(tab){app.wacTab=tab;app.wacCampaign=null;render()}
+function buildAudience(audType,filter){
+ var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]);
+ if(audType==='all_clients')return clients.filter(function(c){return c.phone&&!c.isBlacklist});
+ if(audType==='segment'){var segs=(filter&&filter.segments)||[];if(!segs.length)return [];return clients.filter(function(c){return segs.indexOf(c.segment)>=0&&!c.isBlacklist})}
+ if(audType==='phones'){var rawPhones=(filter&&filter.phones)||[];var byPhone={};clients.forEach(function(c){byPhone[c.phone]=c});return rawPhones.map(function(p){return byPhone[p]||{phone:p,name:''}})}
+ if(audType==='csv'){var rows=(filter&&filter.csv_rows)||[];return rows.map(function(r){return {phone:r.phone,name:r.name||''}})}
+ return [];
+}
+function loadWacrm(){
+ return Promise.all([
+  SB.from('wa_campaigns').select('*').order('created_at',{ascending:false}),
+  SB.from('wa_agent_flows').select('*').order('priority',{ascending:false}),
+  SB.from('wa_conversations').select('*').order('last_message_at',{ascending:false}).limit(100)
+ ]).then(function(rs){
+  if(rs[0].error&&rs[0].error.code==='42P01'){app.wacrmMissingTable=true;return}
+  app.wacrmMissingTable=false;
+  app.cache.waCampaigns=rs[0].data||[];
+  app.cache.waFlows=rs[1].data||[];
+  app.cache.waConversations=rs[2].data||[];
+ }).catch(function(e){console.error('wacrm load',e);app.wacrmMissingTable=true});
+}
+async function loadCampaign(id){
+ var c=await SB.from('wa_campaigns').select('*').eq('id',id).maybeSingle();
+ var r=await SB.from('wa_campaign_recipients').select('*').eq('campaign_id',id).order('position_in_queue',{ascending:true});
+ app.cache.waCampaign=c.data||null;app.cache.waRecipients=r.data||[];
+}
+function openCampaign(id){app.wacCampaign=id;loadCampaign(id).then(render)}
+function backToCampaigns(){app.wacCampaign=null;render()}
+
+/* Wizard state */
+function openWacWizard(){app.wacWizard={step:1,name:'',audience_type:'segment',audience_filter:{segments:['vip','recurrent']},audience_phones_raw:'',audience_csv_raw:'',message_template:'Bonjour {name}, c\'est COD Team. Nouvelle offre pour vous : {product} a {price} DA. Paiement a la livraison. Repondez OUI pour confirmer.'};app.modal='wacWizard';render()}
+function wacWizardNext(){if(!app.wacWizard)return;
+ if(app.wacWizard.step===1){
+  if(app.wacWizard.audience_type==='phones'){var lines=(app.wacWizard.audience_phones_raw||'').split('\n').map(function(x){return x.trim()}).filter(Boolean);app.wacWizard.audience_filter={phones:lines}}
+  if(app.wacWizard.audience_type==='csv'){var rows=(app.wacWizard.audience_csv_raw||'').split('\n').map(function(x){var p=x.split(',');return {phone:(p[0]||'').trim(),name:(p[1]||'').trim()}}).filter(function(x){return x.phone});app.wacWizard.audience_filter={csv_rows:rows}}
+ }
+ app.wacWizard.step=Math.min(4,app.wacWizard.step+1);render();
+}
+function wacWizardBack(){if(!app.wacWizard)return;app.wacWizard.step=Math.max(1,app.wacWizard.step-1);render()}
+function wacWizardToggleSegment(seg){if(!app.wacWizard)return;var f=app.wacWizard.audience_filter;f.segments=f.segments||[];var i=f.segments.indexOf(seg);if(i>=0)f.segments.splice(i,1);else f.segments.push(seg);render()}
+async function wacLaunch(){
+ if(!app.wacWizard)return;
+ var w=app.wacWizard;if(!w.name||!w.message_template){toast('Nom et message requis','err');return}
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p});
+ var aud=buildAudience(w.audience_type,w.audience_filter).filter(function(c){return c.phone});
+ if(!aud.length){toast('Aucun destinataire','err');return}
+ app.busy=true;render();
+ var camp={name:w.name,message_template:w.message_template,audience_type:w.audience_type,audience_filter:w.audience_filter,status:'running',total_recipients:aud.length,created_by:uid(),started_at:new Date().toISOString()};
+ var cr=await SB.from('wa_campaigns').insert(camp).select().single();
+ if(cr.error){toast('Erreur: '+cr.error.message,'err');app.busy=false;render();return}
+ var cid=cr.data.id;
+ var recs=aud.map(function(c,i){
+  var lastOrder=(c.orders&&c.orders[0])||{};
+  var prod=pn[lastOrder.product_id]||{};
+  var vars={name:c.name||'client',phone:c.phone,wilaya:c.wilaya||'',product:prod.name||'',price:lastOrder.total_price||'',qty:lastOrder.quantity||1};
+  return {campaign_id:cid,phone:c.phone,customer_name:c.name||'',rendered_message:renderTemplate(w.message_template,vars),position_in_queue:i,status:'queued'};
+ });
+ var batchSize=200;
+ for(var i=0;i<recs.length;i+=batchSize){
+  var batch=recs.slice(i,i+batchSize);
+  var ir=await SB.from('wa_campaign_recipients').insert(batch);
+  if(ir.error){toast('Erreur dest: '+ir.error.message,'err');break}
+ }
+ app.busy=false;app.modal=null;app.wacWizard=null;
+ await loadWacrm();openCampaign(cid);
+ toast('✓ Campagne lancee: '+aud.length+' destinataires');
+}
+async function wacRecipientAction(rid,action){
+ var u={status:action};if(action==='sent'){u.sent_at=new Date().toISOString();u.sent_by=uid()}
+ await SB.from('wa_campaign_recipients').update(u).eq('id',rid);
+ // Update campaign counts
+ var c=app.cache.waCampaign;if(c){
+  var rec=(app.cache.waRecipients||[]).find(function(x){return x.id===rid});
+  if(rec){
+   var newSent=c.sent_count||0;var newFailed=c.failed_count||0;
+   if(action==='sent')newSent+=1;else if(action==='failed')newFailed+=1;
+   await SB.from('wa_campaigns').update({sent_count:newSent,failed_count:newFailed}).eq('id',c.id);
+  }
+ }
+ await loadCampaign(c.id);render();
+}
+function wacOpenWaForRecipient(rec){
+ var link=waLink(rec.phone,rec.rendered_message);
+ if(!link){toast('Numero invalide','err');return}
+ window.open(link,'_blank');
+}
+async function wacCancelCampaign(id){if(!confirm('Annuler cette campagne ?'))return;await SB.from('wa_campaigns').update({status:'cancelled'}).eq('id',id);await loadWacrm();if(app.wacCampaign===id)await loadCampaign(id);render()}
+async function wacPauseCampaign(id){await SB.from('wa_campaigns').update({status:'paused'}).eq('id',id);await loadWacrm();if(app.wacCampaign===id)await loadCampaign(id);render()}
+async function wacResumeCampaign(id){await SB.from('wa_campaigns').update({status:'running'}).eq('id',id);await loadWacrm();if(app.wacCampaign===id)await loadCampaign(id);render()}
+
+/* AI Agent flows */
+async function createFlow(){
+ var nm=val('fl_name');var tv=val('fl_trigger');var resp=val('fl_response');
+ if(!nm||!resp){toast('Nom et reponse requis','err');return}
+ app.busy=true;render();
+ var data={name:nm,trigger_type:'keyword',trigger_value:tv,match_type:val('fl_match')||'contains',response_template:resp,suggested_action:val('fl_action')||'',priority:Number(val('fl_priority'))||5,active:true,created_by:uid()};
+ var r=await SB.from('wa_agent_flows').insert(data);
+ if(r.error){toast('Erreur: '+r.error.message,'err');app.busy=false;render();return}
+ app.busy=false;app.modal=null;await loadWacrm();toast('✓ Flow cree')
+}
+async function toggleFlow(id,active){await SB.from('wa_agent_flows').update({active:!active}).eq('id',id);await loadWacrm();render()}
+async function delFlow(id){if(!confirm(t('confirmDelete')))return;await SB.from('wa_agent_flows').delete().eq('id',id);await loadWacrm();render()}
+function matchesFlow(text,flow){
+ if(!flow.active||!text)return false;var t=flow.case_sensitive?text:text.toLowerCase();var v=flow.case_sensitive?(flow.trigger_value||''):(flow.trigger_value||'').toLowerCase();
+ if(flow.match_type==='equals')return t.trim()===v;
+ if(flow.match_type==='starts_with')return t.indexOf(v)===0;
+ if(flow.match_type==='regex'){try{return new RegExp(v,flow.case_sensitive?'':'i').test(text)}catch(e){return false}}
+ return v?t.indexOf(v)>=0:false;
+}
+function aiSuggestReply(customerText,context){
+ var flows=(app.cache.waFlows||[]).slice().sort(function(a,b){return (b.priority||0)-(a.priority||0)});
+ var match=flows.find(function(f){return matchesFlow(customerText||'',f)});
+ if(!match)return null;
+ return {flow:match,suggestion:renderTemplate(match.response_template,context||{})};
+}
+
 /* === COCKPIT CFO === */
 function viewCockpit(){
  var allOrders=app.cache.orders||[];var allKpis=app.cache.kpis||[];var prods=app.cache.products||[];
@@ -1687,6 +1854,109 @@ function viewClient(){
  }).join('');
  var histCard='<div class="card" style="padding:0"><div style="padding:12px 14px;border-bottom:1px solid var(--line);font-weight:800">📋 '+t('clientHistory')+' ('+c.count+')</div><div class="scroll-x"><table><thead><tr><th>'+t('date')+'</th><th>'+t('product')+'</th><th style="text-align:center">'+t('quantity')+'</th><th>'+t('totalPrice')+'</th><th>'+t('disposition')+'</th></tr></thead><tbody>'+hist+'</tbody></table></div></div>';
  return head+riskBanner+stats+stats2+histCard;
+}
+
+/* === WhatsApp CRM views === */
+function viewWacrm(){
+ var head='<div class="pghead"><div><h1 class="pg">'+t('wacrmTitle')+'</h1><div class="sub">'+t('wacrmSub')+'</div></div></div>';
+ if(app.wacrmMissingTable)return head+'<div class="card" style="padding:16px;border:1px dashed var(--bad);background:#fef2f2;color:var(--bad);font-weight:700">'+t('wacMissingTable')+'</div>';
+ var tab=app.wacTab||'campaigns';
+ var tabs=['campaigns','inbox','agent'];
+ var tabBar='<div class="tabs">'+tabs.map(function(tb){return '<span class="'+(tab===tb?'on':'')+'" onclick="setWacTab(\''+tb+'\')">'+t('wacrmTab_'+tb)+'</span>'}).join('')+'</div>';
+ var body='';
+ if(tab==='campaigns')body=app.wacCampaign?viewWacCampaignDetail():viewWacCampaignsList();
+ else if(tab==='inbox')body=viewWacInbox();
+ else if(tab==='agent')body=viewWacAgent();
+ return head+tabBar+body;
+}
+
+function viewWacCampaignsList(){
+ var camps=app.cache.waCampaigns||[];
+ var addBtn=(isAdmin()||(app.profile&&app.profile.role==='media_buyer'))?'<button class="btn btn-p" onclick="openWacWizard()" style="margin-bottom:14px">'+t('wacNew')+'</button>':'';
+ if(!camps.length)return addBtn+'<div class="empty">Aucune campagne. Cliquez « '+t('wacNew')+' ».</div>';
+ var rows=camps.map(function(c){
+  var pct=c.total_recipients?Math.round(c.sent_count*100/c.total_recipients):0;
+  var barColor=c.status==='completed'?'var(--good)':c.status==='running'?'var(--brand)':c.status==='cancelled'?'var(--bad)':'#94a3b8';
+  return '<div class="card" style="padding:14px;margin-bottom:8px;cursor:pointer" onclick="openCampaign(\''+c.id+'\')">'+
+   '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:8px">'+
+   '<div><b style="font-size:14px">'+esc(c.name)+'</b> <span class="badge b-todo" style="margin-inline-start:6px">'+t('wacSt_'+c.status)+'</span></div>'+
+   '<div style="font-size:11px;color:var(--ink2)">'+(c.created_at||'').slice(0,16).replace('T',' ')+'</div>'+
+   '</div>'+
+   '<div style="display:flex;align-items:center;gap:8px;font-size:12px"><div style="flex:1;height:8px;background:#e7e9ef;border-radius:4px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+barColor+'"></div></div><b>'+c.sent_count+'/'+c.total_recipients+'</b>'+(c.failed_count>0?' <span style="color:var(--bad)">('+c.failed_count+' echecs)</span>':'')+'</div>'+
+   '</div>';
+ }).join('');
+ return addBtn+rows;
+}
+
+function viewWacCampaignDetail(){
+ var c=app.cache.waCampaign;if(!c)return '<div class="empty"><span class="spin"></span></div>';
+ var recs=app.cache.waRecipients||[];
+ var queued=recs.filter(function(r){return r.status==='queued'});
+ var sent=recs.filter(function(r){return r.status==='sent'});
+ var failed=recs.filter(function(r){return r.status==='failed'});
+ var nextRec=queued[0];
+ var pct=c.total_recipients?Math.round(c.sent_count*100/c.total_recipients):0;
+ var head='<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:14px"><div><button class="btn btn-g btn-s" onclick="backToCampaigns()" style="margin-bottom:6px">'+t('wacBack')+'</button><h2 style="font-size:18px;font-weight:800">'+esc(c.name)+' <span class="badge b-todo">'+t('wacSt_'+c.status)+'</span></h2></div><div style="display:flex;gap:6px;flex-wrap:wrap">'+
+  (c.status==='running'?'<button class="btn btn-g" onclick="wacPauseCampaign(\''+c.id+'\')">⏸ Pause</button>':'')+
+  (c.status==='paused'?'<button class="btn btn-p" onclick="wacResumeCampaign(\''+c.id+'\')">▶ Reprendre</button>':'')+
+  (c.status!=='cancelled'&&c.status!=='completed'?'<button class="pill del" onclick="wacCancelCampaign(\''+c.id+'\')">✗ Annuler</button>':'')+
+  '</div></div>';
+ var stats='<div class="grid g4" style="margin-bottom:14px">'+
+  '<div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('wacRecipients')+'</div><div style="font-size:20px;font-weight:800">'+c.total_recipients+'</div></div>'+
+  '<div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('wacSent')+'</div><div style="font-size:20px;font-weight:800;color:var(--good)">'+sent.length+'</div></div>'+
+  '<div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('wacFailed')+'</div><div style="font-size:20px;font-weight:800;color:var(--bad)">'+failed.length+'</div></div>'+
+  '<div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('wacProgress')+'</div><div style="font-size:20px;font-weight:800">'+pct+'%</div></div>'+
+ '</div>';
+ var queueCard='';
+ if(nextRec&&c.status==='running'){
+  queueCard='<div class="card" style="padding:16px;margin-bottom:14px;border:2px solid var(--brand)">'+
+   '<div style="font-weight:800;margin-bottom:10px">📤 '+t('wacQueueTitle')+' — Prochain destinataire</div>'+
+   '<div class="note" style="margin-bottom:11px">'+t('wacQueueSub')+'</div>'+
+   '<div style="background:var(--soft);border-radius:8px;padding:12px;margin-bottom:11px"><div style="font-weight:700;font-size:14px">👤 '+esc(nextRec.customer_name||'-')+'  ·  📱 '+esc(nextRec.phone)+'</div><div style="font-size:12.5px;color:var(--ink);margin-top:7px;white-space:pre-wrap;background:#fff;padding:9px;border-radius:6px;border:1px solid var(--line)">'+esc(nextRec.rendered_message)+'</div></div>'+
+   '<div style="display:flex;gap:7px;flex-wrap:wrap">'+
+    '<button class="btn btn-p" style="background:#25d366;border-color:#25d366" onclick="wacOpenWaForRecipient(JSON.parse(this.dataset.r))" data-r="'+esc(JSON.stringify({phone:nextRec.phone,rendered_message:nextRec.rendered_message}))+'">'+t('wacOpenWa')+'</button>'+
+    '<button class="btn btn-g" onclick="wacRecipientAction(\''+nextRec.id+'\',\'sent\')">'+t('wacMarkSent')+'</button>'+
+    '<button class="pill del" onclick="wacRecipientAction(\''+nextRec.id+'\',\'failed\')">'+t('wacMarkFailed')+'</button>'+
+    '<button class="pill" onclick="wacRecipientAction(\''+nextRec.id+'\',\'skipped\')">'+t('wacMarkSkip')+'</button>'+
+   '</div>'+
+   '<div style="margin-top:11px;font-size:11.5px;color:var(--ink2)">📊 Restants : '+queued.length+'  ·  Envoyes : '+sent.length+'  ·  Echecs : '+failed.length+'</div>'+
+  '</div>';
+ } else if(queued.length===0&&recs.length>0) {
+  queueCard='<div class="card" style="padding:14px;background:#dcfce7;color:#166534;font-weight:700;margin-bottom:14px">✓ Campagne terminee — '+sent.length+' messages envoyes.</div>';
+ }
+ var listCard='<div class="card" style="padding:0"><div style="padding:11px 14px;border-bottom:1px solid var(--line);font-weight:800">Tous les destinataires ('+recs.length+')</div><div class="scroll-x"><table><thead><tr><th>#</th><th>'+t('customer')+'</th><th>'+t('phone')+'</th><th>'+t('wacStatus')+'</th><th>Envoye le</th></tr></thead><tbody>'+recs.slice(0,200).map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(r.customer_name||'-')+'</td><td>'+esc(r.phone)+'</td><td><span class="badge '+(WAC_REC_COLOR[r.status]||'b-todo')+'">'+t('wacRecSt_'+r.status)+'</span></td><td style="font-size:11.5px">'+(r.sent_at||'').slice(0,16).replace('T',' ')+'</td></tr>'}).join('')+'</tbody></table></div>'+(recs.length>200?'<div style="padding:8px 14px;font-size:11px;color:var(--ink2)">200 premiers affiches sur '+recs.length+'</div>':'')+'</div>';
+ return head+stats+queueCard+listCard;
+}
+
+function viewWacInbox(){
+ var convs=app.cache.waConversations||[];
+ if(!convs.length)return '<div class="empty">'+t('wacInboxEmpty')+'</div>';
+ var rows=convs.map(function(c){
+  return '<div class="card" style="padding:12px;margin-bottom:7px;display:flex;align-items:center;gap:10px">'+
+   '<div style="width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">'+esc((c.customer_name||c.phone||'?').charAt(0).toUpperCase())+'</div>'+
+   '<div style="flex:1"><div style="font-weight:700">'+esc(c.customer_name||c.phone)+(c.unread_count>0?' <span class="badge b-killed" style="margin-inline-start:5px">'+c.unread_count+'</span>':'')+'</div><div style="font-size:12px;color:var(--ink2);margin-top:2px">'+esc((c.last_message_text||'').slice(0,60))+'</div></div>'+
+   '<div style="font-size:11px;color:var(--ink2)">'+(c.last_message_at||'').slice(0,16).replace('T',' ')+'</div>'+
+  '</div>';
+ }).join('');
+ return rows;
+}
+
+function viewWacAgent(){
+ var flows=app.cache.waFlows||[];
+ var head='<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:9px;margin-bottom:12px"><div><b style="font-size:14px">'+t('wacAgentTitle')+'</b><div class="note" style="margin-top:3px">'+t('wacAgentSub')+'</div></div>'+(isAdmin()?'<button class="btn btn-p" onclick="openModal(\'wacFlow\')">'+t('wacFlowAddNew')+'</button>':'')+'</div>';
+ if(!flows.length)return head+'<div class="empty">Aucun flow configure. Cliquez « + Nouveau flow ».</div>';
+ var rows=flows.map(function(f){
+  var actLab=f.suggested_action?t('wacAct_'+f.suggested_action):t('wacAct_none');
+  return '<div class="card" style="padding:13px;margin-bottom:8px;'+(f.active?'':'opacity:0.5')+'">'+
+   '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:7px">'+
+    '<div><b style="font-size:14px">'+esc(f.name)+'</b> <span class="badge b-todo" style="margin-inline-start:6px">'+t('wacMatch_'+(f.match_type||'contains'))+'</span> <span class="badge b-research" style="margin-inline-start:4px">P'+(f.priority||5)+'</span>'+(f.suggested_action?' <span class="badge b-validated" style="margin-inline-start:4px">'+actLab+'</span>':'')+'</div>'+
+    '<div style="display:flex;gap:6px">'+(isAdmin()?'<button class="pill" onclick="toggleFlow(\''+f.id+'\','+(f.active||false)+')">'+(f.active?t('wacFlowActive'):t('wacFlowInactive'))+'</button><button class="pill del" onclick="delFlow(\''+f.id+'\')">✕</button>':'')+'</div>'+
+   '</div>'+
+   '<div style="font-size:12px;background:var(--soft);padding:7px 10px;border-radius:6px;margin-bottom:5px"><b style="color:var(--brand)">'+t('wacTrigger')+':</b> <code style="font-size:11.5px">'+esc(f.trigger_value||'(any)')+'</code></div>'+
+   '<div style="font-size:12px;background:#f0fdf4;padding:7px 10px;border-radius:6px"><b style="color:#166534">'+t('wacResponse')+':</b> '+esc(f.response_template)+'</div>'+
+  '</div>';
+ }).join('');
+ return head+rows;
 }
 
 function viewTrash(){
@@ -2129,6 +2399,47 @@ function renderModal(){
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('priority2')+'</label><select id="nt_prio" class="input">'+PRIOS.map(function(p){return '<option value="'+p+'"'+(p==='normal'?' selected':'')+'>'+t('pr_'+p)+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('due')+'</label><input id="nt_due" type="date" class="input"></div></div>'+
    '<div style="margin-top:9px"><label class="lb">'+t('assignee')+'</label><select id="nt_assignee" class="input"><option value="">'+t('me')+'</option>'+(app.cache.profiles||[]).map(function(u){return '<option value="'+u.id+'">'+esc(u.full_name||u.id)+'</option>'}).join('')+'</select></div>';
   return modalWrap(t('newTask'),b,'createTask()');
+ }
+ if(app.modal==='wacWizard'){
+  var w=app.wacWizard||{};
+  var stepBar='<div style="display:flex;gap:5px;margin-bottom:14px">'+[1,2,3,4].map(function(i){return '<div style="flex:1;height:5px;border-radius:3px;background:'+(i<=w.step?'var(--brand)':'#e7e9ef')+'"></div>'}).join('')+'</div>';
+  var body='';
+  if(w.step===1){
+   var audChip=function(k){return '<button type="button" class="pill" style="padding:6px 11px;background:'+(w.audience_type===k?'var(--brand)':'#f1f2f5')+';color:'+(w.audience_type===k?'#fff':'var(--ink)')+';font-weight:700" onclick="app.wacWizard.audience_type=\''+k+'\';render()">'+t('wacAud_'+k)+'</button>'};
+   var segBtn=function(seg){var on=(w.audience_filter.segments||[]).indexOf(seg)>=0;return '<button type="button" class="pill" style="padding:5px 10px;background:'+(on?'var(--brand)':'#f1f2f5')+';color:'+(on?'#fff':'var(--ink)')+'" onclick="wacWizardToggleSegment(\''+seg+'\')">'+t('seg_'+seg)+'</button>'};
+   body='<div><label class="lb">'+t('wacName')+' *</label><input id="ww_name" class="input" value="'+esc(w.name||'')+'" oninput="app.wacWizard.name=this.value" autofocus placeholder="Ex: Promo Black Friday VIP"></div>'+
+    '<div style="margin-top:11px"><label class="lb">'+t('wacAudience')+'</label><div style="display:flex;gap:6px;flex-wrap:wrap">'+WAC_AUD_TYPES.map(audChip).join('')+'</div></div>';
+   if(w.audience_type==='segment'){body+='<div style="margin-top:11px"><label class="lb">'+t('wacAudienceSegments')+'</label><div style="display:flex;gap:5px;flex-wrap:wrap">'+SEG_ORDER.filter(function(s){return s!=='blacklist'}).map(segBtn).join('')+'</div></div>'}
+   else if(w.audience_type==='phones'){body+='<div style="margin-top:11px"><label class="lb">'+t('wacPhonesList')+'</label><textarea class="input" style="min-height:120px;font-family:monospace" oninput="app.wacWizard.audience_phones_raw=this.value" placeholder="0555123456\n0666789012\n...">'+esc(w.audience_phones_raw||'')+'</textarea></div>'}
+   else if(w.audience_type==='csv'){body+='<div style="margin-top:11px"><label class="lb">'+t('wacCsvUpload')+'</label><textarea class="input" style="min-height:120px;font-family:monospace" oninput="app.wacWizard.audience_csv_raw=this.value" placeholder="0555123456,Karim\n0666789012,Sara">'+esc(w.audience_csv_raw||'')+'</textarea></div>'}
+   else if(w.audience_type==='all_clients'){var ac=buildClients(app.cache.orders||[],app.cache.blacklist||[]).filter(function(c){return c.phone&&!c.isBlacklist}).length;body+='<div style="margin-top:11px;padding:10px;background:var(--soft);border-radius:7px;font-size:13px">📊 <b>'+ac+'</b> clients eligibles (hors blacklist)</div>'}
+  } else if(w.step===2){
+   body='<div class="note" style="margin-bottom:9px">'+t('wacMessageHelper')+'</div>'+
+    '<div><label class="lb">'+t('wacMessage')+' *</label><textarea class="input" style="min-height:140px" oninput="app.wacWizard.message_template=this.value">'+esc(w.message_template||'')+'</textarea></div>';
+  } else if(w.step===3){
+   var aud=buildAudience(w.audience_type,w.audience_filter).filter(function(c){return c.phone}).slice(0,5);
+   var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p});
+   var totalAud=buildAudience(w.audience_type,w.audience_filter).filter(function(c){return c.phone}).length;
+   body='<div style="padding:10px;background:var(--soft);border-radius:7px;margin-bottom:11px;font-size:13px">📤 <b>'+totalAud+'</b> destinataires '+(totalAud>200?'(envoi par lots de 200 max)':'')+'</div>'+
+    '<div style="font-weight:700;font-size:12px;margin-bottom:7px">'+t('wacRecipientsPreview')+' (5 premiers)</div>'+
+    aud.map(function(c){var lastOrder=(c.orders&&c.orders[0])||{};var prod=pn[lastOrder.product_id]||{};var vars={name:c.name||'client',phone:c.phone,wilaya:c.wilaya||'',product:prod.name||'',price:lastOrder.total_price||'',qty:lastOrder.quantity||1};var rendered=renderTemplate(w.message_template,vars);return '<div style="background:#fff;border:1px solid var(--line);border-radius:7px;padding:9px;margin-bottom:6px;font-size:12px"><b>📱 '+esc(c.phone)+'</b> '+esc(c.name||'-')+'<div style="margin-top:5px;white-space:pre-wrap;color:var(--ink2)">'+esc(rendered)+'</div></div>'}).join('');
+   if(!aud.length)body+='<div class="empty">Aucun destinataire trouve. Revoir l\'audience.</div>';
+  } else if(w.step===4){
+   var totalAud=buildAudience(w.audience_type,w.audience_filter).filter(function(c){return c.phone}).length;
+   body='<div style="text-align:center;padding:14px"><div style="font-size:48px;margin-bottom:12px">🚀</div><div style="font-size:16px;font-weight:700;margin-bottom:5px">Pret a lancer ?</div><div style="color:var(--ink2);font-size:13px;margin-bottom:14px">'+totalAud+' destinataires recevront le message.</div><div class="note">Chaque envoi est manuel via wa.me (clic). La file s\'affichera apres lancement.</div></div>';
+  }
+  var foot='<button class="btn btn-g" onclick="closeModal()">'+t('cancel')+'</button>'+
+   (w.step>1?'<button class="btn btn-g" onclick="wacWizardBack()">'+t('wacBack')+'</button>':'')+
+   (w.step<4?'<button class="btn btn-p" onclick="wacWizardNext()">'+t('wacNext')+'</button>':'<button class="btn btn-p" onclick="wacLaunch()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':t('wacLaunch'))+'</button>');
+  return '<div class="modal" onclick="if(event.target===this)closeModal()"><div class="bx" style="max-width:640px"><div class="mh"><b>'+t('wacNew')+' — '+t('wacStep'+w.step)+'</b><button class="x" onclick="closeModal()">×</button></div><div class="mb">'+stepBar+body+'</div><div class="mf">'+foot+'</div></div></div>';
+ }
+ if(app.modal==='wacFlow'){
+  b='<div><label class="lb">'+t('wacFlowName')+' *</label><input id="fl_name" class="input" autofocus placeholder="Ex: Confirmation positive"></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('wacTrigger')+'</label><input id="fl_trigger" class="input" placeholder="oui|d\'accord|ok|na3am"></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('wacMatch')+'</label><select id="fl_match" class="input">'+WAC_MATCH_TYPES.map(function(m){return '<option value="'+m+'">'+t('wacMatch_'+m)+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('wacPriority')+' (1-10)</label><input id="fl_priority" type="number" min="1" max="10" class="input" value="5"></div></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('wacResponse')+' *</label><textarea id="fl_response" class="input" style="min-height:80px" placeholder="Parfait {name} ! Votre commande de {product} ({price} DA) est confirmee..."></textarea></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('wacAction')+'</label><select id="fl_action" class="input"><option value="">'+t('wacAct_none')+'</option>'+WAC_ACTIONS.filter(function(a){return a}).map(function(a){return '<option value="'+a+'">'+t('wacAct_'+a)+'</option>'}).join('')+'</select></div>';
+  return modalWrap(t('wacFlowAddNew'),b,'createFlow()');
  }
  if(app.modal==='newCreative'){
   var pid=app.modalData||app.productId;
