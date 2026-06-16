@@ -277,7 +277,7 @@ var I18N={
   wacStep1:'1. Audience',wacStep2:'2. Message',wacStep3:'3. Preview',wacStep4:'4. Envoyer',wacNext:'Suivant →',wacBack:'← Retour',wacLaunch:'🚀 Lancer la campagne',
   wacMessageHelper:'Utilisez les variables : {name} {phone} {wilaya} {product} {price} {qty}',wacRecipientsPreview:'Apercu des destinataires',wacAudienceSegments:'Segments',wacPhonesList:'Liste de numeros (un par ligne)',wacCsvUpload:'Coller le CSV (phone,name par ligne)',
   wacQueueTitle:'File d\'envoi',wacQueueSub:'Cliquez « Ouvrir WhatsApp » pour chaque destinataire, puis « Envoye » apres confirmation.',wacOpenWa:'📲 Ouvrir WhatsApp',wacMarkSent:'✓ Envoye',wacMarkFailed:'✗ Echec',wacMarkSkip:'Ignorer',wacAutoOpen:'Auto-ouvrir suivant',wacWait:'Attente entre 2 envois (s)',
-  wacInboxEmpty:'Aucune conversation. Les conversations apparaissent quand un client repond a une campagne.',wacAddConv:'+ Nouvelle conversation',wacSendMsg:'Envoyer message',wacAiSuggestion:'💡 Suggestion IA',wacUseAi:'Utiliser',wacReply:'Repondre',
+  wacInboxEmpty:'Aucune conversation. Les conversations apparaissent quand un client repond a une campagne ou cliquez « + Nouvelle conversation ».',wacAddConv:'+ Nouvelle conversation',wacSendMsg:'Envoyer message',wacAiSuggestion:'💡 Suggestion IA',wacUseAi:'Utiliser cette reponse',wacReply:'Repondre',wacInboundPlaceholder:'Collez ici ce que le client vient d\'ecrire...',wacOutboundPlaceholder:'Tapez votre reponse...',wacLogInbound:'📥 Logger message client',wacLogOutbound:'📤 Logger reponse envoyee',wacOpenWaReply:'📲 Envoyer via WhatsApp',wacNoMsg:'Aucun message. Loggez le premier message client ci-dessous.',wacNoMatch:'L\'IA n\'a pas trouve de flow correspondant. Repondez librement.',wacMatched:'Flow declenche',wacQuickAction:'Action rapide',wacActionApplied:'✓ Action appliquee',wacConvSelect:'Selectionnez une conversation a gauche',wacUnread:'non lus',wacJustNow:'a l\'instant',wacMinAgo:'## min',wacHourAgo:'## h',wacDayAgo:'## j',wacConvNew:'Nouvelle conversation',wacConvPhone:'Numero de telephone',wacConvName:'Nom (optionnel)',wacConvFromClient:'Depuis un client existant',wacConvClose:'Fermer conversation',wacConvReopen:'Reouvrir',wacConvCustomer:'👤 Voir fiche client',
   wacAgentTitle:'🤖 Agent IA de confirmation',wacAgentSub:'Configurez les reponses automatiques aux mots-cles. Variables : {name} {product} {price}.',wacFlowName:'Nom du flow',wacTrigger:'Declencheur (mots-cles)',wacMatch:'Type de match',wacMatch_contains:'Contient',wacMatch_equals:'Egal',wacMatch_starts_with:'Commence par',wacMatch_regex:'Regex',wacResponse:'Reponse',wacAction:'Action suggeree',wacAct_confirm_order:'✓ Confirmer commande',wacAct_mark_refused:'✗ Marquer refusee',wacAct_mark_reschedule:'🔁 Reporter',wacAct_request_info:'❓ Demander info',wacAct_send_faq:'📋 Envoyer FAQ',wacAct_none:'Aucune',wacPriority:'Priorite',wacFlowAddNew:'+ Nouveau flow',wacFlowActive:'Actif',wacFlowInactive:'Inactif',
   wacMissingTable:'⚠ Tables WhatsApp absentes. Demandez a l\'admin d\'appliquer v8_migration.sql.'
  },
@@ -355,7 +355,7 @@ var I18N={
   wacStep1:'1. الجمهور',wacStep2:'2. الرسالة',wacStep3:'3. المعاينة',wacStep4:'4. الإرسال',wacNext:'التالي ←',wacBack:'→ رجوع',wacLaunch:'🚀 إطلاق الحملة',
   wacMessageHelper:'استخدم المتغيرات: {name} {phone} {wilaya} {product} {price} {qty}',wacRecipientsPreview:'معاينة المستلمين',wacAudienceSegments:'الفئات',wacPhonesList:'قائمة الأرقام (واحد في كل سطر)',wacCsvUpload:'الصق CSV (phone,name في كل سطر)',
   wacQueueTitle:'قائمة الإرسال',wacQueueSub:'اضغط « فتح WhatsApp » لكل مستلم، ثم « تم الإرسال » بعد التأكيد.',wacOpenWa:'📲 فتح WhatsApp',wacMarkSent:'✓ تم الإرسال',wacMarkFailed:'✗ فشل',wacMarkSkip:'تخطٍّ',wacAutoOpen:'فتح تلقائي للتالي',wacWait:'الانتظار بين إرسالين (ث)',
-  wacInboxEmpty:'لا توجد محادثات. تظهر المحادثات عندما يرد العميل على حملة.',wacAddConv:'+ محادثة جديدة',wacSendMsg:'إرسال رسالة',wacAiSuggestion:'💡 اقتراح الذكاء',wacUseAi:'استخدم',wacReply:'رد',
+  wacInboxEmpty:'لا توجد محادثات. تظهر المحادثات عندما يرد العميل على حملة أو اضغط « + محادثة جديدة ».',wacAddConv:'+ محادثة جديدة',wacSendMsg:'إرسال رسالة',wacAiSuggestion:'💡 اقتراح الذكاء',wacUseAi:'استخدم هذا الرد',wacReply:'رد',wacInboundPlaceholder:'الصق هنا ما كتبه العميل...',wacOutboundPlaceholder:'اكتب ردك...',wacLogInbound:'📥 تسجيل رسالة العميل',wacLogOutbound:'📤 تسجيل الرد المُرسل',wacOpenWaReply:'📲 إرسال عبر WhatsApp',wacNoMsg:'لا توجد رسائل. سجّل أول رسالة عميل أدناه.',wacNoMatch:'لم يجد الذكاء تدفقًا مطابقًا. ردّ بحرية.',wacMatched:'التدفق المُحفّز',wacQuickAction:'إجراء سريع',wacActionApplied:'✓ تم تطبيق الإجراء',wacConvSelect:'اختر محادثة من اليسار',wacUnread:'غير مقروءة',wacJustNow:'الآن',wacMinAgo:'## دقيقة',wacHourAgo:'## س',wacDayAgo:'## ي',wacConvNew:'محادثة جديدة',wacConvPhone:'رقم الهاتف',wacConvName:'الاسم (اختياري)',wacConvFromClient:'من عميل موجود',wacConvClose:'إغلاق المحادثة',wacConvReopen:'إعادة فتح',wacConvCustomer:'👤 عرض بطاقة العميل',
   wacAgentTitle:'🤖 وكيل ذكاء اصطناعي للتأكيد',wacAgentSub:'اضبط الردود التلقائية على الكلمات المفتاحية. المتغيرات: {name} {product} {price}.',wacFlowName:'اسم التدفق',wacTrigger:'المحفّز (كلمات مفتاحية)',wacMatch:'نوع المطابقة',wacMatch_contains:'يحتوي',wacMatch_equals:'يساوي',wacMatch_starts_with:'يبدأ بـ',wacMatch_regex:'Regex',wacResponse:'الرد',wacAction:'الإجراء المقترح',wacAct_confirm_order:'✓ تأكيد الطلب',wacAct_mark_refused:'✗ تعليم كمرفوض',wacAct_mark_reschedule:'🔁 تأجيل',wacAct_request_info:'❓ طلب معلومات',wacAct_send_faq:'📋 إرسال الأسئلة',wacAct_none:'لا شيء',wacPriority:'الأولوية',wacFlowAddNew:'+ تدفق جديد',wacFlowActive:'نشط',wacFlowInactive:'غير نشط',
   wacMissingTable:'⚠ جداول WhatsApp غير موجودة. اطلب من المدير تطبيق v8_migration.sql.'
  }
@@ -928,6 +928,8 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_campaign_recipients'},function(){if(app.view==='wacrm'&&app.wacCampaign)loadCampaign(app.wacCampaign).then(render)})
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_agent_flows'},function(){if(app.view==='wacrm')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_relay_status'},function(){if(app.view==='wacrm'){loadRelayStatus().then(render)}})
+  .on('postgres_changes',{event:'*',schema:'public',table:'wa_conversations'},function(){if(app.view==='wacrm')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'wa_messages'},function(p){if(app.view==='wacrm'&&app.wacConversation){var newRec=p.new||{};if(newRec.conversation_id===app.wacConversation){loadConversation(app.wacConversation).then(render)}}})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -1537,6 +1539,126 @@ function aiSuggestReply(customerText,context){
  return {flow:match,suggestion:renderTemplate(match.response_template,context||{})};
 }
 
+/* === Inbox conversation helpers === */
+function timeAgo(dt){
+ if(!dt)return '-';
+ var s=Math.floor((Date.now()-new Date(dt).getTime())/1000);
+ if(s<60)return t('wacJustNow');
+ if(s<3600)return t('wacMinAgo').replace('##',Math.floor(s/60));
+ if(s<86400)return t('wacHourAgo').replace('##',Math.floor(s/3600));
+ return t('wacDayAgo').replace('##',Math.floor(s/86400));
+}
+function getCustomerContext(phone){
+ // Build context object for AI template rendering from the client's data
+ var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]);
+ var c=clients.find(function(x){return x.phone===phone||cleanWaPhone(x.phone)===cleanWaPhone(phone)});
+ if(!c)return {name:'',phone:phone||'',product:'',price:'',wilaya:'',qty:1};
+ var lastOrder=(c.orders&&c.orders[0])||{};
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p.name});
+ return {
+  name:c.name||'',phone:c.phone,wilaya:c.wilaya||'',
+  product:pn[lastOrder.product_id]||'',
+  price:lastOrder.total_price||'',qty:lastOrder.quantity||1,
+  segment:c.segment,_orderId:lastOrder.id,_client:c
+ };
+}
+async function loadInboxMessages(convId){
+ if(!convId)return [];
+ var r=await SB.from('wa_messages').select('*').eq('conversation_id',convId).order('created_at',{ascending:true});
+ return r.data||[];
+}
+async function loadConversation(convId){
+ if(!convId){app.cache.waConvMessages=[];return}
+ app.cache.waConvMessages=await loadInboxMessages(convId);
+ // Reset unread count on open
+ await SB.from('wa_conversations').update({unread_count:0,updated_at:new Date().toISOString()}).eq('id',convId);
+}
+async function openConv(id){
+ app.wacConversation=id;
+ app.wacInboundDraft='';app.wacOutboundDraft='';
+ await loadConversation(id);
+ await loadWacrm();
+ render();
+}
+function closeConvView(){app.wacConversation=null;app.cache.waConvMessages=[];app.wacInboundDraft='';app.wacOutboundDraft='';render()}
+async function createConversation(phone,name){
+ var cleanedPhone=(phone||'').trim();if(!cleanedPhone){toast('Numero requis','err');return}
+ if(cleanedPhone.length<6){toast('Numero invalide','err');return}
+ var ex=(app.cache.waConversations||[]).find(function(c){return c.phone===cleanedPhone});
+ if(ex){await openConv(ex.id);return}
+ app.busy=true;render();
+ var r=await SB.from('wa_conversations').insert({phone:cleanedPhone,customer_name:name||'',status:'open'}).select().single();
+ app.busy=false;
+ if(r.error){toast('Erreur: '+r.error.message,'err');render();return}
+ app.modal=null;await loadWacrm();await openConv(r.data.id);
+}
+async function logInbound(){
+ var convId=app.wacConversation;if(!convId)return;
+ var body=val('wac_inbound');if(!body||!body.trim())return;
+ var conv=(app.cache.waConversations||[]).find(function(c){return c.id===convId});
+ await SB.from('wa_messages').insert({conversation_id:convId,direction:'inbound',body:body,sent_via:'manual',sender_id:uid()});
+ await SB.from('wa_conversations').update({last_message_text:body.slice(0,200),last_message_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq('id',convId);
+ app.wacInboundDraft='';
+ var el=document.getElementById('wac_inbound');if(el)el.value='';
+ await loadConversation(convId);render();
+ toast('📥 Message client logue');
+}
+async function logOutbound(){
+ var convId=app.wacConversation;if(!convId)return;
+ var body=val('wac_outbound');if(!body||!body.trim())return;
+ await SB.from('wa_messages').insert({conversation_id:convId,direction:'outbound',body:body,sent_via:'manual',sender_id:uid()});
+ await SB.from('wa_conversations').update({last_message_text:body.slice(0,200),last_message_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq('id',convId);
+ app.wacOutboundDraft='';
+ var el=document.getElementById('wac_outbound');if(el)el.value='';
+ await loadConversation(convId);render();
+ toast('📤 Reponse loguee');
+}
+function useAiReply(text){
+ var el=document.getElementById('wac_outbound');if(el){el.value=text;el.focus()}
+ app.wacOutboundDraft=text;
+}
+function buildAiPanelHtml(){
+ var convId=app.wacConversation;if(!convId)return '';
+ var conv=(app.cache.waConversations||[]).find(function(c){return c.id===convId});if(!conv)return '';
+ var ctx=getCustomerContext(conv.phone);
+ var draft=app.wacInboundDraft||'';
+ if(draft.trim().length<2)return '';
+ var sugg=aiSuggestReply(draft,ctx);
+ if(!sugg)return '<div style="padding:9px 13px;background:#f3f4f6;border:1px dashed var(--line);border-radius:8px;font-size:12px;color:var(--ink2);margin-bottom:9px">💡 '+t('wacNoMatch')+'</div>';
+ var actBtn=sugg.flow.suggested_action?'<button class="btn btn-g btn-s" style="background:#fbbf24;color:#1a1a1a;font-weight:700;padding:7px 13px" onclick="applyQuickAction(\''+sugg.flow.suggested_action+'\',\''+conv.id+'\')">'+t('wacAct_'+sugg.flow.suggested_action)+'</button>':'';
+ return '<div style="padding:12px 14px;background:linear-gradient(135deg,#fef3c7,#fef9e7);border:1px solid #f59e0b;border-radius:10px;margin-bottom:9px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;flex-wrap:wrap;gap:7px"><div style="font-size:11px;font-weight:800;color:#92400e;text-transform:uppercase;letter-spacing:.04em">'+t('wacAiSuggestion')+' · '+t('wacMatched')+': '+esc(sugg.flow.name)+'</div>'+actBtn+'</div><div style="font-size:13px;color:#1a1a1a;background:#fff;padding:9px 12px;border-radius:7px;margin-bottom:7px;line-height:1.5;white-space:pre-wrap;border:1px solid rgba(245,158,11,.3)">'+esc(sugg.suggestion)+'</div><button class="btn btn-p btn-s" style="background:#f59e0b;border:none" onclick="useAiReply('+JSON.stringify(sugg.suggestion).replace(/"/g,'&quot;')+')">'+t('wacUseAi')+' →</button></div>';
+}
+function onInboundInput(textarea){
+ app.wacInboundDraft=textarea.value;
+ var panel=document.getElementById('wac_ai_panel');
+ if(panel)panel.innerHTML=buildAiPanelHtml();
+}
+async function openWaReplyForCurrent(){
+ var convId=app.wacConversation;if(!convId)return;
+ var conv=(app.cache.waConversations||[]).find(function(c){return c.id===convId});if(!conv)return;
+ var body=val('wac_outbound');if(!body){toast('Tapez ou utilisez une suggestion d\'abord','warn');return}
+ var link=waLink(conv.phone,body);if(!link){toast('Numero invalide','err');return}
+ window.open(link,'_blank');
+}
+async function applyQuickAction(action,convId){
+ var conv=(app.cache.waConversations||[]).find(function(c){return c.id===convId});if(!conv)return;
+ var ctx=getCustomerContext(conv.phone);var orderId=ctx._orderId;
+ if(!orderId){toast('Aucune commande recente pour ce client','warn');return}
+ var newStatus=null;
+ if(action==='confirm_order')newStatus='confirmed';
+ else if(action==='mark_refused')newStatus='refused';
+ else if(action==='mark_reschedule')newStatus='reschedule';
+ if(!newStatus){toast('Action non applicable','warn');return}
+ await SB.from('orders').update({status:newStatus,last_call_at:new Date().toISOString()}).eq('id',orderId);
+ toast(t('wacActionApplied')+' : commande → '+t('os_'+newStatus));
+}
+async function delConv(id){if(!confirm(t('confirmDelete')))return;await SB.from('wa_conversations').delete().eq('id',id);if(app.wacConversation===id)closeConvView();await loadWacrm();render()}
+async function toggleConvStatus(id,currentStatus){
+ var newSt=currentStatus==='closed'?'open':'closed';
+ await SB.from('wa_conversations').update({status:newSt}).eq('id',id);
+ await loadWacrm();render();
+}
+
 /* Baileys Relay client */
 async function loadRelayStatus(){
  try{
@@ -2014,15 +2136,70 @@ function viewWacCampaignDetail(){
 
 function viewWacInbox(){
  var convs=app.cache.waConversations||[];
- if(!convs.length)return '<div class="empty">'+t('wacInboxEmpty')+'</div>';
- var rows=convs.map(function(c){
-  return '<div class="card" style="padding:12px;margin-bottom:7px;display:flex;align-items:center;gap:10px">'+
-   '<div style="width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">'+esc((c.customer_name||c.phone||'?').charAt(0).toUpperCase())+'</div>'+
-   '<div style="flex:1"><div style="font-weight:700">'+esc(c.customer_name||c.phone)+(c.unread_count>0?' <span class="badge b-killed" style="margin-inline-start:5px">'+c.unread_count+'</span>':'')+'</div><div style="font-size:12px;color:var(--ink2);margin-top:2px">'+esc((c.last_message_text||'').slice(0,60))+'</div></div>'+
-   '<div style="font-size:11px;color:var(--ink2)">'+(c.last_message_at||'').slice(0,16).replace('T',' ')+'</div>'+
+ var openConvId=app.wacConversation;
+ var addBtn='<button class="btn btn-p" onclick="openModal(\'wacNewConv\')" style="margin-bottom:11px">'+t('wacAddConv')+'</button>';
+
+ // Build clients map for segment badges in conv list
+ var clientsByPhone={};buildClients(app.cache.orders||[],app.cache.blacklist||[]).forEach(function(x){clientsByPhone[x.phone]=x;clientsByPhone[cleanWaPhone(x.phone)]=x});
+
+ var convList=convs.length?convs.map(function(c){
+  var ck=clientsByPhone[c.phone]||clientsByPhone[cleanWaPhone(c.phone)];
+  var segChip=ck?'<span class="badge '+(SEG_COLOR[ck.segment]||'b-todo')+'" style="font-size:9.5px;padding:2px 6px;margin-inline-start:5px">'+t('seg_'+ck.segment)+'</span>':'';
+  var active=openConvId===c.id;
+  var unread=c.unread_count>0?'<span class="badge b-killed" style="margin-inline-start:5px;font-size:10px;padding:1px 6px">'+c.unread_count+'</span>':'';
+  var closed=c.status==='closed'?'<span style="opacity:.55">':'<span>';
+  return '<div onclick="openConv(\''+c.id+'\')" style="cursor:pointer;padding:11px 13px;border-radius:9px;border:1px solid '+(active?'var(--brand)':'var(--line)')+';background:'+(active?'rgba(124,58,237,.06)':'#fff')+';margin-bottom:6px;'+(c.status==='closed'?'opacity:.65':'')+'">'+
+   '<div style="display:flex;align-items:center;gap:9px">'+
+    '<div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#06b6d4);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:none">'+esc((c.customer_name||c.phone||'?').charAt(0).toUpperCase())+'</div>'+
+    '<div style="flex:1;min-width:0">'+closed+'<b style="font-size:13px">'+esc(c.customer_name||c.phone)+'</b>'+segChip+unread+'</span><div style="font-size:11px;color:var(--ink2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">'+esc(c.last_message_text||'(nouveau)')+'</div></div>'+
+    '<div style="font-size:10px;color:var(--ink2);flex:none;text-align:end">'+esc(timeAgo(c.last_message_at))+'</div>'+
+   '</div>'+
   '</div>';
- }).join('');
- return rows;
+ }).join(''):'<div class="empty" style="padding:16px;font-size:12.5px">'+t('wacInboxEmpty')+'</div>';
+
+ // Right pane (detail)
+ var rightPane='';
+ if(!openConvId){
+  rightPane='<div style="display:flex;align-items:center;justify-content:center;height:380px;color:var(--ink2);text-align:center;padding:30px;font-size:13.5px"><div><div style="font-size:42px;margin-bottom:14px">💬</div>'+t('wacConvSelect')+'</div></div>';
+ } else {
+  var conv=convs.find(function(c){return c.id===openConvId});
+  if(!conv){rightPane='<div class="empty">Conversation introuvable</div>'}
+  else {
+   var ctx=getCustomerContext(conv.phone);
+   var ck=clientsByPhone[conv.phone]||clientsByPhone[cleanWaPhone(conv.phone)];
+   var segChip=ck?'<span class="badge '+(SEG_COLOR[ck.segment]||'b-todo')+'">'+t('seg_'+ck.segment)+'</span>':'';
+   var customerLink=ck?'<button class="pill" style="padding:4px 10px;font-size:11px" onclick="goClient(\''+esc(ck.phone)+'\')">'+t('wacConvCustomer')+'</button>':'';
+
+   // Header
+   var convHead='<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--soft);border-radius:11px 11px 0 0;flex-wrap:wrap;gap:8px"><div><div style="font-weight:800;font-size:14px">👤 '+esc(conv.customer_name||conv.phone)+' '+segChip+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:2px">📱 '+esc(conv.phone)+' · '+(conv.status==='closed'?'🔒 Fermee':'🟢 Ouverte')+'</div></div><div style="display:flex;gap:5px;flex-wrap:wrap">'+customerLink+'<button class="pill" style="padding:4px 9px;font-size:11px" onclick="toggleConvStatus(\''+conv.id+'\',\''+conv.status+'\')">'+(conv.status==='closed'?t('wacConvReopen'):t('wacConvClose'))+'</button>'+(isAdmin()?'<button class="pill del" style="padding:4px 9px;font-size:11px" onclick="delConv(\''+conv.id+'\')">✕</button>':'')+'</div></div>';
+
+   // Messages thread
+   var msgs=app.cache.waConvMessages||[];
+   var thread=msgs.length?msgs.map(function(m){
+    var isOut=m.direction==='outbound';
+    return '<div style="display:flex;justify-content:'+(isOut?'flex-end':'flex-start')+';margin-bottom:8px"><div style="max-width:78%;padding:9px 13px;border-radius:'+(isOut?'14px 14px 4px 14px':'14px 14px 14px 4px')+';background:'+(isOut?'linear-gradient(135deg,#7c3aed,#06b6d4)':'#fff')+';color:'+(isOut?'#fff':'var(--ink)')+';border:'+(isOut?'none':'1px solid var(--line)')+';box-shadow:0 1px 2px rgba(0,0,0,.04)"><div style="font-size:13px;white-space:pre-wrap;line-height:1.45">'+esc(m.body)+'</div><div style="font-size:10px;opacity:.7;margin-top:4px">'+esc((m.created_at||'').slice(11,16))+(isOut?'  ✓':'')+'</div></div></div>';
+   }).join(''):'<div class="empty" style="padding:30px;font-size:12.5px">'+t('wacNoMsg')+'</div>';
+   var threadCard='<div style="padding:14px 16px;min-height:200px;max-height:340px;overflow-y:auto;background:'+(msgs.length?'#fafbfc':'transparent')+'">'+thread+'</div>';
+
+   // AI suggestion is computed in buildAiPanelHtml() — initialized here, refreshed live on input
+   var draft=app.wacInboundDraft||'';
+   var initialAi=buildAiPanelHtml();
+
+   // Inbound (log what customer said) — triggers AI suggestion via direct DOM update (no full re-render → focus is preserved)
+   var inboundForm='<div style="padding:12px 14px;background:rgba(124,58,237,.04);border-top:1px solid var(--line)"><label class="lb">'+t('wacLogInbound')+'</label><textarea id="wac_inbound" class="input" style="min-height:54px" placeholder="'+t('wacInboundPlaceholder')+'" oninput="onInboundInput(this)">'+esc(draft)+'</textarea><div id="wac_ai_panel" style="margin-top:9px">'+initialAi+'</div><button class="btn btn-g btn-s" style="margin-top:5px" onclick="logInbound()">'+t('wacLogInbound')+'</button></div>';
+
+   // Outbound (log reply or send via WhatsApp)
+   var outDraft=app.wacOutboundDraft||'';
+   var outboundForm='<div style="padding:12px 14px;background:rgba(16,185,129,.04);border-top:1px solid var(--line);border-radius:0 0 11px 11px"><label class="lb">'+t('wacLogOutbound')+'</label><textarea id="wac_outbound" class="input" style="min-height:54px" placeholder="'+t('wacOutboundPlaceholder')+'" oninput="app.wacOutboundDraft=this.value">'+esc(outDraft)+'</textarea><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:7px"><button class="btn btn-p btn-s" style="background:#25d366;border-color:#25d366" onclick="openWaReplyForCurrent()">'+t('wacOpenWaReply')+'</button><button class="btn btn-g btn-s" onclick="logOutbound()">'+t('wacLogOutbound')+'</button></div></div>';
+
+   rightPane='<div class="card" style="padding:0;border-radius:12px;overflow:hidden">'+convHead+threadCard+inboundForm+outboundForm+'</div>';
+  }
+ }
+
+ return '<div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">'+
+  '<div style="flex:1 1 280px;max-width:340px;min-width:240px">'+addBtn+'<div style="max-height:600px;overflow-y:auto">'+convList+'</div></div>'+
+  '<div style="flex:1 1 380px;min-width:0">'+rightPane+'</div>'+
+ '</div>';
 }
 
 function viewWacAgent(){
@@ -2525,6 +2702,14 @@ function renderModal(){
    (w.step>1?'<button class="btn btn-g" onclick="wacWizardBack()">'+t('wacBack')+'</button>':'')+
    (w.step<4?'<button class="btn btn-p" onclick="wacWizardNext()">'+t('wacNext')+'</button>':'<button class="btn btn-p" onclick="wacLaunch()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':t('wacLaunch'))+'</button>');
   return '<div class="modal" onclick="if(event.target===this)closeModal()"><div class="bx" style="max-width:640px"><div class="mh"><b>'+t('wacNew')+' — '+t('wacStep'+w.step)+'</b><button class="x" onclick="closeModal()">×</button></div><div class="mb">'+stepBar+body+'</div><div class="mf">'+foot+'</div></div></div>';
+ }
+ if(app.modal==='wacNewConv'){
+  var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]).slice(0,30);
+  var dlOptions=clients.map(function(c){return '<option value="'+esc(c.phone)+'">'+esc(c.name||'-')+' - '+esc(c.phone)+'</option>'}).join('');
+  b='<div><label class="lb">'+t('wacConvPhone')+' *</label><input id="nc_phone" class="input" autofocus placeholder="+213555..." list="conv-phones"><datalist id="conv-phones">'+dlOptions+'</datalist></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('wacConvName')+'</label><input id="nc_name" class="input" placeholder="Nom du client"></div>'+
+   '<div class="note" style="margin-top:9px">'+t('wacConvFromClient')+' : commencez a taper un numero, l\'autocomplete suggere les clients existants.</div>';
+  return modalWrap(t('wacConvNew'),b,'createConversation(val(\'nc_phone\'),val(\'nc_name\'))');
  }
  if(app.modal==='wacFlow'){
   b='<div><label class="lb">'+t('wacFlowName')+' *</label><input id="fl_name" class="input" autofocus placeholder="Ex: Confirmation positive"></div>'+
