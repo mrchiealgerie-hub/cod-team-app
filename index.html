@@ -190,14 +190,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['cockpit','pipeline','products','research','validate','sourcing','tests','orders','clients','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
- media_buyer:['cockpit','pipeline','products','research','tests','orders','clients','tasks','kpis','perf'],
+ admin:['cockpit','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['cockpit','pipeline','products','research','tests','creatives','orders','clients','tasks','kpis','perf'],
  sourcing:['pipeline','products','research','sourcing','tasks'],
  production:['pipeline','products','sourcing','stock','production','tasks'],
- video_editor:['pipeline','products','video','tasks'],
+ video_editor:['pipeline','products','video','creatives','tasks'],
  confirmatrice:['pipeline','orders','clients','products','tasks']
 };
-var ICON={cockpit:'💰',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',orders:'📞',clients:'👤',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={cockpit:'💰',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
 var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
@@ -216,7 +216,7 @@ var I18N={
   wow:'WOW Effect',problem:'Resout probleme',beforeAfter:'Avant/Apres',innovation:'Innovant',niche:'Niche',priority:'Priorite',
   costProduct:'Cout produit',shipCost:'Cout livraison',usdRate:'Taux USD->DZD',priceMin:'Prix vente min',priceFinal:'PDV final',multiplier:'Multiplicateur',seasonal:'Saisonnier',finalScore:'Note finale',margin:'Marge',
   pr_low:'Basse',pr_normal:'Normale',pr_high:'Haute',pr_urgent:'Urgente',
-  tabInfo:'Infos',tabScoring:'Scoring',tabCosts:'Couts & marge',tabSheet:'Fiche confirmatrice',tabSourcing:'Sourcing',tabTests:'Tests',tabVideo:'Videos',
+  tabInfo:'Infos',tabScoring:'Scoring',tabCosts:'Couts & marge',tabSheet:'Fiche confirmatrice',tabSourcing:'Sourcing',tabTests:'Tests',tabVideo:'Videos',tabCreatives:'🎨 Creas A/B',
   callScript:'Script d\'appel',objections:'Objections frequentes',upsells:'Upsells',faq:'FAQ',sheetIntro:'Document utilise par les confirmatrices.',neMargin:'Marge nette',beRoas:'ROAS d\'equilibre',
   toValidateAdmin:'Produits a valider',validateBy:'Valide par admin',submitToAdmin:'Soumettre a l\'admin',
   workshopOffers:'Offres ateliers',newOffer:'Nouvelle offre',workshopName:'Atelier',priceDzd:'Prix realisation (DA)',ease:'Facilite /10',delayDays:'Delai (jours)',capacityPerMonth:'Capacite / mois',chooseOffer:'Choisir cette offre',chosen:'Choisi',
@@ -256,7 +256,13 @@ var I18N={
   nav_clients:'Clients 360°',clientsTitle:'Clients 360°',clientsSub:'Tous vos clients, segmentes automatiquement.',clientsAll:'Tous',clientsSegment:'Segment',clientsLtv:'Valeur vie (LTV)',clientsOrders:'Commandes',clientsLast:'Derniere',clientsScore:'Score fidelite',clientsFirst:'Premiere',clientsAov:'Panier moyen',clientsDelivery:'Taux livraison',clientsBack:'← Retour',clientsDetail:'Fiche client',clientHistory:'Historique commandes',
   seg_vip:'⭐ VIP',seg_recurrent:'🔁 Recurrent',seg_new:'🆕 Nouveau',seg_atrisk:'⚠ A risque',seg_lost:'💤 Perdu',seg_oneshot:'1× One-shot',seg_blacklist:'⛔ Blacklist',
   segHintVip:'5+ commandes livrees, LTV ≥ 30 000 DA, active < 90j',segHintRec:'2-4 commandes, derniere < 90j',segHintNew:'1 commande dans les 30 derniers jours',segHintRisk:'2+ commandes, derniere entre 60 et 180j',segHintLost:'2+ commandes, derniere > 180j',segHintOne:'1 seule commande, > 30j',
-  noClients:'Aucun client correspondant.',daysAgo:'il y a ## j',today:"Aujourd'hui"
+  noClients:'Aucun client correspondant.',daysAgo:'il y a ## j',today:"Aujourd'hui",
+  nav_creatives:'Tests A/B Creas',creativesTitle:'A/B Test Creas Video',creativesSub:'Comparez vos creas, le verdict est automatique.',newCreative:'+ Nouvelle crea',creativeName:'Nom de la crea',creativeUrl:'Lien video',hookType:'Type de hook',thumbUrl:'Vignette (URL)',
+  hook_ugc:'UGC',hook_demo:'Demo produit',hook_problem_solution:'Probleme/Solution',hook_before_after:'Avant/Apres',hook_lifestyle:'Lifestyle',hook_expert:'Expert/Avis',
+  metricImpressions:'Impressions',metricClicks:'Clics',metricCtr:'CTR',metricCpm:'CPM',metricSpend:'Depense ($)',metricConv:'Conversions',metricRevenue:'Revenu (DA)',metricCpa:'CPA',metricRoas:'ROAS',
+  ct_running:'⏳ En cours',ct_winner:'🏆 Gagnant',ct_loser:'💀 Perdant',ct_paused:'⏸ Pause',ct_retest:'🔄 Re-tester',
+  abVerdict:'Verdict auto',abReason:'Pourquoi ?',markWinner:'Marquer gagnant',markLoser:'Marquer perdant',markPaused:'Mettre en pause',markRetest:'Re-tester',abCompare:'Comparaison A/B',noCreas:'Aucune crea pour ce produit. Cliquez « + Nouvelle crea ».',noCreasGlobal:'Aucune crea encore. Ajoutez-en sur une fiche produit.',openProduct:'Ouvrir produit',
+  abHintWinner:'Marquer comme gagnant: ROAS > 1.5x du concurrent ET 100+ impressions',abHintLoser:'Perdant: CTR < 0.5% avec 1000+ impressions OU CPA > 3x cible',abMissingTable:'⚠ Table creative_tests absente. Demandez a l\'admin d\'appliquer v6_migration.sql.'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -272,7 +278,7 @@ var I18N={
   wow:'عامل الإبهار',problem:'يحل مشكلة',beforeAfter:'قبل/بعد',innovation:'مبتكر',niche:'المجال',priority:'الأولوية',
   costProduct:'سعر التصنيع',shipCost:'تكلفة التوصيل',usdRate:'سعر الدولار',priceMin:'الحد الأدنى للبيع',priceFinal:'سعر البيع النهائي',multiplier:'المضاعف',seasonal:'موسمي',finalScore:'النتيجة النهائية',margin:'الهامش',
   pr_low:'منخفضة',pr_normal:'عادية',pr_high:'عالية',pr_urgent:'عاجلة',
-  tabInfo:'معلومات',tabScoring:'التقييم',tabCosts:'التكاليف',tabSheet:'بطاقة المؤكّدة',tabSourcing:'الورشات',tabTests:'الاختبارات',tabVideo:'الفيديوهات',
+  tabInfo:'معلومات',tabScoring:'التقييم',tabCosts:'التكاليف',tabSheet:'بطاقة المؤكّدة',tabSourcing:'الورشات',tabTests:'الاختبارات',tabVideo:'الفيديوهات',tabCreatives:'🎨 إعلانات A/B',
   callScript:'نص المكالمة',objections:'الاعتراضات',upsells:'عروض إضافية',faq:'أسئلة شائعة',sheetIntro:'وثيقة تستخدمها المؤكِّدات.',neMargin:'صافي الهامش',beRoas:'ROAS التعادل',
   toValidateAdmin:'منتجات بانتظار المصادقة',validateBy:'مصادقة المدير',submitToAdmin:'إرسال للمدير',
   workshopOffers:'عروض الورشات',newOffer:'عرض جديد',workshopName:'الورشة',priceDzd:'سعر التصنيع (دج)',ease:'السهولة /10',delayDays:'المدة (أيام)',capacityPerMonth:'الطاقة / شهر',chooseOffer:'اختيار هذا العرض',chosen:'مختار',
@@ -312,7 +318,13 @@ var I18N={
   nav_clients:'العملاء 360°',clientsTitle:'العملاء 360°',clientsSub:'جميع عملائك مع تصنيف تلقائي.',clientsAll:'الكل',clientsSegment:'الفئة',clientsLtv:'قيمة العميل (LTV)',clientsOrders:'الطلبات',clientsLast:'آخر طلب',clientsScore:'نقاط الولاء',clientsFirst:'أول طلب',clientsAov:'متوسط الطلب',clientsDelivery:'نسبة التسليم',clientsBack:'← رجوع',clientsDetail:'بطاقة العميل',clientHistory:'سجل الطلبات',
   seg_vip:'⭐ مميز',seg_recurrent:'🔁 متكرر',seg_new:'🆕 جديد',seg_atrisk:'⚠ في خطر',seg_lost:'💤 ضائع',seg_oneshot:'1× مرة واحدة',seg_blacklist:'⛔ قائمة سوداء',
   segHintVip:'5+ طلبات مسلَّمة، LTV ≥ 30000 دج، نشط < 90 يوم',segHintRec:'2-4 طلبات، آخر طلب < 90 يوم',segHintNew:'طلب واحد خلال 30 يومًا',segHintRisk:'2+ طلبات، آخر طلب بين 60 و180 يوم',segHintLost:'2+ طلبات، آخر طلب > 180 يوم',segHintOne:'طلب واحد فقط، > 30 يوم',
-  noClients:'لا يوجد عميل مطابق.',daysAgo:'قبل ## يوم',today:'اليوم'
+  noClients:'لا يوجد عميل مطابق.',daysAgo:'قبل ## يوم',today:'اليوم',
+  nav_creatives:'اختبار A/B الإعلانات',creativesTitle:'اختبار A/B لإعلانات الفيديو',creativesSub:'قارن إعلاناتك، الحكم تلقائي.',newCreative:'+ إعلان جديد',creativeName:'اسم الإعلان',creativeUrl:'رابط الفيديو',hookType:'نوع الهوك',thumbUrl:'صورة مصغرة (URL)',
+  hook_ugc:'UGC',hook_demo:'عرض المنتج',hook_problem_solution:'مشكلة/حل',hook_before_after:'قبل/بعد',hook_lifestyle:'نمط الحياة',hook_expert:'خبير/رأي',
+  metricImpressions:'مرّات الظهور',metricClicks:'النقرات',metricCtr:'CTR',metricCpm:'CPM',metricSpend:'الإنفاق ($)',metricConv:'التحويلات',metricRevenue:'الإيراد (دج)',metricCpa:'CPA',metricRoas:'ROAS',
+  ct_running:'⏳ جارٍ',ct_winner:'🏆 رابح',ct_loser:'💀 خاسر',ct_paused:'⏸ موقوف',ct_retest:'🔄 إعادة اختبار',
+  abVerdict:'الحكم التلقائي',abReason:'لماذا؟',markWinner:'تعيين كرابح',markLoser:'تعيين كخاسر',markPaused:'إيقاف مؤقت',markRetest:'إعادة اختبار',abCompare:'مقارنة A/B',noCreas:'لا توجد إعلانات لهذا المنتج. اضغط « + إعلان جديد ».',noCreasGlobal:'لا توجد إعلانات بعد. أضفها في صفحة المنتج.',openProduct:'فتح المنتج',
+  abHintWinner:'تعيين كرابح: ROAS > 1.5× من المنافس و100+ ظهور',abHintLoser:'خاسر: CTR < 0.5% مع 1000+ ظهور أو CPA > 3× الهدف',abMissingTable:'⚠ جدول creative_tests غير موجود. اطلب من المدير تنفيذ v6_migration.sql.'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -531,6 +543,10 @@ async function refresh(){
    var pd=await SB.from('products').select('id,name');
    await loadBlacklist();
    app.cache.orders=oAll.data||[];app.cache.products=pd.data||[];
+  } else if(v==='creatives'){
+   var creas=await loadCreatives(null);
+   var pds=await SB.from('products').select('id,name,image_url,current_stage').is('deleted_at',null);
+   app.cache.creatives=creas;app.cache.products=pds.data||[];
   } else if(v==='blacklist'){
    await loadBlacklist();
   } else if(v==='trash'){
@@ -596,7 +612,8 @@ async function loadProduct(){
  var o=await SB.from('workshop_offers').select('*').eq('product_id',id).order('created_at',{ascending:false});
  var tt=await SB.from('product_tests').select('*').eq('product_id',id).order('created_at',{ascending:false});
  var pr=await SB.from('profiles').select('id,full_name,role');
- app.cache.product=p.data||null;app.cache.sheet=s.data||null;app.cache.videos=v.data||[];app.cache.offers=o.data||[];app.cache.tests=tt.data||[];app.cache.profiles=pr.data||[];
+ var creas=await loadCreatives(id);
+ app.cache.product=p.data||null;app.cache.sheet=s.data||null;app.cache.videos=v.data||[];app.cache.offers=o.data||[];app.cache.tests=tt.data||[];app.cache.profiles=pr.data||[];app.cache.creatives=creas;
 }
 function uid(){return app.session?app.session.user.id:null}
 function isAdmin(){return app.profile&&app.profile.role==='admin'}
@@ -860,6 +877,7 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'cod_kpis'},function(){if(app.view==='kpis')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'orders'},function(){if(app.view==='orders'||app.view==='clients'||app.view==='client')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'customer_blacklist'},function(){if(app.view==='clients'||app.view==='client'||app.view==='orders'||app.view==='blacklist')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'creative_tests'},function(){if(app.view==='creatives'||app.view==='product')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -935,6 +953,7 @@ function renderView(){
   case 'kpis':return viewKpis();
   case 'team':return viewTeam();
   case 'orders':return viewOrders();
+  case 'creatives':return viewCreativesGlobal();
   case 'clients':return viewClients();
   case 'client':return viewClient();
   case 'blacklist':return viewBlacklist();
@@ -1040,6 +1059,61 @@ function buildClients(orders,blacklist){
 }
 function goClient(phone){app.clientPhone=phone;app.view='client';render()}
 function backToClients(){app.clientPhone=null;app.view='clients';render()}
+
+/* === A/B Creative testing helpers === */
+var HOOK_TYPES=['ugc','demo','problem_solution','before_after','lifestyle','expert'];
+var CT_STATUSES=['running','winner','loser','paused','retest'];
+var CT_COLOR={running:'b-doing',winner:'b-live',loser:'b-killed',paused:'b-arch',retest:'b-tovalidate'};
+function creativeMetrics(c){
+ var imp=Number(c.impressions||0),clk=Number(c.clicks||0),sp=Number(c.spend_usd||0),conv=Number(c.conversions||0),rev=Number(c.revenue_dzd||0);
+ var usd=Number((app.cache.settings&&app.cache.settings.usd_to_dzd)||250);
+ var ctr=imp>0?(clk/imp)*100:0;
+ var cpm=imp>0?(sp/imp)*1000:0;
+ var cpa=conv>0?(sp/conv):0;
+ var spDzd=sp*usd;
+ var roas=spDzd>0?(rev/spDzd):0;
+ var net=rev-spDzd;
+ return {ctr:ctr,cpm:cpm,cpa:cpa,roas:roas,net:net,spDzd:spDzd};
+}
+function creativeVerdict(c,peers){
+ if(['winner','loser','paused','retest'].indexOf(c.status)>=0)return {auto:c.status,reason:''};
+ var m=creativeMetrics(c);var imp=Number(c.impressions||0),conv=Number(c.conversions||0);
+ if(imp<100&&conv<3)return {auto:'running',reason:'Donnees insuffisantes (< 100 impressions)'};
+ if(imp>=1000&&m.ctr<0.5)return {auto:'loser',reason:'CTR < 0.5% avec '+imp+' impressions'};
+ var bestPeer=null;peers.forEach(function(p){if(p.id===c.id)return;var pm=creativeMetrics(p);if(p.impressions>=100&&(!bestPeer||pm.roas>creativeMetrics(bestPeer).roas))bestPeer=p});
+ if(bestPeer){var bm=creativeMetrics(bestPeer);
+  if(m.roas>=1.5*bm.roas&&m.roas>1&&imp>=100)return {auto:'winner',reason:'ROAS '+m.roas.toFixed(2)+'x vs '+bm.roas.toFixed(2)+'x du concurrent'};
+  if(bm.roas>=1.5*m.roas&&bm.roas>1&&imp>=100)return {auto:'loser',reason:'Battu par '+esc(bestPeer.creative_name)+' (ROAS '+bm.roas.toFixed(2)+'x vs '+m.roas.toFixed(2)+'x)'};
+ }
+ if(m.roas>=2&&imp>=200)return {auto:'winner',reason:'ROAS '+m.roas.toFixed(2)+'x (excellent)'};
+ if(m.roas<0.7&&imp>=500)return {auto:'loser',reason:'ROAS '+m.roas.toFixed(2)+'x (deficitaire)'};
+ return {auto:'running',reason:'Continuer le test'};
+}
+function goCreative(productId){app.productId=productId;app.tab='creatives';app.view='product';render()}
+async function loadCreatives(productId){
+ var q=SB.from('creative_tests').select('*').order('created_at',{ascending:false});
+ if(productId)q=q.eq('product_id',productId);
+ var r=await q;
+ if(r.error&&r.error.code==='42P01'){app.creasMissingTable=true;return []}
+ app.creasMissingTable=false;return r.data||[];
+}
+async function createCreative(){
+ var pid=app.productId||app.modalData;if(!pid){toast('Produit manquant','err');return}
+ var nm=val('cr_name');if(!nm){toast('Nom requis','err');return}
+ app.busy=true;render();
+ var data={product_id:pid,creative_name:nm,creative_url:val('cr_url'),thumbnail_url:val('cr_thumb'),platform:val('cr_platform')||'meta',hook_type:val('cr_hook')||'ugc',notes:val('cr_notes'),created_by:uid()};
+ var r=await SB.from('creative_tests').insert(data);
+ if(r.error){toast('Erreur: '+r.error.message,'err');app.busy=false;render();return}
+ app.busy=false;app.modal=null;await refresh();toast('🎨 Crea ajoutee');
+}
+async function updateCreativeField(id,field,value){
+ var u={};u[field]=value;
+ var r=await SB.from('creative_tests').update(u).eq('id',id);
+ if(r.error){toast('Erreur: '+r.error.message,'err');return}
+ await refresh();
+}
+async function setCreativeStatus(id,status){await SB.from('creative_tests').update({status:status}).eq('id',id);await refresh();toast('Statut: '+t('ct_'+status))}
+async function delCreative(id){if(!confirm(t('confirmDelete')))return;await SB.from('creative_tests').delete().eq('id',id);await refresh()}
 function lookupClient(phone){
  var el=document.getElementById('o_client_info');if(!el)return;
  var clean=(phone||'').trim();
@@ -1251,6 +1325,57 @@ function viewClients(){
   '</tr>';
  }).join('');
  return head+chips+'<div class="card scroll-x"><table><thead><tr><th>'+t('customer')+'</th><th>'+t('wilaya')+'</th><th>'+t('clientsSegment')+'</th><th style="text-align:center">'+t('clientsOrders')+'</th><th>'+t('clientsLtv')+'</th><th>'+t('clientsLast')+'</th><th>'+t('clientsScore')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+/* === CREATIVES A/B === */
+function renderCreasTable(creas,showProduct){
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p.name});
+ if(!creas.length)return '<div class="empty">'+t(showProduct?'noCreasGlobal':'noCreas')+'</div>';
+ var ce=isAdmin()||(app.profile&&['media_buyer','video_editor'].indexOf(app.profile.role)>=0);
+ var num=function(id,v,field,cid,step){return '<input type="number" id="'+id+'" class="input sm" style="width:90px;padding:4px 6px;font-size:12px" '+(ce?'':'readonly')+' value="'+(v||0)+'" step="'+(step||1)+'" onchange="updateCreativeField(\''+cid+'\',\''+field+'\',parseFloat(this.value)||0)">'};
+ var rows=creas.map(function(c){
+  var m=creativeMetrics(c);
+  var verdict=creativeVerdict(c,creas.filter(function(x){return x.product_id===c.product_id}));
+  var statusColor=CT_COLOR[c.status==='running'?verdict.auto:c.status]||'b-todo';
+  var statusLabel=t('ct_'+(c.status==='running'?verdict.auto:c.status));
+  var hookLabel=t('hook_'+(c.hook_type||'ugc'));
+  var url=c.creative_url?'<a class="lnk" href="'+esc(c.creative_url)+'" target="_blank" rel="noopener">▶</a> ':'';
+  var thumb=c.thumbnail_url?'<img src="'+esc(c.thumbnail_url)+'" style="width:42px;height:42px;border-radius:6px;object-fit:cover" alt="">':'<div style="width:42px;height:42px;border-radius:6px;background:#f1f2f5;display:flex;align-items:center;justify-content:center;font-size:18px">🎬</div>';
+  var pName=showProduct?'<div style="font-size:11px;color:var(--ink2);margin-top:2px"><a class="lnk" onclick="goCreative(\''+c.product_id+'\')">📦 '+esc(pn[c.product_id]||'?')+'</a></div>':'';
+  var roasColor=m.roas>=1.5?'var(--good)':m.roas<1?'var(--bad)':'#f59e0b';
+  var ctrColor=m.ctr>=1?'var(--good)':m.ctr<0.5?'var(--bad)':'var(--ink)';
+  var actions=ce?'<div style="display:flex;flex-direction:column;gap:3px"><button class="pill" style="padding:3px 6px;font-size:10px" onclick="setCreativeStatus(\''+c.id+'\',\'winner\')" title="'+t('markWinner')+'">🏆</button><button class="pill" style="padding:3px 6px;font-size:10px" onclick="setCreativeStatus(\''+c.id+'\',\'loser\')" title="'+t('markLoser')+'">💀</button><button class="pill" style="padding:3px 6px;font-size:10px" onclick="setCreativeStatus(\''+c.id+'\',\'paused\')" title="'+t('markPaused')+'">⏸</button>'+(isAdmin()?'<button class="pill del" style="padding:3px 6px;font-size:10px" onclick="delCreative(\''+c.id+'\')">✕</button>':'')+'</div>':'';
+  return '<tr>'+
+   '<td style="vertical-align:top"><div style="display:flex;gap:8px;align-items:flex-start">'+thumb+'<div><div style="font-weight:700;font-size:13px">'+url+esc(c.creative_name)+'</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">'+esc((c.platform||'meta').toUpperCase())+' · '+hookLabel+'</div>'+pName+'</div></div></td>'+
+   '<td>'+num('imp_'+c.id,c.impressions,'impressions',c.id,'1')+'</td>'+
+   '<td>'+num('clk_'+c.id,c.clicks,'clicks',c.id,'1')+'</td>'+
+   '<td style="font-weight:700;color:'+ctrColor+';font-size:13px">'+m.ctr.toFixed(2)+'%</td>'+
+   '<td>'+num('sp_'+c.id,c.spend_usd,'spend_usd',c.id,'0.01')+'</td>'+
+   '<td>'+num('cv_'+c.id,c.conversions,'conversions',c.id,'1')+'</td>'+
+   '<td>'+num('rv_'+c.id,c.revenue_dzd,'revenue_dzd',c.id,'1')+'</td>'+
+   '<td style="font-weight:700;font-size:13px">$'+m.cpa.toFixed(2)+'</td>'+
+   '<td style="font-weight:800;color:'+roasColor+';font-size:14px">'+m.roas.toFixed(2)+'x</td>'+
+   '<td><span class="badge '+statusColor+'">'+statusLabel+'</span>'+(c.status==='running'&&verdict.reason?'<div style="font-size:10px;color:var(--ink2);margin-top:3px;max-width:140px">'+esc(verdict.reason)+'</div>':'')+'</td>'+
+   '<td>'+actions+'</td>'+
+  '</tr>';
+ }).join('');
+ return '<div class="scroll-x"><table><thead><tr><th>'+t('creativeName')+'</th><th>'+t('metricImpressions')+'</th><th>'+t('metricClicks')+'</th><th>'+t('metricCtr')+'</th><th>'+t('metricSpend')+'</th><th>'+t('metricConv')+'</th><th>'+t('metricRevenue')+'</th><th>'+t('metricCpa')+'</th><th>'+t('metricRoas')+'</th><th>'+t('abVerdict')+'</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+function viewCreativesGlobal(){
+ var head='<div class="pghead"><div><h1 class="pg">🎨 '+t('creativesTitle')+'</h1><div class="sub">'+t('creativesSub')+'</div></div></div>';
+ if(app.creasMissingTable)return head+'<div class="card" style="padding:16px;border:1px dashed var(--bad);background:#fef2f2;color:var(--bad);font-weight:700">'+t('abMissingTable')+'</div>';
+ var creas=app.cache.creatives||[];
+ if(!creas.length)return head+'<div class="empty">'+t('noCreasGlobal')+'</div>';
+ var byProduct={};creas.forEach(function(c){(byProduct[c.product_id]=byProduct[c.product_id]||[]).push(c)});
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p});
+ var groups=Object.keys(byProduct).map(function(pid){
+  var p=pn[pid]||{name:'(supprime)'};
+  var arr=byProduct[pid];var totalSpend=0,totalRev=0,totalConv=0;arr.forEach(function(c){var m=creativeMetrics(c);totalSpend+=m.spDzd;totalRev+=Number(c.revenue_dzd||0);totalConv+=Number(c.conversions||0)});
+  var avgRoas=totalSpend>0?(totalRev/totalSpend):0;
+  return '<div class="card" style="padding:14px;margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;flex-wrap:wrap;gap:10px"><div><b style="font-size:15px">'+esc(p.name)+'</b><div style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+arr.length+' creas · ROAS moyen <b style="color:'+(avgRoas>=1.5?'var(--good)':avgRoas<1?'var(--bad)':'#f59e0b')+'">'+avgRoas.toFixed(2)+'x</b> · '+totalConv+' conv</div></div><button class="btn btn-g btn-s" onclick="goCreative(\''+pid+'\')">'+t('openProduct')+' →</button></div>'+renderCreasTable(arr,false)+'</div>';
+ }).join('');
+ return head+groups;
 }
 
 function viewClient(){
@@ -1518,7 +1643,7 @@ function viewVideoGlobal(){
 /* === PRODUCT DETAIL === */
 function viewProduct(){
  var p=app.cache.product;if(!p)return '<div class="center"><span class="spin"></span></div>';
- var tabs=['info','scoring','costs','sourcing','tests','sheet','comments','audit'];
+ var tabs=['info','scoring','costs','sourcing','tests','creatives','sheet','comments','audit'];
  var canEdit=canEditP();
  var marg=marginDzd(p);
  var tabbar='<div class="tabs">'+tabs.map(function(tb){var lab='tab'+tb.charAt(0).toUpperCase()+tb.slice(1);return '<span class="'+(app.tab===tb?'on':'')+'" onclick="setTab(\''+tb+'\')">'+t(lab)+'</span>'}).join('')+'</div>';
@@ -1565,6 +1690,17 @@ function viewProduct(){
   var tests=app.cache.tests||[];
   var rows=tests.length?tests.map(function(tx){var marg2=tx.calculated_margin||testCalcMargin(tx,p);return '<tr><td>'+esc(tx.platform)+'</td><td>$'+fmt(tx.budget_usd)+'</td><td>$'+fmt(tx.cpa_usd)+'</td><td>'+tx.confirm_pct+'%</td><td>'+tx.deliver_pct+'%</td><td style="font-weight:800;color:'+(marg2>0?'var(--good)':'var(--bad)')+'">'+fmt(Math.round(marg2))+' '+t('cur')+'</td><td><span class="badge '+(tx.verdict==='validate'?'b-validated':tx.verdict==='kill'?'b-killed':'b-todo')+'">'+t('v_'+tx.verdict)+'</span></td></tr>'}).join(''):'<tr><td colspan="7" style="text-align:center;padding:14px;color:var(--ink2)">Aucun test.</td></tr>';
   body='<div style="max-width:880px"><button class="btn btn-p" onclick="openModal(\'newTest\',\''+p.id+'\')">+ '+t('newTest')+'</button><div class="scroll-x" style="margin-top:10px"><table><thead><tr><th>'+t('platform')+'</th><th>'+t('budgetUsd')+'</th><th>'+t('cpaUsd')+'</th><th>'+t('confirmPct')+'</th><th>'+t('deliverPct')+'</th><th>'+t('calcMargin')+'</th><th>'+t('verdict')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+ } else if(app.tab==='creatives'){
+  if(app.creasMissingTable){body='<div class="card" style="padding:16px;border:1px dashed var(--bad);background:#fef2f2;color:var(--bad);font-weight:700">'+t('abMissingTable')+'</div>'}
+  else {
+   var creas=app.cache.creatives||[];
+   var ce=isAdmin()||(app.profile&&['media_buyer','video_editor'].indexOf(app.profile.role)>=0);
+   var totalSpend=0,totalRev=0,totalConv=0;creas.forEach(function(c){var m=creativeMetrics(c);totalSpend+=m.spDzd;totalRev+=Number(c.revenue_dzd||0);totalConv+=Number(c.conversions||0)});
+   var avgRoas=totalSpend>0?(totalRev/totalSpend):0;
+   var summary='';if(creas.length>=1){summary='<div class="grid g4" style="margin-bottom:12px"><div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('abCompare')+'</div><div style="font-size:20px;font-weight:800">'+creas.length+'</div></div><div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('metricSpend')+'</div><div style="font-size:20px;font-weight:800">'+fmt(Math.round(totalSpend))+' '+t('cur')+'</div></div><div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('metricConv')+'</div><div style="font-size:20px;font-weight:800">'+totalConv+'</div></div><div class="card" style="padding:12px"><div style="font-size:11px;color:var(--ink2);font-weight:700">'+t('metricRoas')+' moyen</div><div style="font-size:20px;font-weight:800;color:'+(avgRoas>=1.5?'var(--good)':avgRoas<1?'var(--bad)':'#f59e0b')+'">'+avgRoas.toFixed(2)+'x</div></div></div>'}
+   var addBtn=ce?'<button class="btn btn-p" onclick="openModal(\'newCreative\',\''+p.id+'\')">'+t('newCreative')+'</button>':'';
+   body='<div style="max-width:1280px">'+addBtn+'<div style="margin-top:12px">'+summary+'</div><div class="card" style="padding:14px;margin-top:6px">'+renderCreasTable(creas,false)+'</div><div class="note" style="margin-top:10px">💡 '+t('abHintWinner')+' · '+t('abHintLoser')+'</div></div>';
+  }
  } else if(app.tab==='sheet'){
   var ce=isAdmin()||app.profile.role==='sourcing';var sh=app.cache.sheet||{};
   var LANGS=[['fr',t('lang_fr')],['ar',t('lang_ar')],['en',t('lang_en')],['zh',t('lang_zh')]];
@@ -1692,6 +1828,17 @@ function renderModal(){
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('priority2')+'</label><select id="nt_prio" class="input">'+PRIOS.map(function(p){return '<option value="'+p+'"'+(p==='normal'?' selected':'')+'>'+t('pr_'+p)+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('due')+'</label><input id="nt_due" type="date" class="input"></div></div>'+
    '<div style="margin-top:9px"><label class="lb">'+t('assignee')+'</label><select id="nt_assignee" class="input"><option value="">'+t('me')+'</option>'+(app.cache.profiles||[]).map(function(u){return '<option value="'+u.id+'">'+esc(u.full_name||u.id)+'</option>'}).join('')+'</select></div>';
   return modalWrap(t('newTask'),b,'createTask()');
+ }
+ if(app.modal==='newCreative'){
+  var pid=app.modalData||app.productId;
+  var pn={};(app.cache.products||[]).forEach(function(x){pn[x.id]=x.name});
+  b='<div style="padding:8px 11px;background:var(--soft);border-radius:7px;margin-bottom:10px;font-size:12px"><b>📦 '+esc(pn[pid]||'?')+'</b></div>'+
+   '<div><label class="lb">'+t('creativeName')+' *</label><input id="cr_name" class="input" autofocus placeholder="Ex: Video A - Hook UGC"></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('creativeUrl')+'</label><input id="cr_url" class="input" placeholder="https://..."></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('thumbUrl')+'</label><input id="cr_thumb" class="input" placeholder="https://..."></div>'+
+   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('platform')+'</label><select id="cr_platform" class="input"><option value="meta">META</option><option value="tiktok">TIKTOK</option><option value="snap">SNAP</option><option value="google">GOOGLE</option><option value="other">Autre</option></select></div><div><label class="lb">'+t('hookType')+'</label><select id="cr_hook" class="input">'+HOOK_TYPES.map(function(h){return '<option value="'+h+'">'+t('hook_'+h)+'</option>'}).join('')+'</select></div></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('notes')+'</label><textarea id="cr_notes" class="input" style="min-height:50px"></textarea></div>';
+  return modalWrap(t('newCreative'),b,'createCreative()');
  }
  if(app.modal==='aiBrief'){
   var p=(app.cache.products||[]).find(function(x){return x.id===app.productId})||{};
