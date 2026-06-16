@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 <style>
   :root{--brand:#6d28d9;--brand2:#7c3aed;--soft:#f3effd;--bg:#f6f7fb;--ink:#13151a;--ink2:#6b7280;--line:#e7e9ef;
     --good:#157f4a;--good-bg:#e9f7ef;--warn:#b45309;--warn-bg:#fef3c7;--bad:#c2384b;--bad-bg:#fee2e2;--navy:#10142a;--blue:#1d4ed8;--blue-bg:#dbeafe;}
@@ -190,14 +191,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['cockpit','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ admin:['cockpit','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
  media_buyer:['cockpit','pipeline','products','research','tests','creatives','orders','clients','tasks','kpis','perf'],
  sourcing:['pipeline','products','research','sourcing','tasks'],
  production:['pipeline','products','sourcing','stock','production','tasks'],
  video_editor:['pipeline','products','video','creatives','tasks'],
  confirmatrice:['pipeline','orders','clients','products','tasks']
 };
-var ICON={cockpit:'💰',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
 var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
@@ -264,7 +265,8 @@ var I18N={
   abVerdict:'Verdict auto',abReason:'Pourquoi ?',markWinner:'Marquer gagnant',markLoser:'Marquer perdant',markPaused:'Mettre en pause',markRetest:'Re-tester',abCompare:'Comparaison A/B',noCreas:'Aucune crea pour ce produit. Cliquez « + Nouvelle crea ».',noCreasGlobal:'Aucune crea encore. Ajoutez-en sur une fiche produit.',openProduct:'Ouvrir produit',
   abHintWinner:'Marquer comme gagnant: ROAS > 1.5x du concurrent ET 100+ impressions',abHintLoser:'Perdant: CTR < 0.5% avec 1000+ impressions OU CPA > 3x cible',abMissingTable:'⚠ Table creative_tests absente. Demandez a l\'admin d\'appliquer v6_migration.sql.',
   whatsApp:'WhatsApp',waClient:'📲 WhatsApp client',waPing:'🔔 Ping confirmer',waTplCustomer:'Template message client',waTplConfirmer:'Template ping confirmer',waVars:'Variables disponibles : {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'Numero WhatsApp',waPhoneHint:'Format international: +213... ou 213...',waNotConfigured:'⚠ Le confirmateur n\'a pas de WhatsApp. Demandez-lui de le renseigner dans Equipe.',waCopied:'Message copie. Ouvrez WhatsApp et collez-le.',notifyOrders:'Recevoir notifs commandes',waSaveTpl:'Enregistrer template',
-  fcTitle:'📊 Forecast cashflow 30 jours',fcSub:'Projection basee sur les commandes en cours + tendance pub.',fcCashIn:'Encaissement estime',fcCashOut:'Sortie estimee',fcNetExpected:'Net estime',fcDay:'Jour',fcConfidence:'Confiance',fcConfHigh:'🟢 Elevee',fcConfMed:'🟡 Moyenne',fcConfLow:'🔴 Faible',fcAssumptions:'Hypotheses',fcPendingValue:'Valeur du pipeline',fcDailyAvgRev:'Revenu moyen / jour',fcDailyAvgAd:'Pub moyenne / jour',fcRiskStock:'⚠ Risque stock',fcRiskCash:'⚠ Cashflow critique J+##',fcScenario:'Scenario',fcScConservative:'Conservateur',fcScExpected:'Attendu',fcScOptimistic:'Optimiste',fcDeliveryTime:'Delai livraison moyen (jours)',fcCumulative:'Cumul'
+  fcTitle:'📊 Forecast cashflow 30 jours',fcSub:'Projection basee sur les commandes en cours + tendance pub.',fcCashIn:'Encaissement estime',fcCashOut:'Sortie estimee',fcNetExpected:'Net estime',fcDay:'Jour',fcConfidence:'Confiance',fcConfHigh:'🟢 Elevee',fcConfMed:'🟡 Moyenne',fcConfLow:'🔴 Faible',fcAssumptions:'Hypotheses',fcPendingValue:'Valeur du pipeline',fcDailyAvgRev:'Revenu moyen / jour',fcDailyAvgAd:'Pub moyenne / jour',fcRiskStock:'⚠ Risque stock',fcRiskCash:'⚠ Cashflow critique J+##',fcScenario:'Scenario',fcScConservative:'Conservateur',fcScExpected:'Attendu',fcScOptimistic:'Optimiste',fcDeliveryTime:'Delai livraison moyen (jours)',fcCumulative:'Cumul',
+  nav_report:'Rapport hebdo',reportTitle:'📑 Rapport hebdomadaire',reportSub:'Synthese de la semaine, prete a partager.',reportPdf:'📥 Telecharger PDF',reportEmail:'📧 Envoyer par email',reportPrint:'🖨 Imprimer',reportWeekOf:'Semaine du',reportSummary:'Resume',reportHighlights:'Faits marquants',reportRevenue:'Revenu net',reportOrders:'Commandes traitees',reportConvRate:'Taux conversion',reportTopProducts:'Top 5 produits',reportTopCreas:'Top creas',reportWinners:'Gagnants',reportLosers:'Perdants',reportActions:'A faire la semaine prochaine',reportGeneratedAt:'Genere le',reportEmailSubject:'Rapport hebdo COD Team',reportNoData:'Pas assez de donnees pour cette semaine.',reportWeekPrev:'← Semaine precedente',reportWeekNext:'Semaine suivante →',reportWeekCurr:'Cette semaine',reportRoasAvg:'ROAS moyen',reportCash30:'Cash projete 30j',reportNew:'Nouveaux',reportLost:'Perdus',reportVip:'VIP',reportLowStock:'Stock faible',reportPipeline:'Pipeline actif'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -328,7 +330,8 @@ var I18N={
   abVerdict:'الحكم التلقائي',abReason:'لماذا؟',markWinner:'تعيين كرابح',markLoser:'تعيين كخاسر',markPaused:'إيقاف مؤقت',markRetest:'إعادة اختبار',abCompare:'مقارنة A/B',noCreas:'لا توجد إعلانات لهذا المنتج. اضغط « + إعلان جديد ».',noCreasGlobal:'لا توجد إعلانات بعد. أضفها في صفحة المنتج.',openProduct:'فتح المنتج',
   abHintWinner:'تعيين كرابح: ROAS > 1.5× من المنافس و100+ ظهور',abHintLoser:'خاسر: CTR < 0.5% مع 1000+ ظهور أو CPA > 3× الهدف',abMissingTable:'⚠ جدول creative_tests غير موجود. اطلب من المدير تنفيذ v6_migration.sql.',
   whatsApp:'واتساب',waClient:'📲 واتساب العميل',waPing:'🔔 تنبيه المؤكِّدة',waTplCustomer:'قالب رسالة العميل',waTplConfirmer:'قالب تنبيه المؤكِّدة',waVars:'المتغيرات المتاحة: {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'رقم واتساب',waPhoneHint:'صيغة دولية: 213+... أو 213...',waNotConfigured:'⚠ المؤكِّدة بدون رقم واتساب. اطلب منها إضافته في صفحة الفريق.',waCopied:'تم نسخ الرسالة. افتح واتساب والصقها.',notifyOrders:'استقبال إشعارات الطلبات',waSaveTpl:'حفظ القالب',
-  fcTitle:'📊 توقّع التدفق النقدي 30 يومًا',fcSub:'توقعات بناءً على الطلبات الجارية واتجاه الإعلانات.',fcCashIn:'الإيراد المتوقع',fcCashOut:'المصاريف المتوقعة',fcNetExpected:'الصافي المتوقع',fcDay:'يوم',fcConfidence:'الثقة',fcConfHigh:'🟢 عالية',fcConfMed:'🟡 متوسطة',fcConfLow:'🔴 منخفضة',fcAssumptions:'الفرضيات',fcPendingValue:'قيمة الطلبات المعلّقة',fcDailyAvgRev:'الإيراد اليومي المتوسط',fcDailyAvgAd:'الإعلانات اليومية المتوسطة',fcRiskStock:'⚠ خطر المخزون',fcRiskCash:'⚠ تدفق نقدي حرج في يوم ##',fcScenario:'السيناريو',fcScConservative:'متحفظ',fcScExpected:'متوقع',fcScOptimistic:'متفائل',fcDeliveryTime:'متوسط زمن التسليم (أيام)',fcCumulative:'الإجمالي التراكمي'
+  fcTitle:'📊 توقّع التدفق النقدي 30 يومًا',fcSub:'توقعات بناءً على الطلبات الجارية واتجاه الإعلانات.',fcCashIn:'الإيراد المتوقع',fcCashOut:'المصاريف المتوقعة',fcNetExpected:'الصافي المتوقع',fcDay:'يوم',fcConfidence:'الثقة',fcConfHigh:'🟢 عالية',fcConfMed:'🟡 متوسطة',fcConfLow:'🔴 منخفضة',fcAssumptions:'الفرضيات',fcPendingValue:'قيمة الطلبات المعلّقة',fcDailyAvgRev:'الإيراد اليومي المتوسط',fcDailyAvgAd:'الإعلانات اليومية المتوسطة',fcRiskStock:'⚠ خطر المخزون',fcRiskCash:'⚠ تدفق نقدي حرج في يوم ##',fcScenario:'السيناريو',fcScConservative:'متحفظ',fcScExpected:'متوقع',fcScOptimistic:'متفائل',fcDeliveryTime:'متوسط زمن التسليم (أيام)',fcCumulative:'الإجمالي التراكمي',
+  nav_report:'تقرير أسبوعي',reportTitle:'📑 التقرير الأسبوعي',reportSub:'ملخص الأسبوع، جاهز للمشاركة.',reportPdf:'📥 تحميل PDF',reportEmail:'📧 إرسال بالبريد',reportPrint:'🖨 طباعة',reportWeekOf:'أسبوع',reportSummary:'الملخص',reportHighlights:'الأبرز',reportRevenue:'الإيراد الصافي',reportOrders:'الطلبات المعالجة',reportConvRate:'نسبة التحويل',reportTopProducts:'أفضل 5 منتجات',reportTopCreas:'أفضل الإعلانات',reportWinners:'الفائزون',reportLosers:'الخاسرون',reportActions:'مهام الأسبوع القادم',reportGeneratedAt:'تم التوليد في',reportEmailSubject:'التقرير الأسبوعي COD Team',reportNoData:'لا توجد بيانات كافية لهذا الأسبوع.',reportWeekPrev:'← الأسبوع السابق',reportWeekNext:'الأسبوع التالي →',reportWeekCurr:'هذا الأسبوع',reportRoasAvg:'متوسط ROAS',reportCash30:'تدفق 30 يوم',reportNew:'جدد',reportLost:'ضائعون',reportVip:'مميزون',reportLowStock:'مخزون منخفض',reportPipeline:'الأنابيب النشطة'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -560,6 +563,12 @@ async function refresh(){
    var oAll=await SB.from('orders').select('*');
    var kAll=await SB.from('cod_kpis').select('*');
    app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];
+  } else if(v==='report'){
+   var pAll=await SB.from('products').select('*').is('deleted_at',null);
+   var oAll=await SB.from('orders').select('*');
+   var kAll=await SB.from('cod_kpis').select('*');
+   await loadBlacklist();var creas=await loadCreatives(null);
+   app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];app.cache.creatives=creas;
   } else if(v==='stock'){
    var ps=await SB.from('products').select('id,name,image_url,stock_current,stock_min,current_stage,capacity').is('deleted_at',null).order('stock_current',{ascending:true});
    var sm=await SB.from('stock_movements').select('*').order('created_at',{ascending:false}).limit(50);
@@ -960,6 +969,7 @@ function renderView(){
   case 'creatives':return viewCreativesGlobal();
   case 'clients':return viewClients();
   case 'client':return viewClient();
+  case 'report':return viewReport();
   case 'blacklist':return viewBlacklist();
   case 'trash':return viewTrash();
   case 'cockpit':return viewCockpit();
@@ -1236,6 +1246,110 @@ function buildCashflowForecast(orders,kpis,products,settings,scenario){
  var totalNet=totalIn-totalOut;
  var conf='med';if(orders.length>=30&&recentKpis.length>=7)conf='high';else if(orders.length<10||recentKpis.length<3)conf='low';
  return {days:days,totalIn:totalIn,totalOut:totalOut,totalNet:totalNet,pendingTotal:pendingTotal,dailyAdAvg:dailyAdAvg,conf:conf,minCum:minCum,minCumDay:minCumDay,confR:confR,delivR:delivR};
+}
+
+/* === Weekly report === */
+function weekRange(weeksBack){
+ weeksBack=weeksBack||0;var now=new Date();var day=now.getDay()||7;
+ var monday=new Date(now);monday.setDate(now.getDate()-(day-1)-weeksBack*7);monday.setHours(0,0,0,0);
+ var sunday=new Date(monday);sunday.setDate(monday.getDate()+6);sunday.setHours(23,59,59,999);
+ return {from:monday,to:sunday};
+}
+function buildWeeklyReport(weeksBack){
+ var range=weekRange(weeksBack||0);var prev=weekRange((weeksBack||0)+1);
+ var inWeek=function(arr,field,r){return (arr||[]).filter(function(x){return inRange(x[field],r)})};
+ var orders=app.cache.orders||[],kpis=app.cache.kpis||[],products=app.cache.products||[],creas=app.cache.creatives||[];
+ var wOrders=inWeek(orders,'created_at',range);var pOrders=inWeek(orders,'created_at',prev);
+ var wKpis=inWeek(kpis,'day',range);var pKpis=inWeek(kpis,'day',prev);
+ var usd=Number((app.cache.settings&&app.cache.settings.usd_to_dzd)||260);
+ var calc=function(os,ks){var rev=0,ad=0,deliv=0,confirmed=0,total=os.length;
+  ks.forEach(function(k){rev+=Number(k.revenue||0);ad+=Number(k.ad_spend||0)});
+  os.forEach(function(o){var tot=Number(o.total_price||0);if(o.status==='delivered'){rev+=tot;deliv++}if(o.status==='confirmed'||o.status==='delivered')confirmed++});
+  return {rev:rev,ad:ad*usd,deliv:deliv,confirmed:confirmed,total:total,net:rev-ad*usd}};
+ var cur=calc(wOrders,wKpis);var prv=calc(pOrders,pKpis);
+ var convRate=cur.total?Math.round(cur.confirmed*100/cur.total):0;
+ var prevConvRate=prv.total?Math.round(prv.confirmed*100/prv.total):0;
+ var byProduct={};(products||[]).forEach(function(p){byProduct[p.id]={p:p,rev:0,deliv:0,ad:0}});
+ wOrders.forEach(function(o){if(o.status==='delivered'&&byProduct[o.product_id]){byProduct[o.product_id].rev+=Number(o.total_price||0);byProduct[o.product_id].deliv++}});
+ wKpis.forEach(function(k){if(byProduct[k.product_id]){byProduct[k.product_id].rev+=Number(k.revenue||0);byProduct[k.product_id].ad+=Number(k.ad_spend||0)*usd}});
+ var topProducts=Object.values(byProduct).map(function(b){b.net=b.rev-b.ad;return b}).sort(function(a,b){return b.net-a.net}).filter(function(b){return b.rev||b.ad}).slice(0,5);
+ var topCreas=(creas||[]).map(function(c){var m=creativeMetrics(c);return {c:c,m:m}}).filter(function(x){return x.c.impressions>=100}).sort(function(a,b){return b.m.roas-a.m.roas}).slice(0,5);
+ var creasWinners=(creas||[]).filter(function(c){return c.status==='winner'}).length;
+ var creasLosers=(creas||[]).filter(function(c){return c.status==='loser'}).length;
+ var allClients=buildClients(orders,app.cache.blacklist||[]);
+ var weekClients={vip:0,new:0,atrisk:0,lost:0};
+ allClients.forEach(function(c){if(c.first&&inRange(c.first,range))weekClients.new++;if(c.segment==='vip')weekClients.vip++;if(c.segment==='atrisk')weekClients.atrisk++;if(c.segment==='lost')weekClients.lost++});
+ var lowStock=(products||[]).filter(function(p){return p.stock_current!=null&&p.stock_min!=null&&p.stock_current<p.stock_min});
+ var fc=buildCashflowForecast(orders,kpis,products,app.cache.settings||{},'expected');
+ var actions=[];
+ if(creasLosers>0)actions.push('💀 '+creasLosers+' creas perdantes a tuer');
+ if(creasWinners>0)actions.push('🏆 Scaler '+creasWinners+' creas gagnantes (+30-50% budget)');
+ if(lowStock.length)actions.push('📦 Reapprovisionner '+lowStock.length+' SKU bas');
+ if(weekClients.atrisk>0)actions.push('⚠ Relancer '+weekClients.atrisk+' clients a risque');
+ if(weekClients.vip>0)actions.push('⭐ Cadeau/code promo VIP a envoyer ('+weekClients.vip+' clients)');
+ if(convRate<60&&cur.total>5)actions.push('📞 Reformer les confirmatrices (taux conf '+convRate+'%)');
+ if(fc.totalNet<0)actions.push('🚨 Cashflow 30j negatif: ajuster pub ou prix');
+ return {range:range,cur:cur,prev:prv,convRate:convRate,prevConvRate:prevConvRate,topProducts:topProducts,topCreas:topCreas,creasWinners:creasWinners,creasLosers:creasLosers,weekClients:weekClients,lowStock:lowStock,fc:fc,actions:actions};
+}
+function renderReportHtml(r,opts){
+ opts=opts||{};
+ var weekLab=r.range.from.toISOString().slice(0,10)+' → '+r.range.to.toISOString().slice(0,10);
+ var pct=function(now,prev){if(prev===0)return now>0?'+∞':'0%';var v=((now-prev)/Math.abs(prev))*100;return (v>=0?'+':'')+v.toFixed(0)+'%'};
+ var pctColor=function(now,prev){if(prev===0&&now===0)return '#666';return now>=prev?'#16a34a':'#dc2626'};
+ var kpi=function(lab,val,prev){var c=pctColor(val,prev);return '<div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:14px"><div style="font-size:11px;color:#666;font-weight:700;text-transform:uppercase;letter-spacing:.04em">'+lab+'</div><div style="font-size:24px;font-weight:800;color:#111;margin-top:5px">'+val+'</div>'+(prev!=null?'<div style="font-size:11px;color:'+c+';font-weight:700;margin-top:2px">'+pct(typeof val==='number'?val:0,typeof prev==='number'?prev:0)+' vs sem-1</div>':'')+'</div>'};
+ var s=app.cache.settings||{};
+ var html='<div id="reportPdf" style="font-family:Inter,Arial,sans-serif;background:#fff;padding:28px;color:#111;max-width:780px;margin:0 auto">'+
+  '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #6d28d9;padding-bottom:12px;margin-bottom:18px"><div><div style="font-size:24px;font-weight:900;color:#6d28d9">📑 COD Team</div><div style="font-size:13px;color:#666;margin-top:2px">'+t('reportTitle').replace(/^📑\s*/,'')+'</div></div><div style="text-align:right"><div style="font-size:11px;color:#666">'+t('reportWeekOf')+'</div><div style="font-size:13px;font-weight:700">'+weekLab+'</div></div></div>'+
+  '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:16px">'+
+   kpi(t('reportRevenue'),fmt(Math.round(r.cur.net))+' DA',r.prev.net)+
+   kpi(t('reportOrders'),r.cur.total,r.prev.total)+
+   kpi(t('reportConvRate'),r.convRate+'%',r.prevConvRate)+
+   kpi(t('reportCash30'),fmt(Math.round(r.fc.totalNet))+' DA',null)+
+  '</div>'+
+  '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:18px">'+
+   kpi(t('reportNew')+' (clients)',r.weekClients.new,null)+
+   kpi(t('reportVip'),r.weekClients.vip,null)+
+   kpi(t('reportLost')+' (a risque)',r.weekClients.atrisk,null)+
+   kpi(t('reportLowStock'),r.lowStock.length,null)+
+  '</div>'+
+  '<div style="background:#f8fafc;border-radius:9px;padding:14px;margin-bottom:16px"><div style="font-weight:800;font-size:14px;margin-bottom:10px">🏆 '+t('reportTopProducts')+'</div>'+(r.topProducts.length?'<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#e5e7eb"><th style="text-align:left;padding:6px 8px;border-radius:4px 0 0 0">Produit</th><th style="text-align:right;padding:6px 8px">Livrees</th><th style="text-align:right;padding:6px 8px">Revenu</th><th style="text-align:right;padding:6px 8px;border-radius:0 4px 0 0">Net</th></tr></thead><tbody>'+r.topProducts.map(function(b){return '<tr style="border-bottom:1px solid #e5e7eb"><td style="padding:6px 8px;font-weight:700">'+esc(b.p.name)+'</td><td style="text-align:right;padding:6px 8px">'+b.deliv+'</td><td style="text-align:right;padding:6px 8px">'+fmt(b.rev)+'</td><td style="text-align:right;padding:6px 8px;font-weight:800;color:'+(b.net>=0?'#16a34a':'#dc2626')+'">'+fmt(Math.round(b.net))+'</td></tr>'}).join('')+'</tbody></table>':'<div style="font-size:12px;color:#666">'+t('empty')+'</div>')+'</div>'+
+  '<div style="background:#f8fafc;border-radius:9px;padding:14px;margin-bottom:16px"><div style="font-weight:800;font-size:14px;margin-bottom:10px">🎨 '+t('reportTopCreas')+' (ROAS)</div>'+(r.topCreas.length?'<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#e5e7eb"><th style="text-align:left;padding:6px 8px">Crea</th><th style="text-align:left;padding:6px 8px">Plateforme</th><th style="text-align:right;padding:6px 8px">Impressions</th><th style="text-align:right;padding:6px 8px">ROAS</th></tr></thead><tbody>'+r.topCreas.map(function(x){return '<tr style="border-bottom:1px solid #e5e7eb"><td style="padding:6px 8px;font-weight:700">'+esc(x.c.creative_name)+'</td><td style="padding:6px 8px">'+esc((x.c.platform||'meta').toUpperCase())+'</td><td style="text-align:right;padding:6px 8px">'+fmt(x.c.impressions)+'</td><td style="text-align:right;padding:6px 8px;font-weight:800;color:'+(x.m.roas>=1.5?'#16a34a':x.m.roas<1?'#dc2626':'#f59e0b')+'">'+x.m.roas.toFixed(2)+'x</td></tr>'}).join('')+'</tbody></table>':'<div style="font-size:12px;color:#666">'+t('empty')+'</div>')+'</div>'+
+  '<div style="background:#fef3c7;border:2px solid #f59e0b;border-radius:9px;padding:14px;margin-bottom:16px"><div style="font-weight:800;font-size:14px;margin-bottom:10px;color:#92400e">✅ '+t('reportActions')+'</div>'+(r.actions.length?'<ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.7;color:#451a03">'+r.actions.map(function(a){return '<li>'+esc(a)+'</li>'}).join('')+'</ul>':'<div style="font-size:12px;color:#666">Aucune action urgente — tout va bien ! ✨</div>')+'</div>'+
+  '<div style="text-align:center;font-size:10px;color:#999;margin-top:18px;border-top:1px solid #e5e7eb;padding-top:8px">'+t('reportGeneratedAt')+' '+new Date().toISOString().slice(0,16).replace('T',' ')+' · COD Team Platform</div>'+
+ '</div>';
+ return html;
+}
+function downloadReportPdf(){
+ var el=document.getElementById('reportPdf');if(!el){toast('Rapport indisponible','err');return}
+ if(typeof html2pdf==='undefined'){toast('Librairie PDF non chargee','err');return}
+ var opts={margin:[8,8,8,8],filename:'cod-rapport-'+new Date().toISOString().slice(0,10)+'.pdf',image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff'},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};
+ toast('📥 Generation PDF...');
+ html2pdf().set(opts).from(el).save().then(function(){toast('✓ PDF telecharge')}).catch(function(e){console.error(e);toast('Erreur PDF','err')});
+}
+function emailReport(){
+ var r=buildWeeklyReport(app.reportWeek||0);
+ var weekLab=r.range.from.toISOString().slice(0,10)+' → '+r.range.to.toISOString().slice(0,10);
+ var body='Rapport COD Team — '+weekLab+'\n\n';
+ body+='💰 KPIs:\n';
+ body+='- Revenu net: '+fmt(Math.round(r.cur.net))+' DA\n';
+ body+='- Commandes traitees: '+r.cur.total+'\n';
+ body+='- Taux conversion: '+r.convRate+'%\n';
+ body+='- Cash projete 30j: '+fmt(Math.round(r.fc.totalNet))+' DA\n\n';
+ body+='👤 Clients:\n';
+ body+='- Nouveaux: '+r.weekClients.new+' · VIP: '+r.weekClients.vip+' · A risque: '+r.weekClients.atrisk+'\n\n';
+ if(r.topProducts.length){body+='🏆 Top produits:\n';r.topProducts.forEach(function(b){body+='- '+b.p.name+': '+fmt(Math.round(b.net))+' DA net\n'});body+='\n'}
+ if(r.actions.length){body+='✅ Actions semaine prochaine:\n';r.actions.forEach(function(a){body+='- '+a+'\n'})}
+ body+='\n— Genere par COD Team Platform';
+ var url='mailto:?subject='+encodeURIComponent(t('reportEmailSubject')+' — '+weekLab)+'&body='+encodeURIComponent(body);
+ window.location.href=url;
+}
+function viewReport(){
+ var r=buildWeeklyReport(app.reportWeek||0);
+ var weekLab=r.range.from.toISOString().slice(0,10)+' → '+r.range.to.toISOString().slice(0,10);
+ var nav='<div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:12px"><button class="btn btn-g btn-s" onclick="app.reportWeek=(app.reportWeek||0)+1;render()">'+t('reportWeekPrev')+'</button><b style="font-size:14px">'+weekLab+'</b><button class="btn btn-g btn-s" onclick="if((app.reportWeek||0)>0){app.reportWeek=app.reportWeek-1;render()}" '+((app.reportWeek||0)===0?'disabled':'')+'>'+t('reportWeekNext')+'</button>'+((app.reportWeek||0)>0?'<button class="btn btn-g btn-s" onclick="app.reportWeek=0;render()">'+t('reportWeekCurr')+'</button>':'')+'</div>';
+ var actions='<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-p" onclick="downloadReportPdf()">'+t('reportPdf')+'</button><button class="btn btn-g" onclick="emailReport()">'+t('reportEmail')+'</button><button class="btn btn-g" onclick="window.print()">'+t('reportPrint')+'</button></div>';
+ var head='<div class="pghead"><div><h1 class="pg">'+t('reportTitle')+'</h1><div class="sub">'+t('reportSub')+'</div></div></div>';
+ return head+nav+actions+renderReportHtml(r);
 }
 
 /* === COCKPIT CFO === */
