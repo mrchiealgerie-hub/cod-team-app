@@ -1,0 +1,22 @@
+{
+  "name": "wacrm-baileys-relay",
+  "version": "1.0.0",
+  "description": "Baileys WhatsApp relay for COD Team — auto-sends broadcasts queued in Supabase",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "@whiskeysockets/baileys": "^6.7.18",
+    "express": "^4.21.0",
+    "pino": "^9.5.0",
+    "qrcode": "^1.5.4"
+  },
+  "license": "MIT"
+}
