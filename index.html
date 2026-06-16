@@ -190,14 +190,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['cockpit','pipeline','products','research','validate','sourcing','tests','orders','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
- media_buyer:['cockpit','pipeline','products','research','tests','orders','tasks','kpis','perf'],
+ admin:['cockpit','pipeline','products','research','validate','sourcing','tests','orders','clients','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['cockpit','pipeline','products','research','tests','orders','clients','tasks','kpis','perf'],
  sourcing:['pipeline','products','research','sourcing','tasks'],
  production:['pipeline','products','sourcing','stock','production','tasks'],
  video_editor:['pipeline','products','video','tasks'],
- confirmatrice:['pipeline','orders','products','tasks']
+ confirmatrice:['pipeline','orders','clients','products','tasks']
 };
-var ICON={cockpit:'💰',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',orders:'📞',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={cockpit:'💰',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',orders:'📞',clients:'👤',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
 var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
@@ -252,7 +252,11 @@ var I18N={
   template:'Template',applyTemplate:'Appliquer un template',
   period_today:"Aujourd'hui",period_week:'7 jours',period_month:'30 jours',period_quarter:'90 jours',period_year:'365 jours',period_all:'Tout',vsPrev:'vs periode precedente',trendTitle:'📈 Tendance commandes',revPerDay:'Revenu par jour',cohortTitle:'🔁 Cohort retention (clients qui re-commandent)',cohortIntro:'% des clients d\'un mois qui repassent commande dans les mois suivants.',cohortMonth:'Mois acquisition',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'Clients',avgOrderValue:'Panier moyen',uniqueCustomers:'Clients uniques',repeatRate:'Taux fidelite',
   aiBrief:'🤖 Generer la fiche par IA',aiUsp:'Argument unique (USP)',aiBenefits:'Benefices cles (1-3 lignes)',aiAudience:'Cible (homme/femme/age)',aiGenerate:'Generer',aiNote:'Fiche generee. Modifiez si necessaire puis Enregistrer.',aiHint:'Donnez quelques infos cles, l\'IA generera script + objections + upsells + FAQ.',
-  translate:'Traduire',translating:'Traduction...',translated:'Traduit ✓',lang_fr:'Francais',lang_ar:'Arabe',lang_en:'Anglais',lang_zh:'Chinois',translateAll:'Tout traduire'
+  translate:'Traduire',translating:'Traduction...',translated:'Traduit ✓',lang_fr:'Francais',lang_ar:'Arabe',lang_en:'Anglais',lang_zh:'Chinois',translateAll:'Tout traduire',
+  nav_clients:'Clients 360°',clientsTitle:'Clients 360°',clientsSub:'Tous vos clients, segmentes automatiquement.',clientsAll:'Tous',clientsSegment:'Segment',clientsLtv:'Valeur vie (LTV)',clientsOrders:'Commandes',clientsLast:'Derniere',clientsScore:'Score fidelite',clientsFirst:'Premiere',clientsAov:'Panier moyen',clientsDelivery:'Taux livraison',clientsBack:'← Retour',clientsDetail:'Fiche client',clientHistory:'Historique commandes',
+  seg_vip:'⭐ VIP',seg_recurrent:'🔁 Recurrent',seg_new:'🆕 Nouveau',seg_atrisk:'⚠ A risque',seg_lost:'💤 Perdu',seg_oneshot:'1× One-shot',seg_blacklist:'⛔ Blacklist',
+  segHintVip:'5+ commandes livrees, LTV ≥ 30 000 DA, active < 90j',segHintRec:'2-4 commandes, derniere < 90j',segHintNew:'1 commande dans les 30 derniers jours',segHintRisk:'2+ commandes, derniere entre 60 et 180j',segHintLost:'2+ commandes, derniere > 180j',segHintOne:'1 seule commande, > 30j',
+  noClients:'Aucun client correspondant.',daysAgo:'il y a ## j',today:"Aujourd'hui"
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -304,7 +308,11 @@ var I18N={
   template:'قالب',applyTemplate:'تطبيق قالب',
   period_today:'اليوم',period_week:'7 أيام',period_month:'30 يوم',period_quarter:'90 يوم',period_year:'365 يوم',period_all:'الكل',vsPrev:'مقارنة بالفترة السابقة',trendTitle:'📈 اتجاه الطلبات',revPerDay:'الإيراد يوميًا',cohortTitle:'🔁 الاحتفاظ بالعملاء',cohortIntro:'نسبة العملاء الذين يعيدون الطلب في الأشهر التالية.',cohortMonth:'شهر الاكتساب',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'عملاء',avgOrderValue:'متوسط الطلب',uniqueCustomers:'عملاء فريدون',repeatRate:'معدل الولاء',
   aiBrief:'🤖 توليد البطاقة بالذكاء',aiUsp:'الميزة الفريدة (USP)',aiBenefits:'الفوائد الرئيسية (1-3 أسطر)',aiAudience:'الفئة المستهدفة (رجال/نساء/العمر)',aiGenerate:'توليد',aiNote:'تم توليد البطاقة. عدّل عند الحاجة ثم احفظ.',aiHint:'أعط بعض المعلومات الأساسية، سيتم توليد السكريبت + الاعتراضات + العروض + الأسئلة الشائعة.',
-  translate:'ترجمة',translating:'جاري الترجمة...',translated:'تمت الترجمة ✓',lang_fr:'الفرنسية',lang_ar:'العربية',lang_en:'الإنجليزية',lang_zh:'الصينية',translateAll:'ترجمة الكل'
+  translate:'ترجمة',translating:'جاري الترجمة...',translated:'تمت الترجمة ✓',lang_fr:'الفرنسية',lang_ar:'العربية',lang_en:'الإنجليزية',lang_zh:'الصينية',translateAll:'ترجمة الكل',
+  nav_clients:'العملاء 360°',clientsTitle:'العملاء 360°',clientsSub:'جميع عملائك مع تصنيف تلقائي.',clientsAll:'الكل',clientsSegment:'الفئة',clientsLtv:'قيمة العميل (LTV)',clientsOrders:'الطلبات',clientsLast:'آخر طلب',clientsScore:'نقاط الولاء',clientsFirst:'أول طلب',clientsAov:'متوسط الطلب',clientsDelivery:'نسبة التسليم',clientsBack:'← رجوع',clientsDetail:'بطاقة العميل',clientHistory:'سجل الطلبات',
+  seg_vip:'⭐ مميز',seg_recurrent:'🔁 متكرر',seg_new:'🆕 جديد',seg_atrisk:'⚠ في خطر',seg_lost:'💤 ضائع',seg_oneshot:'1× مرة واحدة',seg_blacklist:'⛔ قائمة سوداء',
+  segHintVip:'5+ طلبات مسلَّمة، LTV ≥ 30000 دج، نشط < 90 يوم',segHintRec:'2-4 طلبات، آخر طلب < 90 يوم',segHintNew:'طلب واحد خلال 30 يومًا',segHintRisk:'2+ طلبات، آخر طلب بين 60 و180 يوم',segHintLost:'2+ طلبات، آخر طلب > 180 يوم',segHintOne:'طلب واحد فقط، > 30 يوم',
+  noClients:'لا يوجد عميل مطابق.',daysAgo:'قبل ## يوم',today:'اليوم'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -518,6 +526,11 @@ async function refresh(){
    await loadOrders();await loadBlacklist();
    var pr=await SB.from('profiles').select('id,full_name');var pd=await SB.from('products').select('id,name');
    app.cache.profiles=pr.data||[];app.cache.products=pd.data||[];
+  } else if(v==='clients'||v==='client'){
+   var oAll=await SB.from('orders').select('*').order('created_at',{ascending:false});
+   var pd=await SB.from('products').select('id,name');
+   await loadBlacklist();
+   app.cache.orders=oAll.data||[];app.cache.products=pd.data||[];
   } else if(v==='blacklist'){
    await loadBlacklist();
   } else if(v==='trash'){
@@ -845,7 +858,8 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'workshop_offers'},function(){if(app.view==='sourcing'||app.view==='product')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'product_tests'},function(){if(app.view==='tests'||app.view==='product')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'cod_kpis'},function(){if(app.view==='kpis')refresh()})
-  .on('postgres_changes',{event:'*',schema:'public',table:'orders'},function(){if(app.view==='orders')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'orders'},function(){if(app.view==='orders'||app.view==='clients'||app.view==='client')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'customer_blacklist'},function(){if(app.view==='clients'||app.view==='client'||app.view==='orders'||app.view==='blacklist')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -921,6 +935,8 @@ function renderView(){
   case 'kpis':return viewKpis();
   case 'team':return viewTeam();
   case 'orders':return viewOrders();
+  case 'clients':return viewClients();
+  case 'client':return viewClient();
   case 'blacklist':return viewBlacklist();
   case 'trash':return viewTrash();
   case 'cockpit':return viewCockpit();
@@ -973,6 +989,68 @@ function buildCohorts(orders){
   }
  });
  return Object.values(cohorts).sort(function(a,b){return b.month.localeCompare(a.month)}).slice(0,6);
+}
+
+/* === Client 360 helpers === */
+var DELIVERED_STATUSES={delivered:1};
+var POSITIVE_STATUSES={delivered:1,confirmed:1};
+var DAY_MS=86400000;
+function daysSince(dt){if(!dt)return 99999;return Math.floor((Date.now()-new Date(dt).getTime())/DAY_MS)}
+function daysSinceLabel(d){if(d<=0)return t('today');return t('daysAgo').replace('##',d)}
+function segmentOf(stat,isBlacklisted){
+ if(isBlacklisted)return 'blacklist';
+ var n=stat.count,ltv=stat.ltv,last=stat.daysSinceLast;
+ if(n>=5&&ltv>=30000&&last<90)return 'vip';
+ if(n>=2&&last<90)return 'recurrent';
+ if(n>=2&&last>=180)return 'lost';
+ if(n>=2&&last>=60)return 'atrisk';
+ if(n===1&&last<30)return 'new';
+ if(n===1)return 'oneshot';
+ return 'recurrent';
+}
+var SEG_COLOR={vip:'b-live',recurrent:'b-validated',new:'b-research',atrisk:'b-tovalidate',lost:'b-arch',oneshot:'b-todo',blacklist:'b-killed'};
+var SEG_ORDER=['vip','recurrent','new','atrisk','lost','oneshot','blacklist'];
+function clientScore(stat){
+ var pCount=Math.min(stat.count*8,40);
+ var pLtv=Math.min(Math.floor(stat.ltv/2000),30);
+ var pRec=Math.max(0,30-Math.floor(stat.daysSinceLast/3));
+ return Math.max(0,Math.min(100,pCount+pLtv+pRec));
+}
+function buildClients(orders,blacklist){
+ var blMap={};(blacklist||[]).forEach(function(b){blMap[b.phone]=b.reason||''});
+ var byPhone={};
+ (orders||[]).forEach(function(o){if(!o.customer_phone)return;
+  var p=o.customer_phone;
+  if(!byPhone[p])byPhone[p]={phone:p,name:o.customer_name||'',wilaya:o.customer_wilaya||'',orders:[],ltv:0,delivered:0,count:0,first:null,last:null};
+  var c=byPhone[p];c.orders.push(o);c.count++;
+  if(o.customer_name&&!c.name)c.name=o.customer_name;
+  if(o.customer_wilaya&&!c.wilaya)c.wilaya=o.customer_wilaya;
+  if(DELIVERED_STATUSES[o.status]){c.ltv+=Number(o.total_price||0);c.delivered++}
+  var d=o.created_at;if(d){if(!c.first||d<c.first)c.first=d;if(!c.last||d>c.last)c.last=d}
+ });
+ return Object.values(byPhone).map(function(c){
+  c.daysSinceLast=daysSince(c.last);c.daysSinceFirst=daysSince(c.first);
+  c.aov=c.delivered?Math.round(c.ltv/c.delivered):0;
+  c.deliveryRate=c.count?Math.round(c.delivered*100/c.count):0;
+  c.isBlacklist=!!blMap[c.phone];c.blacklistReason=blMap[c.phone]||'';
+  c.segment=segmentOf(c,c.isBlacklist);
+  c.score=clientScore(c);
+  return c;
+ }).sort(function(a,b){return b.score-a.score});
+}
+function goClient(phone){app.clientPhone=phone;app.view='client';render()}
+function backToClients(){app.clientPhone=null;app.view='clients';render()}
+function lookupClient(phone){
+ var el=document.getElementById('o_client_info');if(!el)return;
+ var clean=(phone||'').trim();
+ if(clean.length<6){el.style.display='none';el.innerHTML='';return}
+ var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]);
+ var c=clients.find(function(x){return x.phone===clean});
+ if(!c){el.style.display='none';el.innerHTML='';return}
+ var nm=document.getElementById('o_name');if(nm&&!nm.value&&c.name)nm.value=c.name;
+ var seg='<span class="badge '+(SEG_COLOR[c.segment]||'b-todo')+'">'+t('seg_'+c.segment)+'</span>';
+ el.style.display='block';
+ el.innerHTML='✅ Client connu: <b>'+esc(c.name||'-')+'</b> · '+seg+' · '+c.count+' cmd · '+fmt(c.ltv)+' '+t('cur')+' LTV · '+(c.last?daysSinceLabel(c.daysSinceLast):'-')+(c.isBlacklist?' · <span style="color:var(--bad);font-weight:700">⛔ BLACKLIST: '+esc(c.blacklistReason||'')+'</span>':'');
 }
 
 /* === COCKPIT CFO === */
@@ -1121,13 +1199,15 @@ function viewOrders(){
   '<button class="btn btn-p" onclick="openModal(\'newOrder\')">+ '+t('newOrder')+'</button>'+
  '</div></div>';
  if(mine.length===0)return head+'<div class="empty">'+t('empty')+'</div>';
+ var allClients=buildClients(orders,bl);var byPhone={};allClients.forEach(function(c){byPhone[c.phone]=c});
  var rows=mine.map(function(o){
-  var sameP=orders.filter(function(x){return x.customer_phone===o.customer_phone}).length;
+  var ck=byPhone[o.customer_phone];var sameP=ck?ck.count:1;
   var isB=blPhones[o.customer_phone];
+  var segChip=ck&&!isB?'<span class="badge '+(SEG_COLOR[ck.segment]||'b-todo')+'" style="cursor:pointer" onclick="event.stopPropagation();goClient(\''+esc(o.customer_phone)+'\')">'+t('seg_'+ck.segment)+'</span>':'';
   var statusOpts=ORDER_STATUSES.map(function(s){return '<option value="'+s+'" '+(o.status===s?'selected':'')+'>'+t('os_'+s)+'</option>'}).join('');
   return '<div class="card" style="padding:11px 13px;margin-bottom:8px;'+(isB?'border-left:4px solid #dc2626':'')+'">'+
    '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">'+
-   '<div style="flex:1;min-width:200px"><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><b>'+esc(o.customer_name||'-')+'</b><a href="tel:'+esc(o.customer_phone)+'" class="lnk">📱 '+esc(o.customer_phone)+'</a>'+(isB?'<span class="badge b-killed" title="'+esc(isB)+'">⛔</span>':'')+(sameP>1?'<span class="niche-chip">📊 '+sameP+' cmd</span>':'')+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+esc(o.customer_wilaya||'')+' · '+esc((pn[o.product_id]||'-'))+' · '+o.quantity+'× = '+fmt(o.total_price)+' '+t('cur')+(o.notes?' · '+esc(o.notes.slice(0,40)):'')+'</div></div>'+
+   '<div style="flex:1;min-width:200px"><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><b style="cursor:pointer;color:var(--brand)" onclick="goClient(\''+esc(o.customer_phone)+'\')" title="Fiche client">👤 '+esc(o.customer_name||'-')+'</b><a href="tel:'+esc(o.customer_phone)+'" class="lnk">📱 '+esc(o.customer_phone)+'</a>'+segChip+(isB?'<span class="badge b-killed" title="'+esc(isB)+'">⛔</span>':'')+(sameP>1?'<span class="niche-chip">📊 '+sameP+' cmd</span>':'')+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+esc(o.customer_wilaya||'')+' · '+esc((pn[o.product_id]||'-'))+' · '+o.quantity+'× = '+fmt(o.total_price)+' '+t('cur')+(o.notes?' · '+esc(o.notes.slice(0,40)):'')+'</div></div>'+
    '<select class="input sm" style="width:auto" onchange="setOrderStatus(\''+o.id+'\',this.value)">'+statusOpts+'</select>'+
    (!o.assignee_id?'<button class="btn btn-p btn-s" onclick="claimOrder(\''+o.id+'\')">📞 '+t('os_calling')+'</button>':'<span style="font-size:11px;color:var(--ink2)">👤 '+esc(nm[o.assignee_id]||'?')+'</span>')+
    (!isB&&isAdmin()?'<button class="pill del" onclick="addToBlacklist(\''+o.customer_phone+'\',prompt(\''+t('blacklistReason')+' :\')||\'\')" title="'+t('addToBlacklist')+'">⛔</button>':'')+
@@ -1142,6 +1222,56 @@ function viewBlacklist(){
  if(bl.length===0)return head+'<div class="empty">'+t('empty')+'</div>';
  var rows=bl.map(function(b){return '<tr><td><b>'+esc(b.phone)+'</b></td><td>'+esc(b.reason||'-')+'</td><td>'+esc((b.created_at||'').slice(0,10))+'</td><td><button class="pill del" onclick="delBlacklist(\''+b.phone+'\')">✕</button></td></tr>'}).join('');
  return head+'<div class="card scroll-x"><table><thead><tr><th>'+t('phone')+'</th><th>'+t('blacklistReason')+'</th><th>'+t('date')+'</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+/* === CLIENTS 360 === */
+function viewClients(){
+ var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]);
+ var counts={all:clients.length};SEG_ORDER.forEach(function(s){counts[s]=0});
+ clients.forEach(function(c){counts[c.segment]=(counts[c.segment]||0)+1});
+ var seg=app.clientsSegment||'all';
+ var filtered=seg==='all'?clients.slice():clients.filter(function(c){return c.segment===seg});
+ if(app.q){var q=app.q.toLowerCase();filtered=filtered.filter(function(c){return (c.name||'').toLowerCase().indexOf(q)>=0||(c.phone||'').indexOf(q)>=0||(c.wilaya||'').toLowerCase().indexOf(q)>=0})}
+ var head='<div class="pghead"><div><h1 class="pg">👤 '+t('clientsTitle')+'</h1><div class="sub">'+t('clientsSub')+'</div></div></div>';
+ var chipBtn=function(key,label,color){var on=seg===key;return '<button class="pill" style="padding:6px 11px;background:'+(on?'var(--brand)':'#f1f2f5')+';color:'+(on?'#fff':'var(--ink)')+';font-weight:'+(on?'800':'600')+'" onclick="app.clientsSegment=\''+key+'\';render()">'+label+' <span style="opacity:.8;margin-inline-start:5px">'+(counts[key]||0)+'</span></button>'};
+ var chips='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">'+chipBtn('all',t('clientsAll'))+SEG_ORDER.map(function(s){return chipBtn(s,t('seg_'+s))}).join('')+'</div>';
+ if(filtered.length===0)return head+chips+'<div class="empty">'+t('noClients')+'</div>';
+ var rows=filtered.map(function(c){
+  var segBadge='<span class="badge '+(SEG_COLOR[c.segment]||'b-todo')+'">'+t('seg_'+c.segment)+'</span>';
+  var lastTxt=c.last?daysSinceLabel(c.daysSinceLast):'-';
+  var scoreBar='<div style="display:flex;align-items:center;gap:6px"><div style="width:60px;height:6px;background:#e7e9ef;border-radius:3px;overflow:hidden"><div style="width:'+c.score+'%;height:100%;background:'+(c.score>=70?'var(--good)':c.score>=40?'#f59e0b':'var(--bad)')+'"></div></div><span style="font-size:11px;font-weight:700">'+c.score+'</span></div>';
+  return '<tr style="cursor:pointer" onclick="goClient(\''+esc(c.phone)+'\')">'+
+   '<td><b>'+esc(c.name||'-')+'</b><div style="font-size:11px;color:var(--ink2)">📱 '+esc(c.phone)+'</div></td>'+
+   '<td>'+esc(c.wilaya||'-')+'</td>'+
+   '<td>'+segBadge+'</td>'+
+   '<td style="text-align:center;font-weight:700">'+c.count+'</td>'+
+   '<td style="font-weight:700">'+fmt(c.ltv)+' '+t('cur')+'</td>'+
+   '<td style="font-size:12px">'+esc(lastTxt)+'</td>'+
+   '<td>'+scoreBar+'</td>'+
+  '</tr>';
+ }).join('');
+ return head+chips+'<div class="card scroll-x"><table><thead><tr><th>'+t('customer')+'</th><th>'+t('wilaya')+'</th><th>'+t('clientsSegment')+'</th><th style="text-align:center">'+t('clientsOrders')+'</th><th>'+t('clientsLtv')+'</th><th>'+t('clientsLast')+'</th><th>'+t('clientsScore')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+function viewClient(){
+ var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]);
+ var c=clients.find(function(x){return x.phone===app.clientPhone});
+ if(!c)return '<div class="pghead"><div><button class="btn btn-g" onclick="backToClients()">'+t('clientsBack')+'</button></div></div><div class="empty">'+t('noClients')+'</div>';
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p.name});
+ var segBadge='<span class="badge '+(SEG_COLOR[c.segment]||'b-todo')+'" style="font-size:13px;padding:5px 11px">'+t('seg_'+c.segment)+'</span>';
+ var head='<div class="pghead"><div><button class="btn btn-g" onclick="backToClients()" style="margin-bottom:8px">'+t('clientsBack')+'</button><h1 class="pg">👤 '+esc(c.name||'-')+'</h1><div class="sub" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><a class="lnk" href="tel:'+esc(c.phone)+'">📱 '+esc(c.phone)+'</a> · 🗺 '+esc(c.wilaya||'-')+' · '+segBadge+(c.isBlacklist?' <span style="color:var(--bad);font-size:12px">⛔ '+esc(c.blacklistReason||'')+'</span>':'')+'</div></div><div class="acts">'+(isAdmin()?(c.isBlacklist?'<button class="pill" onclick="delBlacklist(\''+esc(c.phone)+'\')">✓ Lever blacklist</button>':'<button class="pill del" onclick="addToBlacklist(\''+esc(c.phone)+'\',prompt(\''+t('blacklistReason')+' :\')||\'\')">⛔ '+t('addToBlacklist')+'</button>'):'')+'</div></div>';
+ var card=function(lab,val,sub){return '<div class="card" style="padding:14px"><div style="font-size:11px;color:var(--ink2);font-weight:700;text-transform:uppercase;letter-spacing:.04em">'+lab+'</div><div style="font-size:22px;font-weight:800;margin-top:5px">'+val+'</div>'+(sub?'<div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+sub+'</div>':'')+'</div>'};
+ var stats='<div class="grid g4" style="margin-bottom:14px">'+
+  card(t('clientsOrders'),c.count,c.delivered+' livrees')+
+  card(t('clientsLtv'),fmt(c.ltv)+' '+t('cur'),'AOV: '+fmt(c.aov)+' '+t('cur'))+
+  card(t('clientsLast'),daysSinceLabel(c.daysSinceLast),(c.last||'').slice(0,10))+
+  card(t('clientsScore'),c.score+'/100',t('clientsDelivery')+': '+c.deliveryRate+'%')+
+ '</div>';
+ var hist=c.orders.slice().sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at)}).map(function(o){
+  return '<tr><td style="font-size:12px">'+esc((o.created_at||'').slice(0,16).replace('T',' '))+'</td><td>'+esc(pn[o.product_id]||'-')+'</td><td style="text-align:center">'+(o.quantity||1)+'</td><td style="font-weight:700">'+fmt(o.total_price)+' '+t('cur')+'</td><td><span class="badge '+(OSCOLOR[o.status]||'b-todo')+'">'+t('os_'+o.status)+'</span></td></tr>';
+ }).join('');
+ var histCard='<div class="card" style="padding:0"><div style="padding:12px 14px;border-bottom:1px solid var(--line);font-weight:800">📋 '+t('clientHistory')+' ('+c.count+')</div><div class="scroll-x"><table><thead><tr><th>'+t('date')+'</th><th>'+t('product')+'</th><th style="text-align:center">'+t('quantity')+'</th><th>'+t('totalPrice')+'</th><th>'+t('disposition')+'</th></tr></thead><tbody>'+hist+'</tbody></table></div></div>';
+ return head+stats+histCard;
 }
 
 function viewTrash(){
@@ -1548,7 +1678,8 @@ function renderModal(){
  }
  if(app.modal==='newOrder'){
   var wOpts=(app.cache.wilayas||[]).map(function(w){return '<option value="'+w.code+'" data-rate="'+(w.yalidine_rate||0)+'">'+w.code+' - '+esc(w.name_fr)+' ('+w.yalidine_rate+' '+t('cur')+')</option>'}).join('');
-  b='<div class="row2"><div><label class="lb">'+t('customer')+'</label><input id="o_name" class="input" autofocus></div><div><label class="lb">'+t('phone')+' *</label><input id="o_phone" class="input" placeholder="0555..."></div></div>'+
+  b='<div class="row2"><div><label class="lb">'+t('customer')+'</label><input id="o_name" class="input" autofocus></div><div><label class="lb">'+t('phone')+' *</label><input id="o_phone" class="input" placeholder="0555..." oninput="lookupClient(this.value)"></div></div>'+
+   '<div id="o_client_info" style="display:none;margin-top:7px;padding:8px 11px;background:var(--soft);border-radius:7px;font-size:12px"></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('wilaya')+'</label><select id="o_wilaya_code" class="input" onchange="document.getElementById(\'o_ship\').value=this.options[this.selectedIndex].dataset.rate||0"><option value="">-</option>'+(wOpts||'<option disabled>Aucune wilaya (executer SQL v5)</option>')+'</select></div><div><label class="lb">'+t('shippingCost')+' ('+t('cur')+')</label><input id="o_ship" type="number" class="input" placeholder="auto"></div></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('product')+'</label><select id="o_product" class="input"><option value="">-</option>'+(app.cache.products||[]).map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>'}).join('')+'</select></div></div>'+
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('quantity')+'</label><input id="o_qty" type="number" min="1" class="input" value="1"></div><div><label class="lb">'+t('unitPrice')+' ('+t('cur')+')</label><input id="o_unit_price" type="number" class="input"></div></div>'+
