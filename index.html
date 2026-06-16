@@ -262,7 +262,8 @@ var I18N={
   metricImpressions:'Impressions',metricClicks:'Clics',metricCtr:'CTR',metricCpm:'CPM',metricSpend:'Depense ($)',metricConv:'Conversions',metricRevenue:'Revenu (DA)',metricCpa:'CPA',metricRoas:'ROAS',
   ct_running:'⏳ En cours',ct_winner:'🏆 Gagnant',ct_loser:'💀 Perdant',ct_paused:'⏸ Pause',ct_retest:'🔄 Re-tester',
   abVerdict:'Verdict auto',abReason:'Pourquoi ?',markWinner:'Marquer gagnant',markLoser:'Marquer perdant',markPaused:'Mettre en pause',markRetest:'Re-tester',abCompare:'Comparaison A/B',noCreas:'Aucune crea pour ce produit. Cliquez « + Nouvelle crea ».',noCreasGlobal:'Aucune crea encore. Ajoutez-en sur une fiche produit.',openProduct:'Ouvrir produit',
-  abHintWinner:'Marquer comme gagnant: ROAS > 1.5x du concurrent ET 100+ impressions',abHintLoser:'Perdant: CTR < 0.5% avec 1000+ impressions OU CPA > 3x cible',abMissingTable:'⚠ Table creative_tests absente. Demandez a l\'admin d\'appliquer v6_migration.sql.'
+  abHintWinner:'Marquer comme gagnant: ROAS > 1.5x du concurrent ET 100+ impressions',abHintLoser:'Perdant: CTR < 0.5% avec 1000+ impressions OU CPA > 3x cible',abMissingTable:'⚠ Table creative_tests absente. Demandez a l\'admin d\'appliquer v6_migration.sql.',
+  whatsApp:'WhatsApp',waClient:'📲 WhatsApp client',waPing:'🔔 Ping confirmer',waTplCustomer:'Template message client',waTplConfirmer:'Template ping confirmer',waVars:'Variables disponibles : {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'Numero WhatsApp',waPhoneHint:'Format international: +213... ou 213...',waNotConfigured:'⚠ Le confirmateur n\'a pas de WhatsApp. Demandez-lui de le renseigner dans Equipe.',waCopied:'Message copie. Ouvrez WhatsApp et collez-le.',notifyOrders:'Recevoir notifs commandes',waSaveTpl:'Enregistrer template'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -324,7 +325,8 @@ var I18N={
   metricImpressions:'مرّات الظهور',metricClicks:'النقرات',metricCtr:'CTR',metricCpm:'CPM',metricSpend:'الإنفاق ($)',metricConv:'التحويلات',metricRevenue:'الإيراد (دج)',metricCpa:'CPA',metricRoas:'ROAS',
   ct_running:'⏳ جارٍ',ct_winner:'🏆 رابح',ct_loser:'💀 خاسر',ct_paused:'⏸ موقوف',ct_retest:'🔄 إعادة اختبار',
   abVerdict:'الحكم التلقائي',abReason:'لماذا؟',markWinner:'تعيين كرابح',markLoser:'تعيين كخاسر',markPaused:'إيقاف مؤقت',markRetest:'إعادة اختبار',abCompare:'مقارنة A/B',noCreas:'لا توجد إعلانات لهذا المنتج. اضغط « + إعلان جديد ».',noCreasGlobal:'لا توجد إعلانات بعد. أضفها في صفحة المنتج.',openProduct:'فتح المنتج',
-  abHintWinner:'تعيين كرابح: ROAS > 1.5× من المنافس و100+ ظهور',abHintLoser:'خاسر: CTR < 0.5% مع 1000+ ظهور أو CPA > 3× الهدف',abMissingTable:'⚠ جدول creative_tests غير موجود. اطلب من المدير تنفيذ v6_migration.sql.'
+  abHintWinner:'تعيين كرابح: ROAS > 1.5× من المنافس و100+ ظهور',abHintLoser:'خاسر: CTR < 0.5% مع 1000+ ظهور أو CPA > 3× الهدف',abMissingTable:'⚠ جدول creative_tests غير موجود. اطلب من المدير تنفيذ v6_migration.sql.',
+  whatsApp:'واتساب',waClient:'📲 واتساب العميل',waPing:'🔔 تنبيه المؤكِّدة',waTplCustomer:'قالب رسالة العميل',waTplConfirmer:'قالب تنبيه المؤكِّدة',waVars:'المتغيرات المتاحة: {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'رقم واتساب',waPhoneHint:'صيغة دولية: 213+... أو 213...',waNotConfigured:'⚠ المؤكِّدة بدون رقم واتساب. اطلب منها إضافته في صفحة الفريق.',waCopied:'تم نسخ الرسالة. افتح واتساب والصقها.',notifyOrders:'استقبال إشعارات الطلبات',waSaveTpl:'حفظ القالب'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -536,7 +538,7 @@ async function refresh(){
    await loadProduct();await loadComments(app.productId);await loadAudit(app.productId);
   } else if(v==='orders'){
    await loadOrders();await loadBlacklist();
-   var pr=await SB.from('profiles').select('id,full_name');var pd=await SB.from('products').select('id,name');
+   var pr=await SB.from('profiles').select('*');var pd=await SB.from('products').select('id,name');
    app.cache.profiles=pr.data||[];app.cache.products=pd.data||[];
   } else if(v==='clients'||v==='client'){
    var oAll=await SB.from('orders').select('*').order('created_at',{ascending:false});
@@ -1114,6 +1116,75 @@ async function updateCreativeField(id,field,value){
 }
 async function setCreativeStatus(id,status){await SB.from('creative_tests').update({status:status}).eq('id',id);await refresh();toast('Statut: '+t('ct_'+status))}
 async function delCreative(id){if(!confirm(t('confirmDelete')))return;await SB.from('creative_tests').delete().eq('id',id);await refresh()}
+
+/* === WhatsApp helpers === */
+var WA_DEFAULTS={
+ customer:"Bonjour {name}, c'est COD Team. Je vous appelle pour confirmer votre commande de {product} a {price} DA, paiement a la livraison. Pouvez-vous repondre ?",
+ confirmer:"🔔 Nouvelle commande COD : {name} ({phone}) - {product} - {price} DA - {wilaya}"
+};
+function getWaTemplate(kind){
+ var s=app.cache.settings||{};var raw=s['whatsapp_template_'+kind];
+ if(raw&&typeof raw==='object'&&raw.text)return raw.text;
+ if(typeof raw==='string')try{var p=JSON.parse(raw);if(p.text)return p.text}catch(e){return raw}
+ return WA_DEFAULTS[kind]||'';
+}
+function applyWaTemplate(tpl,vars){
+ return (tpl||'').replace(/\{(\w+)\}/g,function(_,k){return vars[k]!=null?String(vars[k]):''});
+}
+function cleanWaPhone(phone){
+ if(!phone)return '';
+ var p=String(phone).replace(/[^0-9]/g,'');
+ if(p.startsWith('00'))p=p.slice(2);
+ if(p.startsWith('0')&&p.length>=10)p='213'+p.slice(1);
+ return p;
+}
+function waLink(phone,message){
+ var p=cleanWaPhone(phone);if(!p)return '';
+ return 'https://wa.me/'+p+'?text='+encodeURIComponent(message||'');
+}
+function waCustomer(order,products){
+ var pname=(products||[]).find(function(p){return p.id===order.product_id});
+ var msg=applyWaTemplate(getWaTemplate('customer'),{
+  name:order.customer_name||'',phone:order.customer_phone||'',product:(pname&&pname.name)||'-',
+  price:order.total_price||0,qty:order.quantity||1,wilaya:order.customer_wilaya||'',address:order.customer_address||''
+ });
+ var link=waLink(order.customer_phone,msg);
+ if(!link){toast('Numero invalide','err');return}
+ window.open(link,'_blank');
+}
+function waConfirmer(order,confirmer,products){
+ if(!confirmer||!confirmer.whatsapp_phone){toast(t('waNotConfigured'),'warn');return}
+ var pname=(products||[]).find(function(p){return p.id===order.product_id});
+ var msg=applyWaTemplate(getWaTemplate('confirmer'),{
+  name:order.customer_name||'',phone:order.customer_phone||'',product:(pname&&pname.name)||'-',
+  price:order.total_price||0,qty:order.quantity||1,wilaya:order.customer_wilaya||'',address:order.customer_address||''
+ });
+ var link=waLink(confirmer.whatsapp_phone,msg);
+ if(!link){toast(t('waNotConfigured'),'warn');return}
+ window.open(link,'_blank');
+}
+async function setProfileWa(id,wa){await SB.from('profiles').update({whatsapp_phone:wa}).eq('id',id);refresh()}
+function pingConfirmerFromSelect(sel){
+ var cid=sel.value;if(!cid)return;
+ var orderJson=sel.dataset.o;sel.value='';
+ try{var o=JSON.parse(orderJson);
+  var c=(app.cache.profiles||[]).find(function(x){return x.id===cid});
+  if(!c){toast('Confirmer introuvable','err');return}
+  waConfirmer(o,c,app.cache.products);
+ }catch(e){toast('Erreur ping','err')}
+}
+function openWaCustomerBtn(btn){
+ try{var o=JSON.parse(btn.dataset.o);waCustomer(o,app.cache.products);}catch(e){toast('Erreur WhatsApp','err')}
+}
+async function saveWaTemplates(){
+ app.busy=true;render();
+ var keys=['whatsapp_template_customer','whatsapp_template_confirmer'];
+ for(var i=0;i<keys.length;i++){
+  var raw=val('s_'+keys[i]);
+  await SB.from('settings').upsert({key:keys[i],value:{text:raw},updated_at:new Date().toISOString(),updated_by:uid()});
+ }
+ await loadSettings();app.busy=false;app.saved=true;render();setTimeout(function(){app.saved=false;render()},1500);
+}
 function lookupClient(phone){
  var el=document.getElementById('o_client_info');if(!el)return;
  var clean=(phone||'').trim();
@@ -1274,14 +1345,24 @@ function viewOrders(){
  '</div></div>';
  if(mine.length===0)return head+'<div class="empty">'+t('empty')+'</div>';
  var allClients=buildClients(orders,bl);var byPhone={};allClients.forEach(function(c){byPhone[c.phone]=c});
+ var pf=app.cache.profiles||[];var pfMap={};pf.forEach(function(x){pfMap[x.id]=x});
+ var confirmers=pf.filter(function(x){return x.role==='confirmatrice'||x.role==='admin'});
  var rows=mine.map(function(o){
   var ck=byPhone[o.customer_phone];var sameP=ck?ck.count:1;
   var isB=blPhones[o.customer_phone];
   var segChip=ck&&!isB?'<span class="badge '+(SEG_COLOR[ck.segment]||'b-todo')+'" style="cursor:pointer" onclick="event.stopPropagation();goClient(\''+esc(o.customer_phone)+'\')">'+t('seg_'+ck.segment)+'</span>':'';
   var statusOpts=ORDER_STATUSES.map(function(s){return '<option value="'+s+'" '+(o.status===s?'selected':'')+'>'+t('os_'+s)+'</option>'}).join('');
+  var orderJson=esc(JSON.stringify({id:o.id,customer_name:o.customer_name,customer_phone:o.customer_phone,customer_wilaya:o.customer_wilaya,customer_address:o.customer_address,product_id:o.product_id,quantity:o.quantity,total_price:o.total_price}));
+  var waBtn='<button class="pill" style="background:#25d366;color:#fff;border:none;padding:5px 10px" title="'+t('waClient')+'" onclick="openWaCustomerBtn(this)" data-o="'+orderJson+'">📲</button>';
+  var pingMenu='';
+  if(isAdmin()&&!o.assignee_id&&confirmers.length){
+   var opts=confirmers.filter(function(c){return c.whatsapp_phone}).map(function(c){return '<option value="'+c.id+'">'+esc(c.full_name||c.id.slice(0,6))+'</option>'}).join('');
+   pingMenu=opts?'<select class="input sm" style="width:130px;background:#25d366;color:#fff;border-color:#25d366" onchange="pingConfirmerFromSelect(this)" data-o="'+orderJson+'"><option value="">'+t('waPing')+'</option>'+opts+'</select>':'';
+  }
   return '<div class="card" style="padding:11px 13px;margin-bottom:8px;'+(isB?'border-left:4px solid #dc2626':'')+'">'+
    '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">'+
    '<div style="flex:1;min-width:200px"><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><b style="cursor:pointer;color:var(--brand)" onclick="goClient(\''+esc(o.customer_phone)+'\')" title="Fiche client">👤 '+esc(o.customer_name||'-')+'</b><a href="tel:'+esc(o.customer_phone)+'" class="lnk">📱 '+esc(o.customer_phone)+'</a>'+segChip+(isB?'<span class="badge b-killed" title="'+esc(isB)+'">⛔</span>':'')+(sameP>1?'<span class="niche-chip">📊 '+sameP+' cmd</span>':'')+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+esc(o.customer_wilaya||'')+' · '+esc((pn[o.product_id]||'-'))+' · '+o.quantity+'× = '+fmt(o.total_price)+' '+t('cur')+(o.notes?' · '+esc(o.notes.slice(0,40)):'')+'</div></div>'+
+   waBtn+pingMenu+
    '<select class="input sm" style="width:auto" onchange="setOrderStatus(\''+o.id+'\',this.value)">'+statusOpts+'</select>'+
    (!o.assignee_id?'<button class="btn btn-p btn-s" onclick="claimOrder(\''+o.id+'\')">📞 '+t('os_calling')+'</button>':'<span style="font-size:11px;color:var(--ink2)">👤 '+esc(nm[o.assignee_id]||'?')+'</span>')+
    (!isB&&isAdmin()?'<button class="pill del" onclick="addToBlacklist(\''+o.customer_phone+'\',prompt(\''+t('blacklistReason')+' :\')||\'\')" title="'+t('addToBlacklist')+'">⛔</button>':'')+
@@ -1746,8 +1827,12 @@ function viewKpis(){
 
 /* === TEAM === */
 function viewTeam(){
- var rows=(app.cache.profiles||[]).map(function(u){var opts=ROLES.map(function(r){return '<option value="'+r+'" '+(u.role===r?'selected':'')+'>'+t('r_'+r)+'</option>'}).join('');return '<tr><td><b>'+esc(u.full_name||'-')+'</b></td><td><select class="input sm" style="width:auto" onchange="setRole(\''+u.id+'\',this.value)">'+opts+'</select></td></tr>'}).join('');
- return '<div class="pghead"><div><h1 class="pg">👥 '+t('team')+'</h1></div></div><div class="card scroll-x"><table><thead><tr><th>'+t('member')+'</th><th>'+t('role')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ var rows=(app.cache.profiles||[]).map(function(u){
+  var opts=ROLES.map(function(r){return '<option value="'+r+'" '+(u.role===r?'selected':'')+'>'+t('r_'+r)+'</option>'}).join('');
+  var waVal=esc(u.whatsapp_phone||'');
+  return '<tr><td><b>'+esc(u.full_name||'-')+'</b></td><td><select class="input sm" style="width:auto" onchange="setRole(\''+u.id+'\',this.value)">'+opts+'</select></td><td><input class="input sm" style="width:160px" placeholder="+213..." value="'+waVal+'" onchange="setProfileWa(\''+u.id+'\',this.value)" '+(isAdmin()||u.id===uid()?'':'readonly')+'></td></tr>';
+ }).join('');
+ return '<div class="pghead"><div><h1 class="pg">👥 '+t('team')+'</h1></div></div><div class="card scroll-x"><table><thead><tr><th>'+t('member')+'</th><th>'+t('role')+'</th><th>'+t('waPhone')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
 /* === SETTINGS === */
@@ -1768,7 +1853,14 @@ function viewSettings(){
   '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('beforeAfter')+'</label><input id="s_weight_before_after" type="number" step="0.1" min="0" class="input" value="'+(s.weight_before_after||1)+'"></div><div><label class="lb">'+t('innovation')+'</label><input id="s_weight_innovation" type="number" step="0.1" min="0" class="input" value="'+(s.weight_innovation||1)+'"></div></div>'+
   '<button class="btn btn-p" style="margin-top:11px" onclick="saveWeights()" '+(app.busy?'disabled':'')+'>'+t('save')+'</button>'+
  '</div>';
- return head+settingsCard+weightsCard+profileCard+langCard;
+ var waCustomerTpl=getWaTemplate('customer');var waConfirmerTpl=getWaTemplate('confirmer');
+ var waCard='<div class="card" style="padding:16px;max-width:680px;margin-bottom:12px"><div style="font-weight:700;margin-bottom:9px">📲 '+t('whatsApp')+'</div>'+
+  '<div class="note" style="margin-bottom:9px">'+t('waVars')+'</div>'+
+  '<div><label class="lb">'+t('waTplCustomer')+'</label><textarea id="s_whatsapp_template_customer" class="input" style="min-height:70px">'+esc(waCustomerTpl)+'</textarea></div>'+
+  '<div style="margin-top:9px"><label class="lb">'+t('waTplConfirmer')+'</label><textarea id="s_whatsapp_template_confirmer" class="input" style="min-height:70px">'+esc(waConfirmerTpl)+'</textarea></div>'+
+  '<button class="btn btn-p" style="margin-top:11px" onclick="saveWaTemplates()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':(app.saved?t('saved'):t('waSaveTpl')))+'</button>'+
+ '</div>';
+ return head+settingsCard+weightsCard+waCard+profileCard+langCard;
 }
 async function saveWeights(){
  app.busy=true;render();
