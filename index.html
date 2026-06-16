@@ -250,7 +250,9 @@ var I18N={
   totalCostReal:'Cout total reel',realMargin:'Marge reelle',shippingCost:'Frais livraison',suggestionsTitle:'💡 Suggestions IA',sugScale:'🟢 SCALER',sugWatch:'🔴 SURVEILLER/TUER',sugTest:'🟡 ITERER',sugReason:'Raison',applyAction:'Appliquer',
   tour:'Tour guide',replayTour:'Revoir le tour',tourNext:'Suivant →',tourPrev:'← Precedent',tourSkip:'Passer',tourFinish:'Terminer 🎉',tourStep:'Etape',
   template:'Template',applyTemplate:'Appliquer un template',
-  period_today:"Aujourd'hui",period_week:'7 jours',period_month:'30 jours',period_quarter:'90 jours',period_year:'365 jours',period_all:'Tout',vsPrev:'vs periode precedente',trendTitle:'📈 Tendance commandes',revPerDay:'Revenu par jour',cohortTitle:'🔁 Cohort retention (clients qui re-commandent)',cohortIntro:'% des clients d\'un mois qui repassent commande dans les mois suivants.',cohortMonth:'Mois acquisition',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'Clients',avgOrderValue:'Panier moyen',uniqueCustomers:'Clients uniques',repeatRate:'Taux fidelite'
+  period_today:"Aujourd'hui",period_week:'7 jours',period_month:'30 jours',period_quarter:'90 jours',period_year:'365 jours',period_all:'Tout',vsPrev:'vs periode precedente',trendTitle:'📈 Tendance commandes',revPerDay:'Revenu par jour',cohortTitle:'🔁 Cohort retention (clients qui re-commandent)',cohortIntro:'% des clients d\'un mois qui repassent commande dans les mois suivants.',cohortMonth:'Mois acquisition',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'Clients',avgOrderValue:'Panier moyen',uniqueCustomers:'Clients uniques',repeatRate:'Taux fidelite',
+  aiBrief:'🤖 Generer la fiche par IA',aiUsp:'Argument unique (USP)',aiBenefits:'Benefices cles (1-3 lignes)',aiAudience:'Cible (homme/femme/age)',aiGenerate:'Generer',aiNote:'Fiche generee. Modifiez si necessaire puis Enregistrer.',aiHint:'Donnez quelques infos cles, l\'IA generera script + objections + upsells + FAQ.',
+  translate:'Traduire',translating:'Traduction...',translated:'Traduit ✓',lang_fr:'Francais',lang_ar:'Arabe',lang_en:'Anglais',lang_zh:'Chinois',translateAll:'Tout traduire'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -300,7 +302,9 @@ var I18N={
   totalCostReal:'التكلفة الإجمالية الحقيقية',realMargin:'الهامش الحقيقي',shippingCost:'تكلفة التوصيل',suggestionsTitle:'💡 اقتراحات الذكاء',sugScale:'🟢 توسيع',sugWatch:'🔴 مراقبة/إيقاف',sugTest:'🟡 إعادة',sugReason:'السبب',applyAction:'تطبيق',
   tour:'الجولة التوضيحية',replayTour:'إعادة الجولة',tourNext:'التالي ←',tourPrev:'→ السابق',tourSkip:'تخطي',tourFinish:'إنهاء 🎉',tourStep:'الخطوة',
   template:'قالب',applyTemplate:'تطبيق قالب',
-  period_today:'اليوم',period_week:'7 أيام',period_month:'30 يوم',period_quarter:'90 يوم',period_year:'365 يوم',period_all:'الكل',vsPrev:'مقارنة بالفترة السابقة',trendTitle:'📈 اتجاه الطلبات',revPerDay:'الإيراد يوميًا',cohortTitle:'🔁 الاحتفاظ بالعملاء',cohortIntro:'نسبة العملاء الذين يعيدون الطلب في الأشهر التالية.',cohortMonth:'شهر الاكتساب',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'عملاء',avgOrderValue:'متوسط الطلب',uniqueCustomers:'عملاء فريدون',repeatRate:'معدل الولاء'
+  period_today:'اليوم',period_week:'7 أيام',period_month:'30 يوم',period_quarter:'90 يوم',period_year:'365 يوم',period_all:'الكل',vsPrev:'مقارنة بالفترة السابقة',trendTitle:'📈 اتجاه الطلبات',revPerDay:'الإيراد يوميًا',cohortTitle:'🔁 الاحتفاظ بالعملاء',cohortIntro:'نسبة العملاء الذين يعيدون الطلب في الأشهر التالية.',cohortMonth:'شهر الاكتساب',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'عملاء',avgOrderValue:'متوسط الطلب',uniqueCustomers:'عملاء فريدون',repeatRate:'معدل الولاء',
+  aiBrief:'🤖 توليد البطاقة بالذكاء',aiUsp:'الميزة الفريدة (USP)',aiBenefits:'الفوائد الرئيسية (1-3 أسطر)',aiAudience:'الفئة المستهدفة (رجال/نساء/العمر)',aiGenerate:'توليد',aiNote:'تم توليد البطاقة. عدّل عند الحاجة ثم احفظ.',aiHint:'أعط بعض المعلومات الأساسية، سيتم توليد السكريبت + الاعتراضات + العروض + الأسئلة الشائعة.',
+  translate:'ترجمة',translating:'جاري الترجمة...',translated:'تمت الترجمة ✓',lang_fr:'الفرنسية',lang_ar:'العربية',lang_en:'الإنجليزية',lang_zh:'الصينية',translateAll:'ترجمة الكل'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -343,6 +347,88 @@ function applyTemplate(niche){
  setVal('np_innovation',tpl.innovation_score);
  toast('📋 Template '+niche+' applique');
 }
+/* === AI Brief generator (template-based, no API key) === */
+function aiBuildScript(name,price,niche,usp,benefits,audience){
+ var tpl=NICHE_TEMPLATES[niche]||{};
+ var base=tpl.call_script||'Bonjour, c\'est [Marque] pour confirmer votre commande [produit] au prix de [prix] DA, paiement a la livraison.';
+ var greeting='Bonjour'+(audience&&/femme|dame|madame/i.test(audience)?' madame':audience&&/homme|monsieur/i.test(audience)?' monsieur':'')+', c\'est [Marque].';
+ var pitch=usp?' Je vous appelle pour confirmer votre commande de '+name+', '+usp+'.':' Je vous appelle pour confirmer votre commande de '+name+'.';
+ var price_line=' Le prix est de '+(price||tpl.price_final||0)+' DA, paiement a la livraison.';
+ var benefits_line=benefits?' Pour rappel : '+benefits.split('\n').filter(Boolean).slice(0,3).join(' / ')+'.':'';
+ var close=' Pouvez-vous confirmer votre adresse et votre numero ?';
+ return greeting+pitch+price_line+benefits_line+close;
+}
+function aiBuildObjections(niche,usp,benefits){
+ var tpl=NICHE_TEMPLATES[niche]||{};var base=tpl.objections||'';
+ var lines=[];
+ lines.push('"C\'est cher" -> Rappeler la qualite et '+(usp||'l\'avantage unique')+'. Mentionner la livraison gratuite et le paiement a la livraison (zero risque).');
+ lines.push('"Je vais reflechir" -> "Je comprends. Le stock est limite, je peux vous reserver une unite aujourd\'hui ?"');
+ lines.push('"Ca marche vraiment ?" -> Rassurer avec garantie + retours possibles si non satisfait.');
+ if(benefits)lines.push('"Pourquoi votre produit ?" -> '+benefits.split('\n').filter(Boolean).slice(0,2).join(' / '));
+ if(base)lines.push(base);
+ return lines.join('\n');
+}
+function aiBuildUpsells(niche,price){
+ var tpl=NICHE_TEMPLATES[niche]||{};var base=tpl.upsells||'';
+ var p=price||tpl.price_final||0;var p2=Math.round(p*1.7);var p3=Math.round(p*2.4);
+ var lines=[];
+ lines.push('Pack 2 unites a '+p2+' DA (au lieu de '+(p*2)+' DA) -> economisez '+(p*2-p2)+' DA.');
+ lines.push('Pack 3 unites + cadeau a '+p3+' DA (au lieu de '+(p*3)+' DA) -> '+(p*3-p3)+' DA d\'economie.');
+ if(base)lines.push(base);
+ return lines.join('\n');
+}
+function aiBuildFaq(niche,name){
+ var tpl=NICHE_TEMPLATES[niche]||{};var base=tpl.faq||'';
+ var lines=[];
+ lines.push('Q: Livraison combien de temps ?\nR: 48 a 72h, partout en Algerie (Yalidine/ZRexpress).');
+ lines.push('Q: Comment je paie ?\nR: A la livraison (cash), pas d\'avance.');
+ lines.push('Q: Si je ne suis pas satisfait ?\nR: Vous pouvez refuser le colis a la livraison.');
+ lines.push('Q: Le produit '+name+' est-il garanti ?\nR: Oui, garantie 30 jours sur defaut de fabrication.');
+ if(base)lines.push(base);
+ return lines.join('\n');
+}
+function aiGenerateBrief(){
+ var p=(app.cache.products||[]).find(function(x){return x.id===app.productId});if(!p)return;
+ var usp=val('ai_usp')||'';var benefits=val('ai_benefits')||'';var audience=val('ai_audience')||'';
+ var niche=p.niche||'';var name=p.name||'produit';var price=p.price_final||0;
+ var setIfPresent=function(id,v){var e=document.getElementById(id);if(e&&v)e.value=v};
+ setIfPresent('sh_script',aiBuildScript(name,price,niche,usp,benefits,audience));
+ setIfPresent('sh_obj',aiBuildObjections(niche,usp,benefits));
+ setIfPresent('sh_up',aiBuildUpsells(niche,price));
+ setIfPresent('sh_faq',aiBuildFaq(niche,name));
+ closeModal();toast('🤖 '+t('aiNote'));
+}
+
+/* === Auto-translation (Google Translate free endpoint) === */
+async function translateText(text,target){
+ if(!text||!text.trim())return '';
+ try{
+  var url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl='+encodeURIComponent(target)+'&dt=t&q='+encodeURIComponent(text);
+  var r=await fetch(url);if(!r.ok)throw new Error('http '+r.status);
+  var data=await r.json();
+  if(!data||!data[0])return '';
+  return data[0].map(function(seg){return seg[0]||''}).join('');
+ }catch(e){console.error('translate',e);return ''}
+}
+async function translateField(srcId,target){
+ var src=document.getElementById(srcId);if(!src)return;
+ var orig=src.value||'';if(!orig.trim()){toast('Champ vide','warn');return}
+ var btnId='tr_btn_'+srcId+'_'+target;var btn=document.getElementById(btnId);if(btn){btn.disabled=true;btn.innerHTML='<span class="spin"></span>'}
+ var out=await translateText(orig,target);
+ if(btn){btn.disabled=false;btn.textContent=t('translated')}
+ if(!out){toast('Echec de la traduction','err');return}
+ src.value=out;toast('✓ '+t('translated')+' ('+target.toUpperCase()+')');
+}
+async function translateAllFields(target){
+ var ids=['sh_script','sh_obj','sh_up','sh_faq'];
+ toast(t('translating')+' ('+target.toUpperCase()+')...');
+ for(var i=0;i<ids.length;i++){
+  var el=document.getElementById(ids[i]);if(!el||!el.value.trim())continue;
+  var out=await translateText(el.value,target);if(out)el.value=out;
+ }
+ toast('✓ '+t('translated')+' ('+target.toUpperCase()+')');
+}
+
 function toast(msg,kind){var d=document.createElement('div');d.style.cssText='position:fixed;bottom:20px;inset-inline-end:20px;background:'+(kind==='err'?'#c2384b':kind==='warn'?'#b45309':'#157f4a')+';color:#fff;padding:11px 18px;border-radius:9px;font-size:13.5px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:200;animation:toastIn .25s';d.textContent=msg;document.body.appendChild(d);setTimeout(function(){d.style.opacity='0';d.style.transition='.3s';setTimeout(function(){d.remove()},300)},2400)}
 function confirmIt(msg){return confirm(msg)}
 function applyDark(){document.documentElement.classList.toggle('dark',app.dark);if(app.dark){document.body.style.background='#0f172a';document.body.style.color='#e2e8f0'}else{document.body.style.background='';document.body.style.color=''}}
@@ -1351,8 +1437,11 @@ function viewProduct(){
   body='<div style="max-width:880px"><button class="btn btn-p" onclick="openModal(\'newTest\',\''+p.id+'\')">+ '+t('newTest')+'</button><div class="scroll-x" style="margin-top:10px"><table><thead><tr><th>'+t('platform')+'</th><th>'+t('budgetUsd')+'</th><th>'+t('cpaUsd')+'</th><th>'+t('confirmPct')+'</th><th>'+t('deliverPct')+'</th><th>'+t('calcMargin')+'</th><th>'+t('verdict')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
  } else if(app.tab==='sheet'){
   var ce=isAdmin()||app.profile.role==='sourcing';var sh=app.cache.sheet||{};
-  var ta=function(id,lab,v){return '<div style="margin-bottom:11px"><label class="lb">'+lab+'</label><textarea id="'+id+'" class="input" style="min-height:80px" '+(ce?'':'readonly')+'>'+esc(v||'')+'</textarea></div>'};
-  body='<div style="max-width:680px"><div class="note">'+t('sheetIntro')+'</div>'+ta('sh_script',t('callScript'),sh.call_script)+ta('sh_obj',t('objections'),sh.objections)+ta('sh_up',t('upsells'),sh.upsells)+ta('sh_faq',t('faq'),sh.faq)+(ce?'<button class="btn btn-p" onclick="saveSheet()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':(app.saved?t('saved'):t('save')))+'</button>':'')+'</div>';
+  var LANGS=[['fr',t('lang_fr')],['ar',t('lang_ar')],['en',t('lang_en')],['zh',t('lang_zh')]];
+  var trBtns=function(id){if(!ce)return '';return '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">'+LANGS.map(function(L){return '<button type="button" id="tr_btn_'+id+'_'+L[0]+'" class="pill" style="padding:3px 9px;font-size:11px" onclick="translateField(\''+id+'\',\''+L[0]+'\')">🌐 '+L[1]+'</button>'}).join('')+'</div>'};
+  var ta=function(id,lab,v){return '<div style="margin-bottom:13px"><label class="lb">'+lab+'</label><textarea id="'+id+'" class="input" style="min-height:80px" '+(ce?'':'readonly')+'>'+esc(v||'')+'</textarea>'+trBtns(id)+'</div>'};
+  var aiBar=ce?'<div style="display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 14px"><button class="btn btn-p" onclick="openModal(\'aiBrief\')">'+t('aiBrief')+'</button><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap"><span style="font-size:11.5px;color:var(--ink2)">'+t('translateAll')+':</span>'+LANGS.map(function(L){return '<button type="button" class="pill" style="padding:4px 10px;font-size:11px" onclick="translateAllFields(\''+L[0]+'\')">🌐 '+L[1]+'</button>'}).join('')+'</div></div>':'';
+  body='<div style="max-width:680px"><div class="note">'+t('sheetIntro')+'</div>'+aiBar+ta('sh_script',t('callScript'),sh.call_script)+ta('sh_obj',t('objections'),sh.objections)+ta('sh_up',t('upsells'),sh.upsells)+ta('sh_faq',t('faq'),sh.faq)+(ce?'<button class="btn btn-p" onclick="saveSheet()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':(app.saved?t('saved'):t('save')))+'</button>':'')+'</div>';
  } else if(app.tab==='comments'){
   var cms=app.cache.comments||[];var nm={};(app.cache.profiles||[]).forEach(function(x){nm[x.id]=x.full_name});
   var cmList=cms.length?cms.map(function(c){return '<div style="background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:7px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><b style="font-size:12.5px;color:var(--brand)">👤 '+esc(nm[c.user_id]||'?')+'</b><div style="display:flex;gap:7px;align-items:center"><span style="font-size:11px;color:var(--ink2)">'+esc((c.created_at||'').slice(0,16).replace('T',' '))+'</span>'+(c.user_id===uid()||isAdmin()?'<button class="pill del" onclick="delComment(\''+c.id+'\')">✕</button>':'')+'</div></div><div style="white-space:pre-wrap;font-size:13px">'+esc(c.body)+'</div></div>'}).join(''):'<div class="empty" style="padding:20px">'+t('noComments')+'</div>';
@@ -1472,6 +1561,15 @@ function renderModal(){
    '<div class="row2" style="margin-top:9px"><div><label class="lb">'+t('priority2')+'</label><select id="nt_prio" class="input">'+PRIOS.map(function(p){return '<option value="'+p+'"'+(p==='normal'?' selected':'')+'>'+t('pr_'+p)+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('due')+'</label><input id="nt_due" type="date" class="input"></div></div>'+
    '<div style="margin-top:9px"><label class="lb">'+t('assignee')+'</label><select id="nt_assignee" class="input"><option value="">'+t('me')+'</option>'+(app.cache.profiles||[]).map(function(u){return '<option value="'+u.id+'">'+esc(u.full_name||u.id)+'</option>'}).join('')+'</select></div>';
   return modalWrap(t('newTask'),b,'createTask()');
+ }
+ if(app.modal==='aiBrief'){
+  var p=(app.cache.products||[]).find(function(x){return x.id===app.productId})||{};
+  b='<div class="note" style="margin-bottom:11px">'+t('aiHint')+'</div>'+
+   '<div style="padding:9px 11px;background:var(--soft);border-radius:8px;margin-bottom:11px;font-size:12px"><b>'+esc(p.name||'?')+'</b> · '+esc(p.niche||'-')+' · '+(p.price_final||0)+' '+t('cur')+'</div>'+
+   '<div><label class="lb">'+t('aiUsp')+'</label><input id="ai_usp" class="input" autofocus placeholder="Ex: ergonomique et 50% plus rapide"></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('aiBenefits')+'</label><textarea id="ai_benefits" class="input" style="min-height:70px" placeholder="Ex: Gain de temps&#10;Confort&#10;Garantie 1 an"></textarea></div>'+
+   '<div style="margin-top:9px"><label class="lb">'+t('aiAudience')+'</label><input id="ai_audience" class="input" placeholder="Ex: femmes 25-45 ans"></div>';
+  return '<div class="modal" onclick="if(event.target===this)closeModal()"><div class="bx"><div class="mh"><b>'+t('aiBrief')+'</b><button class="x" onclick="closeModal()">×</button></div><div class="mb">'+b+'</div><div class="mf"><button class="btn btn-g" onclick="closeModal()">'+t('cancel')+'</button><button class="btn btn-p" onclick="aiGenerateBrief()">'+t('aiGenerate')+'</button></div></div></div>';
  }
  return '';
 }
