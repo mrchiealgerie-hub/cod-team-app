@@ -140,7 +140,33 @@
   .niche-chip{display:inline-block;background:#eef2ff;color:#4f46e5;border-radius:999px;padding:1px 7px;font-size:10.5px;font-weight:700;margin-inline-end:3px}
   .lnk{color:var(--brand);text-decoration:none;font-size:11.5px}
   .lnk:hover{text-decoration:underline}
-  @media(max-width:780px){.side{display:none}.side.mob{display:flex}.burger{display:block}.g3,.g2,.g4,.g6{grid-template-columns:1fr}.gsearch{width:120px}}
+  /* Sidebar collapsed (desktop) */
+  .side.collapsed{width:64px;padding:14px 6px}
+  .side.collapsed .brand{justify-content:center;padding:6px 0 14px}
+  .side.collapsed .brand b{display:none}
+  .side .side-toggle{margin-inline-start:auto;background:none;border:1px solid var(--line);border-radius:6px;width:24px;height:24px;cursor:pointer;color:var(--ink2);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .side .side-toggle:hover{background:var(--soft);color:var(--brand)}
+  .side.collapsed .side-toggle{position:absolute;inset-block-start:18px;inset-inline-end:-12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);z-index:10}
+  .side.collapsed{position:relative}
+  .side.collapsed .nav a{justify-content:center;padding:9px}
+  .side.collapsed .nav a .ic{font-size:18px}
+  /* Mobile bottom nav */
+  .mobnav{display:none;position:fixed;inset-inline:0;inset-block-end:0;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);box-shadow:0 -2px 12px rgba(0,0,0,.04);z-index:50;padding:6px 4px 8px;justify-content:space-around;align-items:center;gap:2px}
+  .mobnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;border-radius:9px;text-decoration:none;color:#666;cursor:pointer;position:relative;min-width:0}
+  .mobnav a.on{color:var(--brand);background:var(--soft)}
+  .mobnav .mob-ic{font-size:18px;line-height:1}
+  .mobnav .mob-lab{font-size:10px;font-weight:700;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:100%}
+  .mobnav .mob-cnt{position:absolute;top:3px;inset-inline-end:14px;background:#ef4444;color:#fff;border-radius:999px;padding:1px 5px;font-size:9px;font-weight:800;min-width:14px;text-align:center}
+  .dark .mobnav{background:rgba(15,23,42,.92);border-top-color:#1e293b}
+  @media(max-width:780px){
+    .side{display:none}.side.mob{display:flex;width:230px}
+    .burger{display:block}
+    .g3,.g2,.g4,.g6{grid-template-columns:1fr}
+    .gsearch{width:120px}
+    .mobnav{display:flex}
+    .content{padding-bottom:80px} /* Space for bottom nav */
+    .who-info{display:none} /* Hide name/role on mobile to save space */
+  }
 </style>
 </head>
 <body>
@@ -191,14 +217,23 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['cockpit','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
- media_buyer:['cockpit','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
- sourcing:['pipeline','products','research','sourcing','tasks'],
- production:['pipeline','products','sourcing','stock','production','tasks'],
- video_editor:['pipeline','products','video','creatives','tasks'],
- confirmatrice:['pipeline','orders','clients','wacrm','products','tasks']
+ admin:['home','cockpit','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['home','cockpit','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
+ sourcing:['home','pipeline','products','research','sourcing','tasks'],
+ production:['home','pipeline','products','sourcing','stock','production','tasks'],
+ video_editor:['home','pipeline','products','video','creatives','tasks'],
+ confirmatrice:['home','orders','clients','wacrm','tasks']
 };
-var ICON={cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={home:'🏠',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+// Mobile bottom nav (5 icons max, role-specific)
+var MOBILE_NAV={
+ admin:['home','cockpit','orders','wacrm','clients'],
+ media_buyer:['home','cockpit','tests','creatives','clients'],
+ sourcing:['home','products','research','sourcing','tasks'],
+ production:['home','stock','production','sourcing','tasks'],
+ video_editor:['home','products','video','creatives','tasks'],
+ confirmatrice:['home','orders','clients','wacrm','tasks']
+};
 var ORDER_STATUSES=['queued','calling','confirmed','reschedule','no_answer','refused','fake','cancelled','delivered','returned'];
 var OSCOLOR={queued:'b-todo',calling:'b-doing',confirmed:'b-validated',reschedule:'b-research',no_answer:'b-tovalidate',refused:'b-killed',fake:'b-killed',cancelled:'b-arch',delivered:'b-live',returned:'b-killed'};
 
@@ -267,6 +302,11 @@ var I18N={
   whatsApp:'WhatsApp',waClient:'📲 WhatsApp client',waPing:'🔔 Ping confirmer',waTplCustomer:'Template message client',waTplConfirmer:'Template ping confirmer',waVars:'Variables disponibles : {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'Numero WhatsApp',waPhoneHint:'Format international: +213... ou 213...',waNotConfigured:'⚠ Le confirmateur n\'a pas de WhatsApp. Demandez-lui de le renseigner dans Equipe.',waCopied:'Message copie. Ouvrez WhatsApp et collez-le.',notifyOrders:'Recevoir notifs commandes',waSaveTpl:'Enregistrer template',
   fcTitle:'📊 Forecast cashflow 30 jours',fcSub:'Projection basee sur les commandes en cours + tendance pub.',fcCashIn:'Encaissement estime',fcCashOut:'Sortie estimee',fcNetExpected:'Net estime',fcDay:'Jour',fcConfidence:'Confiance',fcConfHigh:'🟢 Elevee',fcConfMed:'🟡 Moyenne',fcConfLow:'🔴 Faible',fcAssumptions:'Hypotheses',fcPendingValue:'Valeur du pipeline',fcDailyAvgRev:'Revenu moyen / jour',fcDailyAvgAd:'Pub moyenne / jour',fcRiskStock:'⚠ Risque stock',fcRiskCash:'⚠ Cashflow critique J+##',fcScenario:'Scenario',fcScConservative:'Conservateur',fcScExpected:'Attendu',fcScOptimistic:'Optimiste',fcDeliveryTime:'Delai livraison moyen (jours)',fcCumulative:'Cumul',
   nav_report:'Rapport hebdo',reportTitle:'📑 Rapport hebdomadaire',reportSub:'Synthese de la semaine, prete a partager.',reportPdf:'📥 Telecharger PDF',reportEmail:'📧 Envoyer par email',reportPrint:'🖨 Imprimer',reportWeekOf:'Semaine du',reportSummary:'Resume',reportHighlights:'Faits marquants',reportRevenue:'Revenu net',reportOrders:'Commandes traitees',reportConvRate:'Taux conversion',reportTopProducts:'Top 5 produits',reportTopCreas:'Top creas',reportWinners:'Gagnants',reportLosers:'Perdants',reportActions:'A faire la semaine prochaine',reportGeneratedAt:'Genere le',reportEmailSubject:'Rapport hebdo COD Team',reportNoData:'Pas assez de donnees pour cette semaine.',reportWeekPrev:'← Semaine precedente',reportWeekNext:'Semaine suivante →',reportWeekCurr:'Cette semaine',reportRoasAvg:'ROAS moyen',reportCash30:'Cash projete 30j',reportNew:'Nouveaux',reportLost:'Perdus',reportVip:'VIP',reportLowStock:'Stock faible',reportPipeline:'Pipeline actif',
+  nav_home:'Accueil',
+  homeGoodMorning:'Bonjour',homeGoodAft:'Bon apres-midi',homeGoodEve:'Bonsoir',
+  homeWelcome:'Voici votre journee',homeTodayStats:'Aujourd\'hui',homeWeekStats:'Cette semaine',homeMyTasks:'Mes taches',homeMyQueue:'Ma file',homeAlerts:'Alertes',homeNoAlerts:'Aucune alerte. Tout est OK ✨',homeQuickActions:'Acces rapide',
+  hmCashIn:'💰 Encaisse aujourd\'hui',hmOrders:'📦 Commandes',hmAdSpend:'📊 Pub depensee',hmAlerts:'🔴 Urgences',hmForecast:'📈 Prevision 30j',hmConfirmed:'✓ Confirmees',hmDelivered:'✓ Livrees',hmRefused:'✗ Refusees',hmCalls:'📞 Appels',hmAOV:'🛒 Panier moyen',hmRoas:'📈 ROAS',hmEarnings:'💵 Mes gains',hmDailyGoal:'🎯 Objectif jour',hmCallsRemaining:'## restants',hmStartCalling:'▶ Demarrer mode appel',hmTopCrea:'🏆 Top crea',hmKillCrea:'💀 Crea a tuer',hmLastWeek:'Sem -1',hmDay:'Jour',hmRank:'#',hmTeamLeader:'🏆 Leaderboard equipe',hmYou:'Vous',hmDecisionQueue:'📥 File de decisions',hmDecisionPending:'## en attente',hmPending:'En attente',
+  hmVideoBriefs:'🎬 Briefs videos',hmStock:'📦 Stock',hmLowStock:'⚠ Stock bas',hmProdSchedule:'🏭 Planning production',hmTrending:'🔥 Tendances du jour',hmMyValidated:'✅ Mes valides',hmQuota:'🎯 Quota',hmInsight:'💡 Insight',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'Broadcasts en masse + agent IA de confirmation. Envoi gratuit via wa.me.',
   wacrmTab_campaigns:'📢 Broadcasts',wacrmTab_inbox:'💬 Inbox',wacrmTab_agent:'🤖 Agent IA',wacrmTab_relay:'🔌 Relais Baileys',
   relayTitle:'Relais Baileys (envoi automatique)',relayDisconnected:'🔴 Deconnecte',relayQR:'📱 Scanner le QR',relayConnecting:'⏳ Connexion...',relayConnected:'🟢 Connecte',relayError:'❌ Erreur',relayUrl:'URL du relais',relayToken:'Token d\'auth',relaySave:'Enregistrer',relayTest:'Tester',relayLogout:'Deconnecter WhatsApp',relayDailySent:'Envoyes aujourd\'hui',relayTotalSent:'Total envoyes',relayTotalFailed:'Total echecs',relayLastSeen:'Derniere activite',relayQrInstructions:'Sur votre telephone : Reglages WhatsApp → Appareils connectes → Lier un appareil',relayNotConfigured:'⚠ Configurez l\'URL du relais et le token dans les Reglages',relaySendMode:'Mode d\'envoi',relayMode_manual:'📲 Manuel (wa.me)',relayMode_baileys:'🤖 Auto (Baileys)',relayWarning:'⚠ Baileys est contre les CGU WhatsApp. Risque de ban. Utilisez un numero dedie.',relaySetup:'Configurer le relais',
@@ -345,6 +385,11 @@ var I18N={
   whatsApp:'واتساب',waClient:'📲 واتساب العميل',waPing:'🔔 تنبيه المؤكِّدة',waTplCustomer:'قالب رسالة العميل',waTplConfirmer:'قالب تنبيه المؤكِّدة',waVars:'المتغيرات المتاحة: {name} {product} {price} {qty} {phone} {wilaya} {address}',waPhone:'رقم واتساب',waPhoneHint:'صيغة دولية: 213+... أو 213...',waNotConfigured:'⚠ المؤكِّدة بدون رقم واتساب. اطلب منها إضافته في صفحة الفريق.',waCopied:'تم نسخ الرسالة. افتح واتساب والصقها.',notifyOrders:'استقبال إشعارات الطلبات',waSaveTpl:'حفظ القالب',
   fcTitle:'📊 توقّع التدفق النقدي 30 يومًا',fcSub:'توقعات بناءً على الطلبات الجارية واتجاه الإعلانات.',fcCashIn:'الإيراد المتوقع',fcCashOut:'المصاريف المتوقعة',fcNetExpected:'الصافي المتوقع',fcDay:'يوم',fcConfidence:'الثقة',fcConfHigh:'🟢 عالية',fcConfMed:'🟡 متوسطة',fcConfLow:'🔴 منخفضة',fcAssumptions:'الفرضيات',fcPendingValue:'قيمة الطلبات المعلّقة',fcDailyAvgRev:'الإيراد اليومي المتوسط',fcDailyAvgAd:'الإعلانات اليومية المتوسطة',fcRiskStock:'⚠ خطر المخزون',fcRiskCash:'⚠ تدفق نقدي حرج في يوم ##',fcScenario:'السيناريو',fcScConservative:'متحفظ',fcScExpected:'متوقع',fcScOptimistic:'متفائل',fcDeliveryTime:'متوسط زمن التسليم (أيام)',fcCumulative:'الإجمالي التراكمي',
   nav_report:'تقرير أسبوعي',reportTitle:'📑 التقرير الأسبوعي',reportSub:'ملخص الأسبوع، جاهز للمشاركة.',reportPdf:'📥 تحميل PDF',reportEmail:'📧 إرسال بالبريد',reportPrint:'🖨 طباعة',reportWeekOf:'أسبوع',reportSummary:'الملخص',reportHighlights:'الأبرز',reportRevenue:'الإيراد الصافي',reportOrders:'الطلبات المعالجة',reportConvRate:'نسبة التحويل',reportTopProducts:'أفضل 5 منتجات',reportTopCreas:'أفضل الإعلانات',reportWinners:'الفائزون',reportLosers:'الخاسرون',reportActions:'مهام الأسبوع القادم',reportGeneratedAt:'تم التوليد في',reportEmailSubject:'التقرير الأسبوعي COD Team',reportNoData:'لا توجد بيانات كافية لهذا الأسبوع.',reportWeekPrev:'← الأسبوع السابق',reportWeekNext:'الأسبوع التالي →',reportWeekCurr:'هذا الأسبوع',reportRoasAvg:'متوسط ROAS',reportCash30:'تدفق 30 يوم',reportNew:'جدد',reportLost:'ضائعون',reportVip:'مميزون',reportLowStock:'مخزون منخفض',reportPipeline:'الأنابيب النشطة',
+  nav_home:'الرئيسية',
+  homeGoodMorning:'صباح الخير',homeGoodAft:'مساء الخير',homeGoodEve:'مساء الخير',
+  homeWelcome:'إليك يومك',homeTodayStats:'اليوم',homeWeekStats:'هذا الأسبوع',homeMyTasks:'مهامي',homeMyQueue:'قائمتي',homeAlerts:'التنبيهات',homeNoAlerts:'لا توجد تنبيهات. كل شيء بخير ✨',homeQuickActions:'الوصول السريع',
+  hmCashIn:'💰 محصَّل اليوم',hmOrders:'📦 الطلبات',hmAdSpend:'📊 الإنفاق الإعلاني',hmAlerts:'🔴 عاجل',hmForecast:'📈 توقع 30 يوم',hmConfirmed:'✓ مؤكدة',hmDelivered:'✓ مسلَّمة',hmRefused:'✗ مرفوضة',hmCalls:'📞 مكالمات',hmAOV:'🛒 متوسط الطلب',hmRoas:'📈 ROAS',hmEarnings:'💵 مكاسبي',hmDailyGoal:'🎯 هدف اليوم',hmCallsRemaining:'## متبقية',hmStartCalling:'▶ بدء وضع الاتصال',hmTopCrea:'🏆 أفضل إعلان',hmKillCrea:'💀 إعلان لإيقافه',hmLastWeek:'الأسبوع -1',hmDay:'يوم',hmRank:'#',hmTeamLeader:'🏆 ترتيب الفريق',hmYou:'أنت',hmDecisionQueue:'📥 قرارات معلّقة',hmDecisionPending:'## في الانتظار',hmPending:'في الانتظار',
+  hmVideoBriefs:'🎬 ملخصات الفيديو',hmStock:'📦 المخزون',hmLowStock:'⚠ مخزون منخفض',hmProdSchedule:'🏭 جدول الإنتاج',hmTrending:'🔥 تريندات اليوم',hmMyValidated:'✅ المعتمدة',hmQuota:'🎯 الكوتا',hmInsight:'💡 رؤية',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'بث جماعي + وكيل ذكاء اصطناعي للتأكيد. إرسال مجاني عبر wa.me.',
   wacrmTab_campaigns:'📢 البث',wacrmTab_inbox:'💬 الرسائل',wacrmTab_agent:'🤖 الوكيل الذكي',wacrmTab_relay:'🔌 ربط Baileys',
   relayTitle:'مرحّل Baileys (إرسال آلي)',relayDisconnected:'🔴 غير متصل',relayQR:'📱 امسح الرمز',relayConnecting:'⏳ جارٍ الاتصال...',relayConnected:'🟢 متصل',relayError:'❌ خطأ',relayUrl:'رابط المرحّل',relayToken:'رمز المصادقة',relaySave:'حفظ',relayTest:'اختبار',relayLogout:'فصل WhatsApp',relayDailySent:'المرسلة اليوم',relayTotalSent:'إجمالي المرسلة',relayTotalFailed:'إجمالي الفاشلة',relayLastSeen:'آخر نشاط',relayQrInstructions:'في هاتفك: إعدادات WhatsApp → الأجهزة المرتبطة → ربط جهاز',relayNotConfigured:'⚠ اضبط رابط المرحّل والرمز في الإعدادات',relaySendMode:'نمط الإرسال',relayMode_manual:'📲 يدوي (wa.me)',relayMode_baileys:'🤖 آلي (Baileys)',relayWarning:'⚠ Baileys مخالف لشروط WhatsApp. خطر حظر الرقم. استخدم رقمًا مخصصًا.',relaySetup:'إعداد المرحّل',
@@ -368,9 +413,9 @@ function val(id){var e=document.getElementById(id);return e?e.value.trim():''}
 function num(v){var x=parseFloat(String(v==null?'':v).replace(',','.').replace(/[^\d.-]/g,''));return isNaN(x)?0:x}
 
 var app={
- session:null,profile:null,view:'pipeline',productId:null,tab:'info',pview:'kanban',modal:null,modalData:null,authMode:'in',
+ session:null,profile:null,view:'home',productId:null,tab:'info',pview:'kanban',modal:null,modalData:null,authMode:'in',
  err:'',info:'',busy:false,saved:false,mob:false,kpimsg:'',q:'',filterStage:'',filterNiche:'',filterPrio:'',
- selected:{},dark:localStorage.getItem('cod_dark')==='1',notifsOpen:false,filterQueue:'mine',
+ selected:{},dark:localStorage.getItem('cod_dark')==='1',notifsOpen:false,filterQueue:'mine',sideCollapsed:localStorage.getItem('cod_side_collapsed')==='1',
  tourStep:-1,tourDone:localStorage.getItem('cod_tour_done')==='1',
  period:'month',
  cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null,orders:[],blacklist:[],notifs:[],comments:[],audit:[],trash:[],wilayas:[],stockMoves:[]}
@@ -515,7 +560,7 @@ async function doAuth(){
    if(!s.data.session){var si=await SB.auth.signInWithPassword({email:email,password:pass});if(si.error){app.info='Compte cree. Connectez-vous.';app.authMode='in';app.busy=false;return render()}}
   }
   app.session=(await SB.auth.getSession()).data.session;
-  await loadProfile();app.busy=false;app.view='pipeline';render();afterLogin();
+  await loadProfile();app.busy=false;app.view='home';render();afterLogin();
  }catch(e){app.err=String(e&&e.message||e);app.busy=false;render()}
 }
 async function logout(){await SB.auth.signOut();app.session=null;app.profile=null;render()}
@@ -524,7 +569,17 @@ async function logout(){await SB.auth.signOut();app.session=null;app.profile=nul
 async function refresh(){
  var v=app.view;
  try{
-  if(v==='pipeline'){
+  if(v==='home'){
+   var role=app.profile&&app.profile.role;
+   var pAll=await SB.from('products').select('*').is('deleted_at',null);
+   var oAll=await SB.from('orders').select('*').order('created_at',{ascending:false});
+   var kAll=await SB.from('cod_kpis').select('*');
+   var pf=await SB.from('profiles').select('*');
+   await loadBlacklist();
+   app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];app.cache.profiles=pf.data||[];
+   if(role==='video_editor'){var vids=await SB.from('video_assets').select('*').order('created_at',{ascending:false});app.cache.videos=vids.data||[]}
+   if(role==='media_buyer'||role==='admin'){var creas=await loadCreatives(null);app.cache.creatives=creas||[]}
+  } else if(v==='pipeline'){
    var p=await SB.from('products').select('*').is('deleted_at',null).order('updated_at',{ascending:false});
    var t=await SB.from('tasks').select('id,status,assignee_id');
    app.cache.products=p.data||[];app.cache.tasks=t.data||[];
@@ -964,15 +1019,23 @@ function renderLogin(){
 }
 
 function renderShell(inner){
- var u=app.profile;var items=NAV[u.role]||['pipeline','tasks'];
+ var u=app.profile;var items=NAV[u.role]||['home','tasks'];
  var pipelineCount=app.cache.products?app.cache.products.length:0;
  var toValCount=(app.cache.products||[]).filter(function(p){return p.current_stage==='tovalidate'}).length;
  var counts={pipeline:pipelineCount,validate:toValCount};
- var navHtml=items.map(function(k){var c=counts[k];return '<a class="'+(app.view===k?'on':'')+'" onclick="go(\''+k+'\')"><span class="ic">'+ICON[k]+'</span><span>'+t('nav_'+k)+'</span>'+(c?'<span class="cnt">'+c+'</span>':'')+'</a>'}).join('');
- var side='<aside class="side'+(app.mob?' mob':'')+'">'+
-  '<div class="brand"><div class="lg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></div><b>COD Team</b></div>'+
+ var collapsed=app.sideCollapsed;
+ var navHtml=items.map(function(k){var c=counts[k];return '<a class="'+(app.view===k?'on':'')+'" onclick="go(\''+k+'\')" title="'+t('nav_'+k)+'"><span class="ic">'+ICON[k]+'</span>'+(collapsed?'':'<span>'+t('nav_'+k)+'</span>')+(c&&!collapsed?'<span class="cnt">'+c+'</span>':'')+'</a>'}).join('');
+ var side='<aside class="side'+(app.mob?' mob':'')+(collapsed?' collapsed':'')+'">'+
+  '<div class="brand">'+
+   '<div class="lg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></div>'+
+   (collapsed?'':'<b>COD Team</b>')+
+   '<button class="side-toggle" onclick="toggleSide()" title="'+(collapsed?'Etendre':'Reduire')+'">'+(collapsed?'›':'‹')+'</button>'+
+  '</div>'+
   '<nav class="nav">'+navHtml+'</nav>'+
   '</aside>';
+ // Mobile bottom nav (5 max)
+ var mobNavItems=MOBILE_NAV[u.role]||['home','tasks'];
+ var mobBottom='<nav class="mobnav">'+mobNavItems.map(function(k){var c=counts[k];return '<a class="'+(app.view===k?'on':'')+'" onclick="go(\''+k+'\')"><span class="mob-ic">'+ICON[k]+'</span><span class="mob-lab">'+t('nav_'+k)+'</span>'+(c?'<span class="mob-cnt">'+c+'</span>':'')+'</a>'}).join('')+'</nav>';
  return '<div class="shell">'+side+(app.mob?'<div class="ov" onclick="toggleMob()"></div>':'')+
  '<div class="main"><header class="top"><button class="burger" onclick="toggleMob()">☰</button>'+
  '<input class="gsearch" placeholder="'+t('search')+'" value="'+esc(app.q)+'" oninput="app.q=this.value;render()">'+
@@ -981,9 +1044,10 @@ function renderShell(inner){
  notifBell()+
  '<button class="btn btn-g" onclick="toggleDark()" style="padding:6px 9px" title="'+t('darkMode')+'">'+(app.dark?'☀️':'🌙')+'</button>'+
  '<button class="btn btn-g" onclick="toggleLang()" style="padding:6px 10px">🌐 '+(lang==='ar'?'FR':'AR')+'</button>'+
- '<div class="who"><div><div class="nm">'+esc(u.full_name||'')+'</div><div class="rl">'+t('r_'+u.role)+'</div></div><div class="av">'+esc((u.full_name||'?').charAt(0).toUpperCase())+'</div><button class="btn btn-g" onclick="logout()" style="padding:6px 9px" title="'+t('logout')+'">⎋</button></div></header>'+
- '<main class="content"><div class="inner">'+inner+'</div></main></div></div>'+(app.modal?renderModal():'')+(app.tourStep>=0?renderTour():'');
+ '<div class="who"><div class="who-info"><div class="nm">'+esc(u.full_name||'')+'</div><div class="rl">'+t('r_'+u.role)+'</div></div><div class="av">'+esc((u.full_name||'?').charAt(0).toUpperCase())+'</div><button class="btn btn-g" onclick="logout()" style="padding:6px 9px" title="'+t('logout')+'">⎋</button></div></header>'+
+ '<main class="content"><div class="inner">'+inner+'</div></main></div>'+mobBottom+'</div>'+(app.modal?renderModal():'')+(app.tourStep>=0?renderTour():'');
 }
+function toggleSide(){app.sideCollapsed=!app.sideCollapsed;localStorage.setItem('cod_side_collapsed',app.sideCollapsed?'1':'0');render()}
 
 function renderTour(){
  var step=TOUR_STEPS[app.tourStep];if(!step)return '';
@@ -993,6 +1057,7 @@ function renderTour(){
 
 function renderView(){
  switch(app.view){
+  case 'home':return viewHome();
   case 'products':return viewProducts();
   case 'research':return viewResearch();
   case 'validate':return viewValidate();
@@ -1017,7 +1082,7 @@ function renderView(){
   case 'perf':return viewPerf();
   case 'wilayas':return viewWilayas();
   case 'settings':return viewSettings();
-  default:return viewPipeline();
+  default:return viewHome();
  }
 }
 
@@ -2249,6 +2314,217 @@ function viewTrash(){
 }
 
 /* === PIPELINE (dashboard global) === */
+/* === HOME PAGE — personnalisee par role === */
+function getGreeting(){
+ var h=new Date().getHours();
+ if(h<12)return t('homeGoodMorning');
+ if(h<18)return t('homeGoodAft');
+ return t('homeGoodEve');
+}
+function todayRange(){var s=new Date();s.setHours(0,0,0,0);var e=new Date();e.setHours(23,59,59,999);return {from:s,to:e}}
+function thisWeekRange(){var now=new Date();var day=now.getDay()||7;var m=new Date(now);m.setDate(now.getDate()-(day-1));m.setHours(0,0,0,0);var s=new Date();s.setHours(23,59,59,999);return {from:m,to:s}}
+
+function hmCard(lab,val,color,sub,onclick){
+ var bg=color||'#fff';var border=color?'1px solid '+color+'40':'1px solid var(--line)';
+ var ck=onclick?'cursor:pointer;':'';
+ return '<div onclick="'+(onclick||'')+'" style="background:'+bg+';border:'+border+';border-radius:12px;padding:16px;'+ck+'transition:transform .15s" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'"><div style="font-size:11.5px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em">'+lab+'</div><div style="font-size:24px;font-weight:800;margin-top:6px">'+val+'</div>'+(sub?'<div style="font-size:11.5px;color:var(--ink2);margin-top:4px">'+sub+'</div>':'')+'</div>';
+}
+
+function viewHome(){
+ var role=app.profile.role;
+ var name=(app.profile.full_name||'').split(' ')[0]||'';
+ var greeting=getGreeting()+(name?' '+name:'');
+ var header='<div class="pghead" style="margin-bottom:18px"><div><h1 class="pg" style="font-size:28px;letter-spacing:-.02em">🏠 '+greeting+',</h1><div class="sub" style="font-size:15px">'+t('homeWelcome')+' — '+new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})+'</div></div></div>';
+ var body='';
+ if(role==='admin')body=viewHomeAdmin();
+ else if(role==='media_buyer')body=viewHomeMediaBuyer();
+ else if(role==='confirmatrice')body=viewHomeConfirmatrice();
+ else if(role==='video_editor')body=viewHomeVideo();
+ else if(role==='production')body=viewHomeProduction();
+ else if(role==='sourcing')body=viewHomeSourcing();
+ else body=viewHomeAdmin();
+ return header+body;
+}
+
+/* ---- Admin Home ---- */
+function viewHomeAdmin(){
+ var orders=app.cache.orders||[];var kpis=app.cache.kpis||[];var prods=app.cache.products||[];
+ var todayR=todayRange();var weekR=thisWeekRange();
+ var inToday=function(arr,fld){return arr.filter(function(x){return x[fld]&&new Date(x[fld])>=todayR.from&&new Date(x[fld])<=todayR.to})};
+ var todayOrders=inToday(orders,'created_at');
+ var todayDeliv=todayOrders.filter(function(o){return o.status==='delivered'});
+ var cashToday=0;todayDeliv.forEach(function(o){cashToday+=Number(o.total_price||0)});
+ var todayKpis=inToday(kpis,'day');
+ var adToday=0;todayKpis.forEach(function(k){adToday+=Number(k.ad_spend||0)});
+ var usd=Number((app.cache.settings&&app.cache.settings.usd_to_dzd)||260);
+ // Alerts
+ var alerts=[];
+ var toValidate=prods.filter(function(p){return p.current_stage==='tovalidate'}).length;
+ if(toValidate>0)alerts.push({type:'warn',text:toValidate+' produit'+(toValidate>1?'s a valider':' a valider'),link:'go(\'validate\')'});
+ var lowStock=prods.filter(function(p){return p.stock_current!=null&&p.stock_min!=null&&p.stock_current<p.stock_min}).length;
+ if(lowStock>0)alerts.push({type:'err',text:lowStock+' SKU en rupture/bas',link:'go(\'stock\')'});
+ var pendingOrders=orders.filter(function(o){return ['queued','calling','reschedule'].indexOf(o.status)>=0}).length;
+ if(pendingOrders>10)alerts.push({type:'warn',text:pendingOrders+' commandes en attente d\'appel',link:'go(\'orders\')'});
+ var fc=buildCashflowForecast(orders,kpis,prods,app.cache.settings||{},'expected');
+ if(fc.totalNet<0)alerts.push({type:'err',text:'Cashflow 30j negatif: '+fmt(Math.round(fc.totalNet))+' DA',link:'go(\'cockpit\')'});
+ // Top KPI cards
+ var kpiGrid='<div class="grid g4" style="margin-bottom:16px">'+
+  hmCard(t('hmCashIn'),fmt(Math.round(cashToday))+' DA','#ecfdf5',todayDeliv.length+' livrees','go(\'cockpit\')')+
+  hmCard(t('hmOrders'),todayOrders.length,'#eff6ff',pendingOrders+' a appeler','go(\'orders\')')+
+  hmCard(t('hmAdSpend'),fmt(Math.round(adToday*usd))+' DA','#fef3c7','aujourd\'hui','go(\'kpis\')')+
+  hmCard(t('hmForecast'),fmt(Math.round(fc.totalNet))+' DA',fc.totalNet>=0?'#f0fdf4':'#fef2f2',t(fc.conf==='high'?'fcConfHigh':fc.conf==='med'?'fcConfMed':'fcConfLow'),'go(\'cockpit\')')+
+ '</div>';
+ // Alerts panel
+ var alertsCard='';
+ if(alerts.length){
+  var alertList=alerts.map(function(a){return '<div onclick="'+a.link+'" style="display:flex;align-items:center;gap:9px;padding:11px 13px;background:'+(a.type==='err'?'#fef2f2':'#fef3c7')+';border:1px solid '+(a.type==='err'?'#fca5a5':'#fcd34d')+';border-radius:9px;margin-bottom:6px;cursor:pointer;font-size:13.5px;font-weight:600;color:'+(a.type==='err'?'#991b1b':'#92400e')+'"><span style="font-size:16px">'+(a.type==='err'?'🔴':'🟡')+'</span><span style="flex:1">'+esc(a.text)+'</span><span>→</span></div>'}).join('');
+  alertsCard='<div style="margin-bottom:18px"><b style="font-size:14px;color:var(--ink);text-transform:uppercase;letter-spacing:.05em">'+t('homeAlerts')+'</b><div style="margin-top:9px">'+alertList+'</div></div>';
+ } else {
+  alertsCard='<div style="padding:14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;margin-bottom:18px;font-size:13.5px;font-weight:600;color:#166534">'+t('homeNoAlerts')+'</div>';
+ }
+ // Decision queue
+ var toValProducts=prods.filter(function(p){return p.current_stage==='tovalidate'}).slice(0,5);
+ var decisionsCard=toValProducts.length?('<div class="card" style="padding:14px;margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px"><b style="font-size:14px">'+t('hmDecisionQueue')+'</b><span style="font-size:11px;color:var(--ink2)">'+t('hmDecisionPending').replace('##',toValProducts.length)+'</span></div>'+toValProducts.map(function(p){return '<div onclick="openProduct(\''+p.id+'\')" style="display:flex;justify-content:space-between;align-items:center;padding:9px 11px;background:var(--soft);border-radius:7px;margin-bottom:5px;cursor:pointer;font-size:13px"><div><b>'+esc(p.name)+'</b> <span style="font-size:11px;color:var(--ink2)">· '+esc(p.niche||'-')+'</span></div>'+scoreChip(p.final_score)+'</div>'}).join('')+'</div>'):'';
+ // Quick actions
+ var qaCard='<div class="card" style="padding:14px"><div style="font-weight:700;margin-bottom:11px;font-size:14px">'+t('homeQuickActions')+'</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+
+  '<button class="btn btn-p" onclick="go(\'cockpit\')">💰 Cockpit CFO</button>'+
+  '<button class="btn btn-g" onclick="go(\'report\')">📑 Rapport hebdo</button>'+
+  '<button class="btn btn-g" onclick="go(\'wacrm\')">📲 WhatsApp CRM</button>'+
+  '<button class="btn btn-g" onclick="go(\'orders\')">📞 Commandes</button>'+
+  '<button class="btn btn-g" onclick="go(\'clients\')">👤 Clients 360</button>'+
+ '</div></div>';
+ return kpiGrid+alertsCard+decisionsCard+qaCard;
+}
+
+/* ---- Confirmatrice Home ---- */
+function viewHomeConfirmatrice(){
+ var orders=app.cache.orders||[];var myId=uid();
+ var todayR=todayRange();var weekR=thisWeekRange();
+ var inTodayMine=orders.filter(function(o){return o.assignee_id===myId&&o.created_at&&new Date(o.created_at)>=todayR.from});
+ var todayConfirmed=inTodayMine.filter(function(o){return o.status==='confirmed'||o.status==='delivered'});
+ var todayCalls=inTodayMine.filter(function(o){return ['confirmed','delivered','refused','no_answer','reschedule','fake','cancelled'].indexOf(o.status)>=0});
+ var myDelivered=orders.filter(function(o){return o.assignee_id===myId&&o.status==='delivered'&&new Date(o.created_at)>=weekR.from});
+ var weekCash=0;myDelivered.forEach(function(o){weekCash+=Number(o.total_price||0)});
+ var aov=todayConfirmed.length?Math.round(todayConfirmed.reduce(function(s,o){return s+Number(o.total_price||0)},0)/todayConfirmed.length):0;
+ // Queue prioritaire (5 plus urgentes: confirmees pas livrees + queue assignee + queue libre)
+ var myQueue=orders.filter(function(o){return o.assignee_id===myId&&['queued','calling','reschedule'].indexOf(o.status)>=0});
+ var freeQueue=orders.filter(function(o){return !o.assignee_id&&o.status==='queued'});
+ var queue=myQueue.concat(freeQueue).slice(0,5);
+ // Daily goal
+ var goal=10;var done=todayConfirmed.length;var progress=Math.min(100,Math.round(done/goal*100));
+ var goalColor=done>=goal?'#10b981':done>=goal*0.6?'#f59e0b':'#6366f1';
+ // KPI cards
+ var kpiGrid='<div class="grid g4" style="margin-bottom:16px">'+
+  hmCard(t('hmCalls'),todayCalls.length+'/'+inTodayMine.length,'#eff6ff','aujourd\'hui')+
+  hmCard(t('hmConfirmed'),todayConfirmed.length,'#ecfdf5','sur '+goal+' objectif')+
+  hmCard(t('hmAOV'),fmt(aov)+' DA','#fef3c7','panier moyen')+
+  hmCard(t('hmEarnings'),fmt(Math.round(weekCash))+' DA','#fdf2f8','cette semaine')+
+ '</div>';
+ // Daily goal progress bar
+ var goalCard='<div class="card" style="padding:16px;margin-bottom:16px;background:linear-gradient(135deg,#f5f3ff,#fef3c7)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;flex-wrap:wrap;gap:7px"><b style="font-size:14px">'+t('hmDailyGoal')+'</b><span style="font-size:13px;font-weight:800;color:'+goalColor+'">'+done+' / '+goal+(done>=goal?' 🎉':'')+'</span></div><div style="height:14px;background:#fff;border-radius:7px;overflow:hidden"><div style="width:'+progress+'%;height:100%;background:linear-gradient(90deg,#6366f1,#10b981);transition:width .4s"></div></div><div style="font-size:11.5px;color:var(--ink2);margin-top:5px">'+t('hmCallsRemaining').replace('##',Math.max(0,goal-done))+'</div></div>';
+ // Start calling button (huge mobile-friendly)
+ var startBtn='<button class="btn btn-p" style="width:100%;padding:18px;font-size:16px;font-weight:800;margin-bottom:16px;background:linear-gradient(135deg,#7c3aed,#06b6d4);border:none" onclick="go(\'orders\')">'+t('hmStartCalling')+' · '+queue.length+' '+t('hmPending').toLowerCase()+' →</button>';
+ // Priority queue list
+ var pn={};(app.cache.products||[]).forEach(function(p){pn[p.id]=p.name});
+ var queueCard=queue.length?('<div class="card" style="padding:14px;margin-bottom:16px"><b style="font-size:14px">📞 '+t('homeMyQueue')+' ('+queue.length+')</b><div style="margin-top:10px">'+queue.map(function(o){var statBadge='<span class="badge '+(OSCOLOR[o.status]||'b-todo')+'" style="font-size:10px">'+t('os_'+o.status)+'</span>';return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 11px;background:var(--soft);border-radius:7px;margin-bottom:5px;font-size:13px"><div><b>'+esc(o.customer_name||'-')+'</b> · '+esc(o.customer_phone||'')+' '+statBadge+'<div style="font-size:11px;color:var(--ink2);margin-top:2px">'+esc(pn[o.product_id]||'-')+' · '+fmt(o.total_price)+' DA · '+esc(o.customer_wilaya||'')+'</div></div><a class="lnk" href="tel:'+esc(o.customer_phone)+'" style="font-size:18px">📞</a></div>'}).join('')+'</div></div>'):'<div class="empty" style="padding:24px;margin-bottom:16px">Aucun appel en attente. Bravo ! ✨</div>';
+ // Leaderboard
+ var profiles=app.cache.profiles||[];
+ var leader=profiles.filter(function(p){return p.role==='confirmatrice'||p.role==='admin'}).map(function(p){
+  var pOrders=orders.filter(function(o){return o.assignee_id===p.id&&['confirmed','delivered'].indexOf(o.status)>=0&&new Date(o.created_at)>=weekR.from});
+  return {profile:p,count:pOrders.length};
+ }).sort(function(a,b){return b.count-a.count}).slice(0,5);
+ var leaderCard=leader.length?('<div class="card" style="padding:14px"><b style="font-size:14px">'+t('hmTeamLeader')+'</b><div style="margin-top:9px">'+leader.map(function(L,i){var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'  ';var isMe=L.profile.id===myId;return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:'+(isMe?'#fef3c7':'transparent')+';border-radius:6px;font-size:13px;font-weight:'+(isMe?'700':'500')+'"><span>'+medal+' '+esc(L.profile.full_name||L.profile.id.slice(0,6))+(isMe?' ('+t('hmYou')+')':'')+'</span><b>'+L.count+'</b></div>'}).join('')+'</div></div>'):'';
+ return kpiGrid+goalCard+startBtn+queueCard+leaderCard;
+}
+
+/* ---- Media Buyer Home ---- */
+function viewHomeMediaBuyer(){
+ var orders=app.cache.orders||[];var kpis=app.cache.kpis||[];var prods=app.cache.products||[];var creas=app.cache.creatives||[];
+ var todayR=todayRange();
+ var inToday=function(arr,fld){return arr.filter(function(x){return x[fld]&&new Date(x[fld])>=todayR.from})};
+ var todayKpis=inToday(kpis,'day');
+ var adToday=0;var revToday=0;todayKpis.forEach(function(k){adToday+=Number(k.ad_spend||0);revToday+=Number(k.revenue||0)});
+ var usd=Number((app.cache.settings&&app.cache.settings.usd_to_dzd)||260);
+ var adTodayDzd=adToday*usd;
+ var roas=adTodayDzd>0?revToday/adTodayDzd:0;
+ var todayOrders=inToday(orders,'created_at');
+ var conv=todayOrders.length;
+ // Top + worst crea
+ var withMetrics=creas.map(function(c){return {c:c,m:creativeMetrics(c)}}).filter(function(x){return x.c.impressions>=100});
+ var bestCrea=withMetrics.slice().sort(function(a,b){return b.m.roas-a.m.roas})[0];
+ var worstCrea=withMetrics.slice().sort(function(a,b){return a.m.roas-b.m.roas}).filter(function(x){return x.c.impressions>=500})[0];
+ var pn={};prods.forEach(function(p){pn[p.id]=p.name});
+ var kpiGrid='<div class="grid g4" style="margin-bottom:16px">'+
+  hmCard(t('hmAdSpend'),fmt(Math.round(adTodayDzd))+' DA','#fef3c7','aujourd\'hui','go(\'kpis\')')+
+  hmCard(t('hmRoas'),roas.toFixed(2)+'x',roas>=1.5?'#ecfdf5':roas>=1?'#fef3c7':'#fef2f2','revenu/depense')+
+  hmCard(t('hmOrders'),conv,'#eff6ff','conversions du jour','go(\'orders\')')+
+  hmCard('💰 Revenu',fmt(Math.round(revToday))+' DA','#fdf2f8','aujourd\'hui')+
+ '</div>';
+ // Top crea
+ var topCreaCard='';if(bestCrea){topCreaCard='<div class="card" style="padding:14px;margin-bottom:12px;background:#f0fdf4;border-color:#86efac;cursor:pointer" onclick="goCreative(\''+bestCrea.c.product_id+'\')"><b style="font-size:13px;color:#166534">'+t('hmTopCrea')+'</b><div style="margin-top:7px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px"><div><b>'+esc(bestCrea.c.creative_name)+'</b><div style="font-size:11px;color:var(--ink2)">'+esc(pn[bestCrea.c.product_id]||'-')+' · '+esc((bestCrea.c.platform||'').toUpperCase())+'</div></div><div style="text-align:end"><div style="font-size:20px;font-weight:800;color:#10b981">'+bestCrea.m.roas.toFixed(2)+'x</div><div style="font-size:11px;color:var(--ink2)">'+fmt(bestCrea.c.impressions)+' impressions</div></div></div></div>'}
+ // Worst crea
+ var worstCreaCard='';if(worstCrea){worstCreaCard='<div class="card" style="padding:14px;margin-bottom:16px;background:#fef2f2;border-color:#fca5a5;cursor:pointer" onclick="goCreative(\''+worstCrea.c.product_id+'\')"><b style="font-size:13px;color:#991b1b">'+t('hmKillCrea')+'</b><div style="margin-top:7px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px"><div><b>'+esc(worstCrea.c.creative_name)+'</b><div style="font-size:11px;color:var(--ink2)">'+esc(pn[worstCrea.c.product_id]||'-')+' · '+esc((worstCrea.c.platform||'').toUpperCase())+'</div></div><div style="text-align:end"><div style="font-size:20px;font-weight:800;color:#ef4444">'+worstCrea.m.roas.toFixed(2)+'x</div><div style="font-size:11px;color:var(--ink2)">'+fmt(worstCrea.c.impressions)+' impressions</div></div></div></div>'}
+ // Quick actions
+ var qaCard='<div class="card" style="padding:14px"><div style="font-weight:700;margin-bottom:11px;font-size:14px">'+t('homeQuickActions')+'</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+
+  '<button class="btn btn-p" onclick="go(\'creatives\')">🎨 Tests A/B</button>'+
+  '<button class="btn btn-g" onclick="go(\'tests\')">🧪 Tests Meta/TikTok</button>'+
+  '<button class="btn btn-g" onclick="go(\'cockpit\')">💰 Cockpit</button>'+
+  '<button class="btn btn-g" onclick="go(\'wacrm\')">📲 WhatsApp CRM</button>'+
+ '</div></div>';
+ return kpiGrid+topCreaCard+worstCreaCard+qaCard;
+}
+
+/* ---- Video Editor Home ---- */
+function viewHomeVideo(){
+ var videos=app.cache.videos||[];var prods=app.cache.products||[];
+ var todo=videos.filter(function(v){return v.status==='todo'||v.status==='in_progress'});
+ var done=videos.filter(function(v){return v.status==='done'});
+ var pn={};prods.forEach(function(p){pn[p.id]=p});
+ var kpiGrid='<div class="grid g3" style="margin-bottom:16px">'+
+  hmCard(t('hmVideoBriefs'),todo.length,'#eff6ff','a monter')+
+  hmCard('✓ Terminees',done.length,'#ecfdf5','cette semaine')+
+  hmCard('🎬 Total',videos.length,'#fef3c7','tous statuts','go(\'video\')')+
+ '</div>';
+ var briefCard=todo.length?('<div class="card" style="padding:14px;margin-bottom:14px"><b>📥 Files de montage</b><div style="margin-top:9px">'+todo.slice(0,8).map(function(v){var p=pn[v.product_id]||{name:'?'};return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 11px;background:var(--soft);border-radius:7px;margin-bottom:5px;cursor:pointer" onclick="openProduct(\''+v.product_id+'\')"><div><b style="font-size:13px">'+esc(v.title||'-')+'</b> <span style="font-size:11px;color:var(--ink2)">· '+esc(p.name)+'</span><div style="font-size:11px;color:var(--ink2);margin-top:2px">'+esc(v.kind||'ugc')+(v.link_url?' · 🔗':'')+'</div></div><span class="badge '+(v.status==='in_progress'?'b-doing':'b-todo')+'">'+esc(v.status)+'</span></div>'}).join('')+'</div></div>'):'<div class="empty" style="margin-bottom:14px">Aucune video a monter ✨</div>';
+ var qaCard='<div class="card" style="padding:14px"><div style="font-weight:700;margin-bottom:11px">'+t('homeQuickActions')+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" onclick="go(\'video\')">🎬 Toutes les videos</button><button class="btn btn-g" onclick="go(\'creatives\')">🎨 Tests A/B</button></div></div>';
+ return kpiGrid+briefCard+qaCard;
+}
+
+/* ---- Production Home ---- */
+function viewHomeProduction(){
+ var prods=app.cache.products||[];
+ var lowStock=prods.filter(function(p){return p.stock_current!=null&&p.stock_min!=null&&p.stock_current<p.stock_min});
+ var inProduction=prods.filter(function(p){return p.current_stage==='production'});
+ var live=prods.filter(function(p){return p.current_stage==='live'});
+ var kpiGrid='<div class="grid g3" style="margin-bottom:16px">'+
+  hmCard(t('hmLowStock'),lowStock.length,lowStock.length>0?'#fef2f2':'#ecfdf5','SKU a recommander','go(\'stock\')')+
+  hmCard('🏭 En production',inProduction.length,'#fef3c7','produits')+
+  hmCard('✓ En live',live.length,'#ecfdf5','vendus actuellement')+
+ '</div>';
+ var lowCard=lowStock.length?('<div class="card" style="padding:14px;margin-bottom:14px;background:#fef2f2;border-color:#fca5a5"><b>'+t('hmLowStock')+'</b><div style="margin-top:9px">'+lowStock.slice(0,8).map(function(p){return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 11px;background:#fff;border-radius:7px;margin-bottom:5px;cursor:pointer" onclick="openProduct(\''+p.id+'\')"><b style="font-size:13px">'+esc(p.name)+'</b><div style="font-size:12px;font-weight:700;color:#dc2626">'+(p.stock_current||0)+' / '+(p.stock_min||0)+'</div></div>'}).join('')+'</div></div>'):'';
+ var prodCard=inProduction.length?('<div class="card" style="padding:14px;margin-bottom:14px"><b>'+t('hmProdSchedule')+'</b><div style="margin-top:9px">'+inProduction.slice(0,5).map(function(p){return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 11px;background:var(--soft);border-radius:7px;margin-bottom:5px;cursor:pointer" onclick="openProduct(\''+p.id+'\')"><b style="font-size:13px">'+esc(p.name)+'</b><span class="badge b-doing">'+esc(p.current_stage)+'</span></div>'}).join('')+'</div></div>'):'';
+ var qaCard='<div class="card" style="padding:14px"><div style="font-weight:700;margin-bottom:11px">'+t('homeQuickActions')+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" onclick="go(\'stock\')">📦 Stock complet</button><button class="btn btn-g" onclick="go(\'production\')">🏭 Production</button><button class="btn btn-g" onclick="go(\'sourcing\')">🏭 Sourcing</button></div></div>';
+ return kpiGrid+lowCard+prodCard+qaCard;
+}
+
+/* ---- Sourcing/Recherche Home ---- */
+function viewHomeSourcing(){
+ var prods=app.cache.products||[];var myId=uid();
+ var mine=prods.filter(function(p){return p.created_by===myId});
+ var toValidate=mine.filter(function(p){return p.current_stage==='tovalidate'});
+ var validated=mine.filter(function(p){return ['validated','production','scaling','live'].indexOf(p.current_stage)>=0});
+ var researching=mine.filter(function(p){return ['idea','research'].indexOf(p.current_stage)>=0});
+ var kpiGrid='<div class="grid g4" style="margin-bottom:16px">'+
+  hmCard(t('hmQuota'),mine.length,'#eff6ff','produits ajoutes','go(\'research\')')+
+  hmCard('⏳ '+t('hmPending'),toValidate.length,'#fef3c7','attente validation','go(\'validate\')')+
+  hmCard(t('hmMyValidated'),validated.length,'#ecfdf5','approuves')+
+  hmCard('🔍 En recherche',researching.length,'#fdf2f8','idees + recherche')+
+ '</div>';
+ var insightCard='<div class="card" style="padding:14px;margin-bottom:14px;background:linear-gradient(135deg,#f5f3ff,#ecfdf5)"><b>'+t('hmInsight')+'</b><div style="font-size:13px;color:var(--ink);margin-top:7px">'+(validated.length?'🎉 Bravo ! '+validated.length+' produit(s) valide(s). Continuez sur les niches a fort scoring.':'💪 Aucun produit valide pour l\'instant. Concentrez-vous sur le wow factor et le scoring (≥ 7/10).')+'</div></div>';
+ var qaCard='<div class="card" style="padding:14px"><div style="font-weight:700;margin-bottom:11px">'+t('homeQuickActions')+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" onclick="go(\'research\')">🔍 Recherche</button><button class="btn btn-g" onclick="go(\'sourcing\')">🏭 Sourcing</button><button class="btn btn-g" onclick="go(\'products\')">📦 Tous les produits</button></div></div>';
+ return kpiGrid+insightCard+qaCard;
+}
+
 function viewPipeline(){
  var u=app.profile;
  var ps=app.cache.products||[];
