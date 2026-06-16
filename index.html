@@ -249,7 +249,8 @@ var I18N={
   wilayasTitle:'Wilayas et tarifs',wilayasSub:'Tarif livraison par wilaya et par transporteur.',zoneN:'Nord',zoneHP:'Hauts-plateaux',zoneS:'Sud',zoneG:'Grand Sud',
   totalCostReal:'Cout total reel',realMargin:'Marge reelle',shippingCost:'Frais livraison',suggestionsTitle:'💡 Suggestions IA',sugScale:'🟢 SCALER',sugWatch:'🔴 SURVEILLER/TUER',sugTest:'🟡 ITERER',sugReason:'Raison',applyAction:'Appliquer',
   tour:'Tour guide',replayTour:'Revoir le tour',tourNext:'Suivant →',tourPrev:'← Precedent',tourSkip:'Passer',tourFinish:'Terminer 🎉',tourStep:'Etape',
-  template:'Template',applyTemplate:'Appliquer un template'
+  template:'Template',applyTemplate:'Appliquer un template',
+  period_today:"Aujourd'hui",period_week:'7 jours',period_month:'30 jours',period_quarter:'90 jours',period_year:'365 jours',period_all:'Tout',vsPrev:'vs periode precedente',trendTitle:'📈 Tendance commandes',revPerDay:'Revenu par jour',cohortTitle:'🔁 Cohort retention (clients qui re-commandent)',cohortIntro:'% des clients d\'un mois qui repassent commande dans les mois suivants.',cohortMonth:'Mois acquisition',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'Clients',avgOrderValue:'Panier moyen',uniqueCustomers:'Clients uniques',repeatRate:'Taux fidelite'
  },
  ar:{
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
@@ -298,7 +299,8 @@ var I18N={
   wilayasTitle:'الولايات والتعريفات',wilayasSub:'تكلفة التوصيل حسب الولاية والناقل.',zoneN:'الشمال',zoneHP:'الهضاب',zoneS:'الجنوب',zoneG:'الجنوب الكبير',
   totalCostReal:'التكلفة الإجمالية الحقيقية',realMargin:'الهامش الحقيقي',shippingCost:'تكلفة التوصيل',suggestionsTitle:'💡 اقتراحات الذكاء',sugScale:'🟢 توسيع',sugWatch:'🔴 مراقبة/إيقاف',sugTest:'🟡 إعادة',sugReason:'السبب',applyAction:'تطبيق',
   tour:'الجولة التوضيحية',replayTour:'إعادة الجولة',tourNext:'التالي ←',tourPrev:'→ السابق',tourSkip:'تخطي',tourFinish:'إنهاء 🎉',tourStep:'الخطوة',
-  template:'قالب',applyTemplate:'تطبيق قالب'
+  template:'قالب',applyTemplate:'تطبيق قالب',
+  period_today:'اليوم',period_week:'7 أيام',period_month:'30 يوم',period_quarter:'90 يوم',period_year:'365 يوم',period_all:'الكل',vsPrev:'مقارنة بالفترة السابقة',trendTitle:'📈 اتجاه الطلبات',revPerDay:'الإيراد يوميًا',cohortTitle:'🔁 الاحتفاظ بالعملاء',cohortIntro:'نسبة العملاء الذين يعيدون الطلب في الأشهر التالية.',cohortMonth:'شهر الاكتساب',cohortM0:'M0',cohortM1:'M+1',cohortM2:'M+2',cohortM3:'M+3',cohortCustomers:'عملاء',avgOrderValue:'متوسط الطلب',uniqueCustomers:'عملاء فريدون',repeatRate:'معدل الولاء'
  }
 };
 var lang=localStorage.getItem('cod_lang')||'fr';
@@ -313,6 +315,7 @@ var app={
  err:'',info:'',busy:false,saved:false,mob:false,kpimsg:'',q:'',filterStage:'',filterNiche:'',filterPrio:'',
  selected:{},dark:localStorage.getItem('cod_dark')==='1',notifsOpen:false,filterQueue:'mine',
  tourStep:-1,tourDone:localStorage.getItem('cod_tour_done')==='1',
+ period:'month',
  cache:{products:[],profiles:[],tasks:[],kpis:[],settings:{},offers:[],tests:[],videos:[],product:null,sheet:null,orders:[],blacklist:[],notifs:[],comments:[],audit:[],trash:[],wilayas:[],stockMoves:[]}
 };
 /* === Tour guide === */
@@ -843,13 +846,68 @@ function renderView(){
  }
 }
 
+/* === Helpers temporels === */
+var PERIODS={today:1,week:7,month:30,quarter:90,year:365,all:99999};
+function setPeriod(p){app.period=p;render()}
+function periodRange(p){var d=PERIODS[p]||30;var to=new Date();var from=new Date(Date.now()-d*86400000);return {from:from,to:to}}
+function prevPeriodRange(p){var d=PERIODS[p]||30;var to=new Date(Date.now()-d*86400000);var from=new Date(Date.now()-2*d*86400000);return {from:from,to:to}}
+function inRange(dt,r){if(!dt)return false;var x=new Date(dt);return x>=r.from&&x<=r.to}
+function pctDelta(now,prev){if(prev===0)return now>0?'+∞%':'0%';var v=((now-prev)/Math.abs(prev))*100;var s=(v>=0?'+':'')+v.toFixed(0)+'%';return s}
+function deltaColor(now,prev){if(prev===0&&now===0)return 'var(--ink2)';return now>=prev?'var(--good)':'var(--bad)'}
+function deltaChip(now,prev){var c=deltaColor(now,prev);var s=pctDelta(now,prev);return '<span style="font-size:11px;font-weight:800;color:'+c+';margin-inline-start:5px">'+s+'</span>'}
+
+function buildTrendBars(orders,kpis,period){
+ var d=PERIODS[period]||30;if(d>90)d=90;
+ var bars=[];var today=new Date();today.setHours(0,0,0,0);
+ for(var i=d-1;i>=0;i--){var day=new Date(today.getTime()-i*86400000);var dayStr=day.toISOString().slice(0,10);
+  var rev=0;
+  orders.filter(function(o){return o.status==='delivered'&&(o.created_at||'').slice(0,10)===dayStr}).forEach(function(o){rev+=Number(o.total_price||0)});
+  kpis.filter(function(k){return (k.day||'').slice(0,10)===dayStr}).forEach(function(k){rev+=Number(k.revenue||0)});
+  bars.push({day:dayStr.slice(5),val:rev});
+ }
+ return bars;
+}
+
+function buildCohorts(orders){
+ var byPhone={};orders.forEach(function(o){if(!o.customer_phone)return;var p=o.customer_phone;if(!byPhone[p])byPhone[p]=[];byPhone[p].push(o)});
+ var cohorts={};
+ Object.keys(byPhone).forEach(function(phone){
+  var arr=byPhone[phone].slice().sort(function(a,b){return new Date(a.created_at)-new Date(b.created_at)});
+  var first=arr[0];if(!first||!first.created_at)return;
+  var fm=first.created_at.slice(0,7);
+  if(!cohorts[fm])cohorts[fm]={month:fm,customers:0,m0:0,m1:0,m2:0,m3:0};
+  cohorts[fm].customers++;cohorts[fm].m0++;
+  var firstD=new Date(first.created_at);
+  for(var i=1;i<arr.length;i++){
+   var dt=new Date(arr[i].created_at);
+   var monthsDiff=(dt.getFullYear()-firstD.getFullYear())*12+(dt.getMonth()-firstD.getMonth());
+   if(monthsDiff===1)cohorts[fm].m1++;
+   else if(monthsDiff===2)cohorts[fm].m2++;
+   else if(monthsDiff===3)cohorts[fm].m3++;
+  }
+ });
+ return Object.values(cohorts).sort(function(a,b){return b.month.localeCompare(a.month)}).slice(0,6);
+}
+
 /* === COCKPIT CFO === */
 function viewCockpit(){
- var orders=app.cache.orders||[];var kpis=app.cache.kpis||[];var prods=app.cache.products||[];
- var revKpi=0,adSpend=0;kpis.forEach(function(k){revKpi+=Number(k.revenue||0);adSpend+=Number(k.ad_spend||0)});
- var revOrders=0,pendingValue=0,nOrders=0,nPending=0,deliveredCount=0;
- orders.forEach(function(o){var tot=Number(o.total_price||0);if(o.status==='delivered'){revOrders+=tot;deliveredCount++}else if(['queued','calling','confirmed','reschedule'].indexOf(o.status)>=0){pendingValue+=tot;nPending++}nOrders++});
+ var allOrders=app.cache.orders||[];var allKpis=app.cache.kpis||[];var prods=app.cache.products||[];
+ var range=periodRange(app.period);var prevRange=prevPeriodRange(app.period);
+ var filterByDate=function(arr,dateField,r){return arr.filter(function(x){return inRange(x[dateField],r)})};
+ var orders=app.period==='all'?allOrders:filterByDate(allOrders,'created_at',range);
+ var kpis=app.period==='all'?allKpis:filterByDate(allKpis,'day',range);
+ var prevOrders=app.period==='all'?[]:filterByDate(allOrders,'created_at',prevRange);
+ var prevKpis=app.period==='all'?[]:filterByDate(allKpis,'day',prevRange);
+ var calcStats=function(os,ks){var rk=0,ad=0,ro=0,pv=0,no=0,np=0,dc=0,uniq={};ks.forEach(function(k){rk+=Number(k.revenue||0);ad+=Number(k.ad_spend||0)});os.forEach(function(o){var tot=Number(o.total_price||0);if(o.status==='delivered'){ro+=tot;dc++}else if(['queued','calling','confirmed','reschedule'].indexOf(o.status)>=0){pv+=tot;np++}no++;if(o.customer_phone)uniq[o.customer_phone]=1});return {revKpi:rk,adSpend:ad,revOrders:ro,pendingValue:pv,nOrders:no,nPending:np,deliveredCount:dc,uniqueCustomers:Object.keys(uniq).length}};
+ var cur_=calcStats(orders,kpis);var prev=calcStats(prevOrders,prevKpis);
+ var revKpi=cur_.revKpi,adSpend=cur_.adSpend,revOrders=cur_.revOrders,pendingValue=cur_.pendingValue,nOrders=cur_.nOrders,nPending=cur_.nPending,deliveredCount=cur_.deliveredCount;
  var revTotal=revKpi+revOrders;var netMarg=revTotal-adSpend;
+ var prevNet=(prev.revKpi+prev.revOrders)-prev.adSpend;
+ var aov=deliveredCount?Math.round(revOrders/deliveredCount):0;var prevAov=prev.deliveredCount?Math.round(prev.revOrders/prev.deliveredCount):0;
+ var byPhone={};allOrders.forEach(function(o){if(!o.customer_phone)return;byPhone[o.customer_phone]=(byPhone[o.customer_phone]||0)+1});
+ var repeatCust=Object.values(byPhone).filter(function(c){return c>1}).length;
+ var totalCust=Object.keys(byPhone).length;
+ var repeatRate=totalCust?Math.round(repeatCust/totalCust*100):0;
  var pname={};prods.forEach(function(p){pname[p.id]=p.name});
  var profitByP={};kpis.forEach(function(k){var id=k.product_id;if(!id)return;if(!profitByP[id])profitByP[id]={revenue:0,ad:0};profitByP[id].revenue+=Number(k.revenue||0);profitByP[id].ad+=Number(k.ad_spend||0)});
  orders.filter(function(o){return o.status==='delivered'}).forEach(function(o){if(!o.product_id)return;if(!profitByP[o.product_id])profitByP[o.product_id]={revenue:0,ad:0};profitByP[o.product_id].revenue+=Number(o.total_price||0)});
@@ -859,24 +917,38 @@ function viewCockpit(){
  var deliv=Number(app.cache.settings.default_deliver_rate||60)/100;
  var projected=Math.round(pendingValue*conf*deliv);
  var sugg=buildSuggestions();
- var head='<div class="pghead"><div><h1 class="pg">💰 '+t('cockpitTitle')+'</h1><div class="sub">'+t('cockpitSub')+'</div></div></div>';
+ var pBtns=['today','week','month','quarter','year','all'].map(function(p){return '<button class="pill" style="background:'+(app.period===p?'var(--brand)':'#f1f2f5')+';color:'+(app.period===p?'#fff':'var(--ink2)')+';padding:5px 11px" onclick="setPeriod(\''+p+'\')">'+t('period_'+p)+'</button>'}).join('');
+ var head='<div class="pghead"><div><h1 class="pg">💰 '+t('cockpitTitle')+'</h1><div class="sub">'+t('cockpitSub')+'</div></div></div>'+
+  '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center">'+pBtns+'<span style="font-size:11px;color:var(--ink2);margin-inline-start:8px">'+t('vsPrev')+'</span></div>';
  var stats='<div class="grid g4">'+
-  '<div class="card stat"><div class="ic">💵</div><div class="v">'+fmt(revOrders)+'</div><div class="l">'+t('cashIn')+' ('+t('cur')+')</div></div>'+
-  '<div class="card stat"><div class="ic">📣</div><div class="v">'+fmt(adSpend)+'</div><div class="l">'+t('adSpendTotal')+' ('+t('cur')+')</div></div>'+
-  '<div class="card stat" style="background:'+(netMarg>=0?'#e9f7ef':'#fee2e2')+'"><div class="ic">'+(netMarg>=0?'📈':'📉')+'</div><div class="v" style="color:'+(netMarg>=0?'var(--good)':'var(--bad)')+'">'+fmt(netMarg)+'</div><div class="l">'+t('netMargin')+' ('+t('cur')+')</div></div>'+
+  '<div class="card stat"><div class="ic">💵</div><div class="v">'+fmt(revOrders)+'</div><div class="l">'+t('cashIn')+' ('+t('cur')+')'+(app.period!=='all'?deltaChip(revOrders,prev.revOrders):'')+'</div></div>'+
+  '<div class="card stat"><div class="ic">📣</div><div class="v">'+fmt(adSpend)+'</div><div class="l">'+t('adSpendTotal')+' ('+t('cur')+')'+(app.period!=='all'?deltaChip(adSpend,prev.adSpend):'')+'</div></div>'+
+  '<div class="card stat" style="background:'+(netMarg>=0?'#e9f7ef':'#fee2e2')+'"><div class="ic">'+(netMarg>=0?'📈':'📉')+'</div><div class="v" style="color:'+(netMarg>=0?'var(--good)':'var(--bad)')+'">'+fmt(netMarg)+'</div><div class="l">'+t('netMargin')+' ('+t('cur')+')'+(app.period!=='all'?deltaChip(netMarg,prevNet):'')+'</div></div>'+
   '<div class="card stat"><div class="ic">⏳</div><div class="v">'+fmt(projected)+'</div><div class="l">'+t('cashProjected')+' ('+t('cur')+')</div></div>'+
  '</div>';
- var orderStats='<div class="grid g3" style="margin-top:13px">'+
-  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('pendingOrders')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+nPending+' / '+nOrders+'</div><div style="font-size:11px;color:var(--ink2)">'+fmt(pendingValue)+' '+t('cur')+'</div></div>'+
-  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('deliveryRevenue')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:var(--good)">'+fmt(revOrders)+' '+t('cur')+'</div><div style="font-size:11px;color:var(--ink2)">'+deliveredCount+' livrees</div></div>'+
-  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">KPI revenu pub</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+fmt(revKpi)+' '+t('cur')+'</div></div>'+
+ var clientStats='<div class="grid g3" style="margin-top:13px">'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('uniqueCustomers')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+cur_.uniqueCustomers+(app.period!=='all'?deltaChip(cur_.uniqueCustomers,prev.uniqueCustomers):'')+'</div></div>'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('avgOrderValue')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+fmt(aov)+' '+t('cur')+(app.period!=='all'?deltaChip(aov,prevAov):'')+'</div></div>'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('repeatRate')+' (global)</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+repeatRate+'%</div><div style="font-size:11px;color:var(--ink2)">'+repeatCust+' / '+totalCust+'</div></div>'+
  '</div>';
+ var orderStats='<div class="grid g3" style="margin-top:13px">'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('pendingOrders')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+nPending+' / '+nOrders+(app.period!=='all'?deltaChip(nOrders,prev.nOrders):'')+'</div><div style="font-size:11px;color:var(--ink2)">'+fmt(pendingValue)+' '+t('cur')+'</div></div>'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('deliveryRevenue')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:var(--good)">'+fmt(revOrders)+' '+t('cur')+'</div><div style="font-size:11px;color:var(--ink2)">'+deliveredCount+' livrees'+(app.period!=='all'?deltaChip(deliveredCount,prev.deliveredCount):'')+'</div></div>'+
+  '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">KPI revenu pub</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+fmt(revKpi)+' '+t('cur')+(app.period!=='all'?deltaChip(revKpi,prev.revKpi):'')+'</div></div>'+
+ '</div>';
+ var bars=buildTrendBars(orders,kpis,app.period);
+ var maxBar=Math.max.apply(null,bars.map(function(b){return b.val}).concat([1]));
+ var trendCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('trendTitle')+'</b><div style="display:flex;align-items:flex-end;gap:2px;height:120px;margin-top:14px;border-bottom:1px solid var(--line);padding-bottom:4px">'+bars.map(function(b){var h=Math.max(2,Math.round(b.val/maxBar*100));return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px"><div style="font-size:9px;color:var(--ink2);'+(b.val===0?'opacity:0':'')+'">'+(b.val>1000?Math.round(b.val/1000)+'k':b.val)+'</div><div style="width:100%;background:var(--brand);height:'+h+'%;border-radius:2px 2px 0 0;min-height:2px" title="'+b.day+': '+fmt(b.val)+' '+t('cur')+'"></div></div>'}).join('')+'</div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink2);margin-top:4px"><span>'+bars[0].day+'</span><span>'+bars[bars.length-1].day+'</span></div></div>';
  var topCard='<div class="grid g2" style="margin-top:13px">'+
   '<div class="card" style="padding:14px"><b>🏆 '+t('topProfitable')+'</b>'+(top5.length?top5.map(function(x){return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f1f2f5;font-size:13px"><span>'+esc(x.name)+'</span><b style="color:var(--good)">+'+fmt(x.net)+'</b></div>'}).join(''):'<div style="font-size:12px;color:var(--ink2);margin-top:6px">'+t('empty')+'</div>')+'</div>'+
   '<div class="card" style="padding:14px"><b>📉 '+t('topLosing')+'</b>'+(bot5.length?bot5.filter(function(x){return x.net<0}).map(function(x){return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f1f2f5;font-size:13px"><span>'+esc(x.name)+'</span><b style="color:var(--bad)">'+fmt(x.net)+'</b></div>'}).join('')||'<div style="font-size:12px;color:var(--ink2);margin-top:6px">Aucun produit en perte ✨</div>':'<div style="font-size:12px;color:var(--ink2);margin-top:6px">'+t('empty')+'</div>')+'</div>'+
  '</div>';
+ var cohorts=buildCohorts(allOrders);
+ var pct=function(n,t){return t?Math.round(n/t*100)+'%':'-'};
+ var cohortRows=cohorts.length?cohorts.map(function(c){return '<tr><td><b>'+esc(c.month)+'</b></td><td style="text-align:center">'+c.customers+'</td><td style="text-align:center;background:var(--soft);font-weight:700">100%</td><td style="text-align:center;background:'+(c.m1?'#dcfce7':'#f8f9fb')+'">'+pct(c.m1,c.customers)+' <span style="color:var(--ink2);font-size:10px">('+c.m1+')</span></td><td style="text-align:center;background:'+(c.m2?'#bbf7d0':'#f8f9fb')+'">'+pct(c.m2,c.customers)+' <span style="color:var(--ink2);font-size:10px">('+c.m2+')</span></td><td style="text-align:center;background:'+(c.m3?'#86efac':'#f8f9fb')+'">'+pct(c.m3,c.customers)+' <span style="color:var(--ink2);font-size:10px">('+c.m3+')</span></td></tr>'}).join(''):'<tr><td colspan="6" style="text-align:center;padding:14px;color:var(--ink2)">Pas assez de donnees clients.</td></tr>';
+ var cohortCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('cohortTitle')+'</b><div class="note" style="margin-top:4px">'+t('cohortIntro')+'</div><div class="scroll-x" style="margin-top:10px"><table><thead><tr><th>'+t('cohortMonth')+'</th><th style="text-align:center">'+t('cohortCustomers')+'</th><th style="text-align:center">'+t('cohortM0')+'</th><th style="text-align:center">'+t('cohortM1')+'</th><th style="text-align:center">'+t('cohortM2')+'</th><th style="text-align:center">'+t('cohortM3')+'</th></tr></thead><tbody>'+cohortRows+'</tbody></table></div></div>';
  var sugCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('suggestionsTitle')+'</b>'+(sugg.length?sugg.map(function(s){var c=s.type==='scale'?'b-validated':s.type==='watch'?'b-killed':'b-research';var lab=s.type==='scale'?t('sugScale'):s.type==='watch'?t('sugWatch'):t('sugTest');return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f2f5"><div><span class="badge '+c+'">'+lab+'</span> <b style="margin-inline-start:6px;font-size:13px"><a class="tile" onclick="openProduct(\''+s.product.id+'\')">'+esc(s.product.name)+'</a></b><div style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+esc(s.reason)+'</div></div>'+(isAdmin()?'<button class="pill" onclick="'+(s.type==='scale'?'setStage(\''+s.product.id+'\',\'scaling\')':'adminKill(\''+s.product.id+'\')')+'">'+t('applyAction')+'</button>':'')+'</div>'}).join(''):'<div style="font-size:12px;color:var(--ink2);margin-top:7px">Aucune suggestion (donnees insuffisantes).</div>')+'</div>';
- return head+stats+orderStats+topCard+sugCard;
+ return head+stats+clientStats+orderStats+trendCard+topCard+cohortCard+sugCard;
 }
 
 /* === STOCK === */
