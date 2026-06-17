@@ -222,14 +222,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['home','cockpit','time','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
- media_buyer:['home','cockpit','time','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
- sourcing:['home','time','pipeline','products','research','sourcing','tasks'],
- production:['home','time','pipeline','products','sourcing','stock','production','tasks'],
- video_editor:['home','time','pipeline','products','video','creatives','tasks'],
- confirmatrice:['home','time','orders','clients','wacrm','tasks']
+ admin:['home','cockpit','time','timesheet','capacity','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['home','cockpit','time','timesheet','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
+ sourcing:['home','time','timesheet','pipeline','products','research','sourcing','tasks'],
+ production:['home','time','timesheet','pipeline','products','sourcing','stock','production','tasks'],
+ video_editor:['home','time','timesheet','pipeline','products','video','creatives','tasks'],
+ confirmatrice:['home','time','timesheet','orders','clients','wacrm','tasks']
 };
-var ICON={home:'🏠',time:'⏱️',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={home:'🏠',time:'⏱️',timesheet:'📋',capacity:'⚙',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 // Mobile bottom nav (5 icons max, role-specific)
 var MOBILE_NAV={
  admin:['home','cockpit','orders','wacrm','clients'],
@@ -324,6 +324,18 @@ var I18N={
   timeWidgetClick:'Cliquez pour gerer',timeWidgetStart:'Demarrer un timer',
   timeAutoCall:'⚡ Auto-track activé',timeAutoStarted:'Timer demarre automatiquement',timeAutoStopped:'Timer arrete automatiquement',
   timeNoTime:'Aucune duree enregistree',timeEstimate:'Estimation',timeActual:'Reel',timeAccuracy:'Precision',
+  /* T1 SLA */
+  slaTarget:'Cible SLA',slaDeadline:'Echeance',slaBreached:'⚠ SLA depasse',slaOnTrack:'✓ Dans les delais',slaWarning:'🟡 Bientot expire',slaHealth:'SLA Health',slaHealthSub:'Respect des delais cette semaine',slaSettingsTitle:'Definitions SLA par role',
+  /* T2 Labor cost */
+  hourlyCost:'Cout horaire (DZD)',hourlyCostHint:'Salaire mensuel / 173h pour le calcul automatique',laborCost:'Cout main d\'oeuvre',laborMargin:'Marge apres labor',profitPerMin:'Profit/min travail',laborWarn:'⚠ Labor > 30% panier',laborOk:'✓ Labor sous controle',laborDetail:'Detail cout commande',
+  /* T3 Capacity */
+  nav_capacity:'Capacite',capacityTitle:'⚙ Capacity Planning',capacitySub:'Charge theorique vs reelle de chaque membre.',capTheo:'Capacite theorique',capUsed:'Utilise aujourd\'hui',capRemain:'Disponible',capFull:'🔴 Sature',capPartial:'🟡 Partiel',capFree:'🟢 Disponible',capHeatmap:'Heatmap horaires',capBottleneck:'Goulot',
+  /* T4 Coaching */
+  coachingTitle:'💡 Coaching insights',outliersTitle:'⚠ Performances atypiques',avgTeam:'Moyenne equipe',vsAvg:'vs moyenne',needsTraining:'A former',topPerformer:'🏆 Top performer',fpyRate:'1st Pass Yield',fpySub:'% confirmes au 1er appel',
+  /* T5 Pomodoro */
+  pomodoro:'🍅 Pomodoro',pomoStart:'Demarrer Pomodoro 25/5',pomoFocus:'Concentration',pomoBreak:'Pause',pomoCycleN:'Cycle',pomoSkip:'Sauter',pomoDone:'Pomodoro complete ! 🎉',pomoNextBreak:'Pause dans',pomoNextFocus:'Reprise dans',dailyCapTitle:'⚠ Limite quotidienne atteinte',dailyCapMsg:'Vous avez depasse votre cap journalier. Pensez a vous reposer.',breakReminder:'☕ 90min de travail. Une pause ferait du bien.',
+  /* T6 Timesheet */
+  nav_timesheet:'Timesheet',timesheetTitle:'📋 Timesheet hebdomadaire',timesheetSub:'Suivi des heures pour validation et paie.',weekOf:'Semaine du',totalWeek:'Total semaine',laborTotal:'Total paie',submitTs:'Soumettre',approveTs:'Approuver',rejectTs:'Rejeter',tsStatus_draft:'📝 Brouillon',tsStatus_submitted:'⏳ Soumis',tsStatus_approved:'✓ Approuve',tsStatus_rejected:'✗ Rejete',exportCsv:'📥 Export CSV',exportPdf:'📥 Export PDF',rejectReason:'Raison du rejet',allTimesheets:'Tous les timesheets',myTimesheets:'Mes timesheets',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'Broadcasts en masse + agent IA de confirmation. Envoi gratuit via wa.me.',
   wacrmTab_campaigns:'📢 Broadcasts',wacrmTab_inbox:'💬 Inbox',wacrmTab_agent:'🤖 Agent IA',wacrmTab_relay:'🔌 Relais Baileys',
   relayTitle:'Relais Baileys (envoi automatique)',relayDisconnected:'🔴 Deconnecte',relayQR:'📱 Scanner le QR',relayConnecting:'⏳ Connexion...',relayConnected:'🟢 Connecte',relayError:'❌ Erreur',relayUrl:'URL du relais',relayToken:'Token d\'auth',relaySave:'Enregistrer',relayTest:'Tester',relayLogout:'Deconnecter WhatsApp',relayDailySent:'Envoyes aujourd\'hui',relayTotalSent:'Total envoyes',relayTotalFailed:'Total echecs',relayLastSeen:'Derniere activite',relayQrInstructions:'Sur votre telephone : Reglages WhatsApp → Appareils connectes → Lier un appareil',relayNotConfigured:'⚠ Configurez l\'URL du relais et le token dans les Reglages',relaySendMode:'Mode d\'envoi',relayMode_manual:'📲 Manuel (wa.me)',relayMode_baileys:'🤖 Auto (Baileys)',relayWarning:'⚠ Baileys est contre les CGU WhatsApp. Risque de ban. Utilisez un numero dedie.',relaySetup:'Configurer le relais',
@@ -419,6 +431,18 @@ var I18N={
   timeWidgetClick:'انقر للإدارة',timeWidgetStart:'بدء مؤقت',
   timeAutoCall:'⚡ التتبّع التلقائي نشط',timeAutoStarted:'بدأ المؤقت تلقائيًا',timeAutoStopped:'تم إيقاف المؤقت تلقائيًا',
   timeNoTime:'لا توجد مدة مسجلة',timeEstimate:'التقدير',timeActual:'الفعلي',timeAccuracy:'الدقة',
+  /* T1 SLA */
+  slaTarget:'هدف SLA',slaDeadline:'الموعد النهائي',slaBreached:'⚠ تجاوز SLA',slaOnTrack:'✓ في الوقت',slaWarning:'🟡 سيتجاوز قريبًا',slaHealth:'صحة SLA',slaHealthSub:'احترام المواعيد هذا الأسبوع',slaSettingsTitle:'تعريفات SLA حسب الدور',
+  /* T2 Labor */
+  hourlyCost:'التكلفة بالساعة (دج)',hourlyCostHint:'الراتب الشهري / 173 ساعة للحساب التلقائي',laborCost:'تكلفة اليد العاملة',laborMargin:'الهامش بعد اليد العاملة',profitPerMin:'الربح/دقيقة',laborWarn:'⚠ اليد العاملة > 30% من السلة',laborOk:'✓ اليد العاملة تحت السيطرة',laborDetail:'تفصيل تكلفة الطلب',
+  /* T3 Capacity */
+  nav_capacity:'القدرة',capacityTitle:'⚙ تخطيط القدرة',capacitySub:'الحمل النظري مقابل الفعلي لكل عضو.',capTheo:'القدرة النظرية',capUsed:'مستخدم اليوم',capRemain:'المتاح',capFull:'🔴 مشبع',capPartial:'🟡 جزئي',capFree:'🟢 متاح',capHeatmap:'خريطة الساعات',capBottleneck:'عنق الزجاجة',
+  /* T4 Coaching */
+  coachingTitle:'💡 رؤى التدريب',outliersTitle:'⚠ أداء غير معتاد',avgTeam:'متوسط الفريق',vsAvg:'مقارنة بالمتوسط',needsTraining:'يحتاج تدريبًا',topPerformer:'🏆 أفضل أداء',fpyRate:'تأكيد من المحاولة الأولى',fpySub:'% المؤكدة في المكالمة الأولى',
+  /* T5 Pomodoro */
+  pomodoro:'🍅 بومودورو',pomoStart:'ابدأ Pomodoro 25/5',pomoFocus:'تركيز',pomoBreak:'استراحة',pomoCycleN:'الدورة',pomoSkip:'تخطّ',pomoDone:'Pomodoro مكتمل ! 🎉',pomoNextBreak:'استراحة بعد',pomoNextFocus:'استئناف بعد',dailyCapTitle:'⚠ تم بلوغ الحد اليومي',dailyCapMsg:'لقد تجاوزت حدّك اليومي. خذ قسطًا من الراحة.',breakReminder:'☕ 90 دقيقة عمل. استراحة قصيرة ستفيدك.',
+  /* T6 Timesheet */
+  nav_timesheet:'كشف ساعات',timesheetTitle:'📋 كشف الساعات الأسبوعي',timesheetSub:'تتبّع الساعات للمصادقة والرواتب.',weekOf:'أسبوع',totalWeek:'إجمالي الأسبوع',laborTotal:'إجمالي الراتب',submitTs:'إرسال',approveTs:'موافقة',rejectTs:'رفض',tsStatus_draft:'📝 مسودة',tsStatus_submitted:'⏳ مُرسل',tsStatus_approved:'✓ موافق',tsStatus_rejected:'✗ مرفوض',exportCsv:'📥 تصدير CSV',exportPdf:'📥 تصدير PDF',rejectReason:'سبب الرفض',allTimesheets:'كل الكشوف',myTimesheets:'كشوفاتي',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'بث جماعي + وكيل ذكاء اصطناعي للتأكيد. إرسال مجاني عبر wa.me.',
   wacrmTab_campaigns:'📢 البث',wacrmTab_inbox:'💬 الرسائل',wacrmTab_agent:'🤖 الوكيل الذكي',wacrmTab_relay:'🔌 ربط Baileys',
   relayTitle:'مرحّل Baileys (إرسال آلي)',relayDisconnected:'🔴 غير متصل',relayQR:'📱 امسح الرمز',relayConnecting:'⏳ جارٍ الاتصال...',relayConnected:'🟢 متصل',relayError:'❌ خطأ',relayUrl:'رابط المرحّل',relayToken:'رمز المصادقة',relaySave:'حفظ',relayTest:'اختبار',relayLogout:'فصل WhatsApp',relayDailySent:'المرسلة اليوم',relayTotalSent:'إجمالي المرسلة',relayTotalFailed:'إجمالي الفاشلة',relayLastSeen:'آخر نشاط',relayQrInstructions:'في هاتفك: إعدادات WhatsApp → الأجهزة المرتبطة → ربط جهاز',relayNotConfigured:'⚠ اضبط رابط المرحّل والرمز في الإعدادات',relaySendMode:'نمط الإرسال',relayMode_manual:'📲 يدوي (wa.me)',relayMode_baileys:'🤖 آلي (Baileys)',relayWarning:'⚠ Baileys مخالف لشروط WhatsApp. خطر حظر الرقم. استخدم رقمًا مخصصًا.',relaySetup:'إعداد المرحّل',
@@ -612,6 +636,14 @@ async function refresh(){
    await loadTimeEntries();
    var pf2=await SB.from('profiles').select('*');var pd=await SB.from('products').select('id,name');
    app.cache.profiles=pf2.data||[];app.cache.products=pd.data||[];
+  } else if(v==='timesheet'){
+   await loadTimeEntries();await loadTimesheets();
+   var pf3=await SB.from('profiles').select('*');
+   app.cache.profiles=pf3.data||[];
+  } else if(v==='capacity'){
+   await loadTimeEntries();
+   var pf4=await SB.from('profiles').select('*');
+   app.cache.profiles=pf4.data||[];
   } else if(v==='pipeline'){
    var p=await SB.from('products').select('*').is('deleted_at',null).order('updated_at',{ascending:false});
    var t=await SB.from('tasks').select('id,status,assignee_id');
@@ -683,7 +715,9 @@ async function refresh(){
    var pAll=await SB.from('products').select('*').is('deleted_at',null);
    var oAll=await SB.from('orders').select('*');
    var kAll=await SB.from('cod_kpis').select('*');
-   app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];
+   var pfA=await SB.from('profiles').select('*');
+   await loadTimeEntries();
+   app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];app.cache.profiles=pfA.data||[];
   } else if(v==='report'){
    var pAll=await SB.from('products').select('*').is('deleted_at',null);
    var oAll=await SB.from('orders').select('*');
@@ -1012,7 +1046,7 @@ function downloadTemplate(){var csv='produit,date,commandes,confirmees,livrees,r
 /* Realtime */
 var rtDone=false;
 function afterLogin(){
- loadSettings();loadWilayas();loadActiveTimer();refresh();
+ loadSettings();loadWilayas();loadActiveTimer();loadSlaDefinitions();refresh();
  if(!app.tourDone&&app.tourStep<0){setTimeout(function(){if(app.session&&!app.tourDone)startTour()},1200)}
  if(rtDone)return;rtDone=true;
  SB.channel('rt')
@@ -1030,7 +1064,9 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_relay_status'},function(){if(app.view==='wacrm'){loadRelayStatus().then(render)}})
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_conversations'},function(){if(app.view==='wacrm')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_messages'},function(p){if(app.view==='wacrm'&&app.wacConversation){var newRec=p.new||{};if(newRec.conversation_id===app.wacConversation){loadConversation(app.wacConversation).then(render)}}})
-  .on('postgres_changes',{event:'*',schema:'public',table:'time_entries',filter:'user_id=eq.'+uid()},function(p){if(p.eventType==='INSERT'||p.eventType==='UPDATE'){var rec=p.new;if(rec&&!rec.end_time){app.activeTimer=rec;startTimeTicker()}else if(app.activeTimer&&app.activeTimer.id===(rec&&rec.id)){app.activeTimer=null;stopTimeTicker()}if(app.view==='time')refresh();render()}})
+  .on('postgres_changes',{event:'*',schema:'public',table:'time_entries',filter:'user_id=eq.'+uid()},function(p){if(p.eventType==='INSERT'||p.eventType==='UPDATE'){var rec=p.new;if(rec&&!rec.end_time){app.activeTimer=rec;startTimeTicker()}else if(app.activeTimer&&app.activeTimer.id===(rec&&rec.id)){app.activeTimer=null;stopTimeTicker()}if(app.view==='time'||app.view==='timesheet'||app.view==='capacity')refresh();render()}})
+  .on('postgres_changes',{event:'*',schema:'public',table:'timesheets'},function(){if(app.view==='timesheet')refresh()})
+  .on('postgres_changes',{event:'*',schema:'public',table:'sla_definitions'},function(){loadSlaDefinitions().then(render)})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -1105,6 +1141,8 @@ function renderView(){
  switch(app.view){
   case 'home':return viewHome();
   case 'time':return viewTime();
+  case 'timesheet':return viewTimesheet();
+  case 'capacity':return viewCapacity();
   case 'products':return viewProducts();
   case 'research':return viewResearch();
   case 'validate':return viewValidate();
@@ -1884,6 +1922,17 @@ function viewCockpit(){
   '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">'+t('deliveryRevenue')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:var(--good)">'+fmt(revOrders)+' '+t('cur')+'</div><div style="font-size:11px;color:var(--ink2)">'+deliveredCount+' livrees'+(app.period!=='all'?deltaChip(deliveredCount,prev.deliveredCount):'')+'</div></div>'+
   '<div class="card" style="padding:13px"><div style="font-size:11.5px;color:var(--ink2)">KPI revenu pub</div><div style="font-size:20px;font-weight:800;margin-top:3px">'+fmt(revKpi)+' '+t('cur')+(app.period!=='all'?deltaChip(revKpi,prev.revKpi):'')+'</div></div>'+
  '</div>';
+ // T2 Labor cost section
+ var pfMap={};(app.cache.profiles||[]).forEach(function(p){pfMap[p.id]=p});
+ var laborTotal=0;
+ (app.cache.timeEntries||[]).forEach(function(e){if(!e.duration_seconds)return;if(e.start_time&&app.period!=='all'&&!inRange(e.start_time,range))return;var p=pfMap[e.user_id];if(!p||!p.hourly_cost_dzd)return;laborTotal+=(e.duration_seconds/3600)*Number(p.hourly_cost_dzd)});
+ var realMarginAfterLabor=netMarg-laborTotal;
+ var laborWarning=aov>0&&deliveredCount>0&&laborTotal>0&&(laborTotal/deliveredCount)>(aov*0.3);
+ var laborStats='<div class="grid g3" style="margin-top:13px">'+
+  '<div class="card" style="padding:13px;background:#fdf2f8"><div style="font-size:11.5px;color:var(--ink2)">'+t('laborCost')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:#ec4899">'+fmt(Math.round(laborTotal))+' '+t('cur')+'</div><div style="font-size:11px;color:var(--ink2)">'+(laborTotal>0&&deliveredCount?fmt(Math.round(laborTotal/deliveredCount))+' DA/commande livree':'taux horaire non configure')+'</div></div>'+
+  '<div class="card" style="padding:13px;background:#f0fdf4"><div style="font-size:11.5px;color:var(--ink2)">'+t('laborMargin')+'</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:'+(realMarginAfterLabor>=0?'var(--good)':'var(--bad)')+'">'+fmt(Math.round(realMarginAfterLabor))+' '+t('cur')+'</div><div style="font-size:11px;color:var(--ink2)">marge nette - labor</div></div>'+
+  '<div class="card" style="padding:13px;background:'+(laborWarning?'#fef2f2':'#f0fdf4')+'"><div style="font-size:11.5px;color:var(--ink2)">Ratio labor/AOV</div><div style="font-size:20px;font-weight:800;margin-top:3px;color:'+(laborWarning?'var(--bad)':'var(--good)')+'">'+(aov>0&&deliveredCount>0?Math.round((laborTotal/deliveredCount)/aov*100):0)+'%</div><div style="font-size:11px;color:var(--ink2)">'+(laborWarning?t('laborWarn'):t('laborOk'))+'</div></div>'+
+ '</div>';
  var bars=buildTrendBars(orders,kpis,app.period);
  var maxBar=Math.max.apply(null,bars.map(function(b){return b.val}).concat([1]));
  var trendCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('trendTitle')+'</b><div style="display:flex;align-items:flex-end;gap:2px;height:120px;margin-top:14px;border-bottom:1px solid var(--line);padding-bottom:4px">'+bars.map(function(b){var h=Math.max(2,Math.round(b.val/maxBar*100));return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px"><div style="font-size:9px;color:var(--ink2);'+(b.val===0?'opacity:0':'')+'">'+(b.val>1000?Math.round(b.val/1000)+'k':b.val)+'</div><div style="width:100%;background:var(--brand);height:'+h+'%;border-radius:2px 2px 0 0;min-height:2px" title="'+b.day+': '+fmt(b.val)+' '+t('cur')+'"></div></div>'}).join('')+'</div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink2);margin-top:4px"><span>'+bars[0].day+'</span><span>'+bars[bars.length-1].day+'</span></div></div>';
@@ -1924,7 +1973,7 @@ function viewCockpit(){
  var cohortRows=cohorts.length?cohorts.map(function(c){return '<tr><td><b>'+esc(c.month)+'</b></td><td style="text-align:center">'+c.customers+'</td><td style="text-align:center;background:var(--soft);font-weight:700">100%</td><td style="text-align:center;background:'+(c.m1?'#dcfce7':'#f8f9fb')+'">'+pct(c.m1,c.customers)+' <span style="color:var(--ink2);font-size:10px">('+c.m1+')</span></td><td style="text-align:center;background:'+(c.m2?'#bbf7d0':'#f8f9fb')+'">'+pct(c.m2,c.customers)+' <span style="color:var(--ink2);font-size:10px">('+c.m2+')</span></td><td style="text-align:center;background:'+(c.m3?'#86efac':'#f8f9fb')+'">'+pct(c.m3,c.customers)+' <span style="color:var(--ink2);font-size:10px">('+c.m3+')</span></td></tr>'}).join(''):'<tr><td colspan="6" style="text-align:center;padding:14px;color:var(--ink2)">Pas assez de donnees clients.</td></tr>';
  var cohortCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('cohortTitle')+'</b><div class="note" style="margin-top:4px">'+t('cohortIntro')+'</div><div class="scroll-x" style="margin-top:10px"><table><thead><tr><th>'+t('cohortMonth')+'</th><th style="text-align:center">'+t('cohortCustomers')+'</th><th style="text-align:center">'+t('cohortM0')+'</th><th style="text-align:center">'+t('cohortM1')+'</th><th style="text-align:center">'+t('cohortM2')+'</th><th style="text-align:center">'+t('cohortM3')+'</th></tr></thead><tbody>'+cohortRows+'</tbody></table></div></div>';
  var sugCard='<div class="card" style="padding:14px;margin-top:13px"><b>'+t('suggestionsTitle')+'</b>'+(sugg.length?sugg.map(function(s){var c=s.type==='scale'?'b-validated':s.type==='watch'?'b-killed':'b-research';var lab=s.type==='scale'?t('sugScale'):s.type==='watch'?t('sugWatch'):t('sugTest');return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f2f5"><div><span class="badge '+c+'">'+lab+'</span> <b style="margin-inline-start:6px;font-size:13px"><a class="tile" onclick="openProduct(\''+s.product.id+'\')">'+esc(s.product.name)+'</a></b><div style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+esc(s.reason)+'</div></div>'+(isAdmin()?'<button class="pill" onclick="'+(s.type==='scale'?'setStage(\''+s.product.id+'\',\'scaling\')':'adminKill(\''+s.product.id+'\')')+'">'+t('applyAction')+'</button>':'')+'</div>'}).join(''):'<div style="font-size:12px;color:var(--ink2);margin-top:7px">Aucune suggestion (donnees insuffisantes).</div>')+'</div>';
- return head+stats+clientStats+orderStats+forecastCard+trendCard+topCard+cohortCard+sugCard;
+ return head+stats+clientStats+orderStats+laborStats+forecastCard+trendCard+topCard+cohortCard+sugCard;
 }
 
 /* === STOCK === */
@@ -2019,6 +2068,7 @@ function viewOrders(){
   var isB=blPhones[o.customer_phone];
   var segChip=ck&&!isB?'<span class="badge '+(SEG_COLOR[ck.segment]||'b-todo')+'" style="cursor:pointer" onclick="event.stopPropagation();goClient(\''+esc(o.customer_phone)+'\')">'+t('seg_'+ck.segment)+'</span>':'';
   var statusOpts=ORDER_STATUSES.map(function(s){return '<option value="'+s+'" '+(o.status===s?'selected':'')+'>'+t('os_'+s)+'</option>'}).join('');
+  var sBadge=['queued','calling','reschedule','no_answer'].indexOf(o.status)>=0?slaBadge(o.sla_deadline):'';
   var orderJson=esc(JSON.stringify({id:o.id,customer_name:o.customer_name,customer_phone:o.customer_phone,customer_wilaya:o.customer_wilaya,customer_address:o.customer_address,product_id:o.product_id,quantity:o.quantity,total_price:o.total_price}));
   var waBtn='<button class="pill" style="background:#25d366;color:#fff;border:none;padding:5px 10px" title="'+t('waClient')+'" onclick="openWaCustomerBtn(this)" data-o="'+orderJson+'">📲</button>';
   var pingMenu='';
@@ -2028,7 +2078,7 @@ function viewOrders(){
   }
   return '<div class="card" style="padding:11px 13px;margin-bottom:8px;'+(isB?'border-left:4px solid #dc2626':'')+'">'+
    '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">'+
-   '<div style="flex:1;min-width:200px"><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><b style="cursor:pointer;color:var(--brand)" onclick="goClient(\''+esc(o.customer_phone)+'\')" title="Fiche client">👤 '+esc(o.customer_name||'-')+'</b><a href="tel:'+esc(o.customer_phone)+'" class="lnk">📱 '+esc(o.customer_phone)+'</a>'+segChip+(isB?'<span class="badge b-killed" title="'+esc(isB)+'">⛔</span>':'')+(sameP>1?'<span class="niche-chip">📊 '+sameP+' cmd</span>':'')+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+esc(o.customer_wilaya||'')+' · '+esc((pn[o.product_id]||'-'))+' · '+o.quantity+'× = '+fmt(o.total_price)+' '+t('cur')+(o.notes?' · '+esc(o.notes.slice(0,40)):'')+'</div></div>'+
+   '<div style="flex:1;min-width:200px"><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><b style="cursor:pointer;color:var(--brand)" onclick="goClient(\''+esc(o.customer_phone)+'\')" title="Fiche client">👤 '+esc(o.customer_name||'-')+'</b><a href="tel:'+esc(o.customer_phone)+'" class="lnk">📱 '+esc(o.customer_phone)+'</a>'+segChip+sBadge+(isB?'<span class="badge b-killed" title="'+esc(isB)+'">⛔</span>':'')+(sameP>1?'<span class="niche-chip">📊 '+sameP+' cmd</span>':'')+'</div><div style="font-size:11.5px;color:var(--ink2);margin-top:3px">'+esc(o.customer_wilaya||'')+' · '+esc((pn[o.product_id]||'-'))+' · '+o.quantity+'× = '+fmt(o.total_price)+' '+t('cur')+(o.notes?' · '+esc(o.notes.slice(0,40)):'')+'</div></div>'+
    waBtn+pingMenu+
    '<select class="input sm" style="width:auto" onchange="setOrderStatus(\''+o.id+'\',this.value)">'+statusOpts+'</select>'+
    (!o.assignee_id?'<button class="btn btn-p btn-s" onclick="claimOrder(\''+o.id+'\')">📞 '+t('os_calling')+'</button>':'<span style="font-size:11px;color:var(--ink2)">👤 '+esc(nm[o.assignee_id]||'?')+'</span>')+
@@ -2470,15 +2520,22 @@ async function createManualEntry(){
 /* === Widget flottant timer (toujours visible) === */
 function renderTimerWidget(){
  if(app.timeMissingTable)return '';
- var hasTimer=!!app.activeTimer;
+ var hasTimer=!!app.activeTimer;var inPomo=!!app.pomodoroActive;
  var taskLabel=hasTimer?t('tt_'+app.activeTimer.task_type):t('timeWidgetStart');
  var taskDesc=hasTimer?(app.activeTimer.description||''):'';
  var liveTime=hasTimer?formatHMS(liveDuration(app.activeTimer)):'00:00';
- var col=hasTimer?'#10b981':'#6b7280';
+ var col=inPomo?'#dc2626':(hasTimer?'#10b981':'#6b7280');
  var pulse=hasTimer?'box-shadow:0 0 0 0 rgba(16,185,129,.5);animation:pulse 2s infinite':'';
- return '<div id="time_widget" class="time-widget" style="position:fixed;inset-block-end:14px;inset-inline-end:14px;z-index:75;background:#fff;border:2px solid '+col+';border-radius:14px;padding:9px 13px;box-shadow:0 8px 24px rgba(0,0,0,.15);display:flex;align-items:center;gap:10px;cursor:pointer;max-width:280px;'+pulse+'" onclick="openTimeWidget()">'+
-  '<div style="width:38px;height:38px;border-radius:9px;background:'+(hasTimer?'#dcfce7':'#f3f4f6')+';display:flex;align-items:center;justify-content:center;font-size:18px;flex:none">'+(hasTimer?'⏱️':'▶')+'</div>'+
-  '<div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--ink2);font-weight:600;text-transform:uppercase;letter-spacing:.04em">'+esc(hasTimer?t('timeRunning'):t('timeIdle'))+'</div><div style="font-weight:800;font-size:14px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(hasTimer?'<span id="time_widget_value">'+liveTime+'</span>  ·  '+esc(taskLabel):esc(taskLabel))+'</div>'+(taskDesc?'<div style="font-size:10.5px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(taskDesc)+'</div>':'')+'</div>'+
+ var pomoExtra='';
+ if(inPomo){
+  var remaining=Math.max(0,Math.floor((app.pomodoroPhaseEnd-Date.now())/1000));
+  pomoExtra='<div style="font-size:10px;color:#dc2626;font-weight:800;margin-top:2px">🍅 '+(app.pomodoroPhase==='focus'?t('pomoFocus'):t('pomoBreak'))+' · '+t('pomoCycleN')+' '+app.pomodoroCycle+' · <span id="pomodoro_remaining">'+formatHMS(remaining)+'</span></div>';
+ }
+ var pomoBtn=inPomo?'<button onclick="event.stopPropagation();stopPomodoro()" style="background:#fef3c7;color:#92400e;border:1px solid #f59e0b;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;flex:none">🛑</button>':'<button onclick="event.stopPropagation();startPomodoro()" style="background:#fef3c7;color:#92400e;border:1px solid #f59e0b;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;flex:none" title="'+t('pomoStart')+'">🍅</button>';
+ return '<div id="time_widget" class="time-widget" style="position:fixed;inset-block-end:14px;inset-inline-end:14px;z-index:75;background:#fff;border:2px solid '+col+';border-radius:14px;padding:9px 13px;box-shadow:0 8px 24px rgba(0,0,0,.15);display:flex;align-items:center;gap:10px;cursor:pointer;max-width:300px;'+pulse+'" onclick="openTimeWidget()">'+
+  '<div style="width:38px;height:38px;border-radius:9px;background:'+(inPomo?'#fef3c7':hasTimer?'#dcfce7':'#f3f4f6')+';display:flex;align-items:center;justify-content:center;font-size:18px;flex:none">'+(inPomo?'🍅':hasTimer?'⏱️':'▶')+'</div>'+
+  '<div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--ink2);font-weight:600;text-transform:uppercase;letter-spacing:.04em">'+esc(hasTimer?t('timeRunning'):t('timeIdle'))+'</div><div style="font-weight:800;font-size:14px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(hasTimer?'<span id="time_widget_value">'+liveTime+'</span>  ·  '+esc(taskLabel):esc(taskLabel))+'</div>'+pomoExtra+(taskDesc&&!inPomo?'<div style="font-size:10.5px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(taskDesc)+'</div>':'')+'</div>'+
+  pomoBtn+
   (hasTimer?'<button onclick="event.stopPropagation();stopTimer()" style="background:#ef4444;color:#fff;border:none;border-radius:8px;width:34px;height:34px;font-size:14px;cursor:pointer;flex:none">⏹</button>':'<button onclick="event.stopPropagation();openTimeWidget()" style="background:var(--brand);color:#fff;border:none;border-radius:8px;width:34px;height:34px;font-size:14px;cursor:pointer;flex:none">+</button>')+
  '</div>';
 }
@@ -2538,6 +2595,259 @@ function viewTime(){
  }).join('');
  var historyCard='<div class="card" style="padding:0"><div style="padding:11px 14px;border-bottom:1px solid var(--line);font-weight:800">📋 '+t('timeHistory')+' ('+myEntries.length+')</div>'+(myEntries.length?'<div class="scroll-x"><table><thead><tr><th>'+t('timeStartedAt')+'</th><th>Type</th><th>'+t('timeDesc')+'</th><th>'+t('timeDuration')+'</th><th></th></tr></thead><tbody>'+historyRows+'</tbody></table></div>':'<div class="empty" style="padding:24px">'+t('timeNoEntries')+'</div>')+'</div>';
  return head+kpiGrid+byTaskCard+leaderCard+historyCard;
+}
+
+/* =================================================================
+   T1 — SLA helpers + UI
+   ================================================================= */
+function slaStateFor(deadline){
+ if(!deadline)return {state:'none',label:'',color:'var(--ink2)'};
+ var now=Date.now();var dl=new Date(deadline).getTime();
+ var remainingMs=dl-now;
+ if(remainingMs<0)return {state:'breached',label:t('slaBreached'),color:'var(--bad)',hoursOver:Math.floor(-remainingMs/3600000)};
+ if(remainingMs<1.5*3600000)return {state:'warning',label:t('slaWarning'),color:'#f59e0b',minutesLeft:Math.floor(remainingMs/60000)};
+ return {state:'ok',label:t('slaOnTrack'),color:'var(--good)',hoursLeft:Math.floor(remainingMs/3600000)};
+}
+function slaBadge(deadline){
+ var s=slaStateFor(deadline);if(s.state==='none')return '';
+ var extra='';
+ if(s.state==='breached')extra=' +'+s.hoursOver+'h';
+ else if(s.state==='warning')extra=' ('+s.minutesLeft+'min)';
+ else if(s.state==='ok')extra=' ('+s.hoursLeft+'h)';
+ return '<span class="badge" style="background:'+s.color+'15;color:'+s.color+';border:1px solid '+s.color+'40;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px">'+s.label+extra+'</span>';
+}
+async function loadSlaDefinitions(){
+ var r=await SB.from('sla_definitions').select('*').eq('active',true);
+ if(r.error&&r.error.code==='42P01'){app.slaMissingTable=true;return}
+ app.slaMissingTable=false;
+ app.cache.slaDefs=r.data||[];
+}
+function computeSlaHealth(){
+ var orders=app.cache.orders||[];
+ var inWeek=orders.filter(function(o){return o.created_at&&new Date(o.created_at)>=thisWeekRange().from});
+ var total=inWeek.length;if(!total)return {pct:100,total:0,breached:0};
+ var breached=inWeek.filter(function(o){var s=slaStateFor(o.sla_deadline);return s.state==='breached'&&['queued','calling','reschedule','no_answer'].indexOf(o.status)>=0}).length;
+ return {pct:Math.round(((total-breached)/total)*100),total:total,breached:breached};
+}
+
+/* =================================================================
+   T2 — Labor cost helpers + UI
+   ================================================================= */
+function laborCostForEntries(entries,profilesById){
+ var total=0;
+ (entries||[]).forEach(function(e){
+  if(!e.duration_seconds)return;
+  var p=profilesById[e.user_id];if(!p||!p.hourly_cost_dzd)return;
+  total += (e.duration_seconds/3600) * Number(p.hourly_cost_dzd);
+ });
+ return total;
+}
+function laborCostForOrder(orderId){
+ var entries=(app.cache.timeEntries||[]).filter(function(e){return e.related_table==='orders'&&e.related_id===orderId});
+ var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+ return laborCostForEntries(entries,pf);
+}
+async function updateProfileHourlyCost(id,cost){
+ await SB.from('profiles').update({hourly_cost_dzd:Number(cost)||0}).eq('id',id);
+ refresh();
+}
+
+/* =================================================================
+   T3 — Capacity planning view
+   ================================================================= */
+function viewCapacity(){
+ var head='<div class="pghead"><div><h1 class="pg">'+t('capacityTitle')+'</h1><div class="sub">'+t('capacitySub')+'</div></div></div>';
+ var profiles=app.cache.profiles||[];
+ var entries=app.cache.timeEntries||[];
+ var todayR=todayRange();
+ var inToday=entries.filter(function(e){return new Date(e.start_time)>=todayR.from});
+ var byUser={};inToday.forEach(function(e){var d=liveDuration(e);byUser[e.user_id]=(byUser[e.user_id]||0)+d});
+ // average task duration last 30 days per user
+ var avgByUser={};
+ entries.filter(function(e){return e.duration_seconds>0}).forEach(function(e){
+  if(!avgByUser[e.user_id])avgByUser[e.user_id]={total:0,count:0};
+  avgByUser[e.user_id].total+=e.duration_seconds;avgByUser[e.user_id].count++;
+ });
+ // Filter to relevant team roles
+ var team=profiles.filter(function(p){return ['confirmatrice','video_editor','production','sourcing','media_buyer'].indexOf(p.role)>=0});
+ if(!team.length)return head+'<div class="empty">Aucun membre d\'equipe configure.</div>';
+ var rows=team.map(function(p){
+  var used=byUser[p.id]||0;
+  var capHours=p.daily_cap_hours||9;var capSec=capHours*3600;
+  var pct=Math.min(100,Math.round(used/capSec*100));
+  var statusColor=pct>=85?'#ef4444':pct>=60?'#f59e0b':'#10b981';
+  var statusLabel=pct>=85?t('capFull'):pct>=60?t('capPartial'):t('capFree');
+  var avgDur=avgByUser[p.id]&&avgByUser[p.id].count?Math.round(avgByUser[p.id].total/avgByUser[p.id].count):0;
+  var theoMax=avgDur?Math.floor(capSec/avgDur):0;
+  return '<div class="card" style="padding:14px;margin-bottom:9px"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px"><div><b>'+esc(p.full_name||p.id.slice(0,8))+'</b> <span class="badge b-research">'+t('r_'+p.role)+'</span></div><span style="font-weight:800;color:'+statusColor+'">'+statusLabel+'</span></div><div style="margin-top:9px;display:flex;align-items:center;gap:10px"><div style="flex:1;height:10px;background:#f1f2f5;border-radius:5px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+statusColor+';transition:width .3s"></div></div><b style="font-family:monospace;font-size:12.5px">'+formatDurShort(used)+' / '+capHours+'h</b></div><div style="font-size:11.5px;color:var(--ink2);margin-top:6px">Duree moyenne tache : <b>'+(avgDur?formatDurShort(avgDur):'-')+'</b> · Capacite theorique : <b>'+(theoMax||'-')+' taches/jour</b></div></div>';
+ }).join('');
+ return head+rows;
+}
+
+/* =================================================================
+   T4 — Coaching insights (computed for admin home)
+   ================================================================= */
+function computeCoachingInsights(){
+ var entries=(app.cache.timeEntries||[]).filter(function(e){return e.task_type==='call'&&e.duration_seconds>0});
+ if(entries.length<10)return null;
+ // Average call duration overall
+ var total=0;entries.forEach(function(e){total+=e.duration_seconds});
+ var avg=total/entries.length;
+ // Per-user average
+ var byUser={};entries.forEach(function(e){if(!byUser[e.user_id])byUser[e.user_id]={total:0,count:0};byUser[e.user_id].total+=e.duration_seconds;byUser[e.user_id].count++});
+ var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+ var outliers=Object.keys(byUser).filter(function(uid_){return byUser[uid_].count>=3}).map(function(uid_){
+  var u=byUser[uid_];var userAvg=u.total/u.count;
+  var deltaPct=Math.round(((userAvg-avg)/avg)*100);
+  return {user:pf[uid_]||{id:uid_},userAvg:userAvg,deltaPct:deltaPct,count:u.count};
+ }).sort(function(a,b){return Math.abs(b.deltaPct)-Math.abs(a.deltaPct)});
+ // FPY: % orders confirmed at first call attempt
+ var orders=app.cache.orders||[];
+ var fpyByUser={};
+ orders.forEach(function(o){if(!o.assignee_id)return;if(o.status==='confirmed'||o.status==='delivered'){var calls=Number(o.call_attempts||1);if(!fpyByUser[o.assignee_id])fpyByUser[o.assignee_id]={fpy:0,total:0};fpyByUser[o.assignee_id].total++;if(calls<=1)fpyByUser[o.assignee_id].fpy++}});
+ return {teamAvg:avg,outliers:outliers,fpy:fpyByUser};
+}
+
+/* =================================================================
+   T5 — Pomodoro state machine
+   ================================================================= */
+var POMODORO_FOCUS_MIN=25;var POMODORO_BREAK_MIN=5;var POMODORO_INTERVAL=null;
+function playBeep(freq,duration){
+ try{var ctx=new (window.AudioContext||window.webkitAudioContext)();var osc=ctx.createOscillator();var gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.frequency.value=freq||880;osc.type='sine';gain.gain.value=0.3;osc.start();setTimeout(function(){osc.stop();ctx.close()},duration||300)}catch(e){}
+}
+function startPomodoro(){
+ if(app.pomodoroActive){toast('Pomodoro deja en cours','warn');return}
+ if(app.activeTimer){if(!confirm('Stopper le timer en cours et demarrer Pomodoro ?'))return;stopTimer()}
+ app.pomodoroActive=true;app.pomodoroPhase='focus';app.pomodoroCycle=1;
+ app.pomodoroPhaseEnd=Date.now()+POMODORO_FOCUS_MIN*60000;
+ startTimer({task_type:'other',description:'🍅 Pomodoro #'+app.pomodoroCycle+' (focus)',billable:true});
+ playBeep(880,200);
+ pomodoroTick();
+ render();
+}
+function pomodoroTick(){
+ if(POMODORO_INTERVAL)clearInterval(POMODORO_INTERVAL);
+ POMODORO_INTERVAL=setInterval(function(){
+  if(!app.pomodoroActive){clearInterval(POMODORO_INTERVAL);POMODORO_INTERVAL=null;return}
+  var remaining=Math.max(0,app.pomodoroPhaseEnd-Date.now());
+  var el=document.getElementById('pomodoro_remaining');if(el)el.textContent=formatHMS(Math.floor(remaining/1000));
+  if(remaining<=0){
+   playBeep(440,500);
+   if(app.pomodoroPhase==='focus'){
+    stopTimer();
+    app.pomodoroPhase='break';app.pomodoroPhaseEnd=Date.now()+POMODORO_BREAK_MIN*60000;
+    toast('⏸ Pause Pomodoro (5min)');
+    startTimer({task_type:'other',description:'🍅 Pomodoro #'+app.pomodoroCycle+' (pause)',billable:false});
+   } else {
+    stopTimer();app.pomodoroCycle++;
+    app.pomodoroPhase='focus';app.pomodoroPhaseEnd=Date.now()+POMODORO_FOCUS_MIN*60000;
+    toast('▶ Reprise Pomodoro #'+app.pomodoroCycle);
+    startTimer({task_type:'other',description:'🍅 Pomodoro #'+app.pomodoroCycle+' (focus)',billable:true});
+   }
+   render();
+  }
+ },1000);
+}
+function stopPomodoro(){
+ app.pomodoroActive=false;app.pomodoroPhase=null;app.pomodoroPhaseEnd=null;
+ if(POMODORO_INTERVAL){clearInterval(POMODORO_INTERVAL);POMODORO_INTERVAL=null}
+ if(app.activeTimer&&(app.activeTimer.description||'').indexOf('🍅')===0)stopTimer();
+ toast('🛑 Pomodoro arrete');
+ render();
+}
+
+/* =================================================================
+   T6 — Timesheet (weekly grid + payroll export)
+   ================================================================= */
+function weekStartISO(d){
+ d=d||new Date();var day=d.getDay()||7;var m=new Date(d);m.setDate(d.getDate()-(day-1));m.setHours(0,0,0,0);return m.toISOString().slice(0,10);
+}
+async function loadTimesheets(){
+ var role=app.profile&&app.profile.role;
+ var q=SB.from('timesheets').select('*').order('week_start',{ascending:false}).limit(50);
+ if(role!=='admin')q=q.eq('user_id',uid());
+ var r=await q;
+ if(r.error&&r.error.code==='42P01'){app.tsMissingTable=true;return}
+ app.tsMissingTable=false;
+ app.cache.timesheets=r.data||[];
+}
+async function ensureTimesheetForWeek(weekStart){
+ var existing=(app.cache.timesheets||[]).find(function(t){return t.user_id===uid()&&t.week_start===weekStart});
+ if(existing)return existing;
+ // Compute totals from time_entries
+ var weekEnd=new Date(weekStart+'T23:59:59');weekEnd.setDate(weekEnd.getDate()+6);
+ var entries=(app.cache.timeEntries||[]).filter(function(e){return e.user_id===uid()&&new Date(e.start_time)>=new Date(weekStart)&&new Date(e.start_time)<=weekEnd});
+ var totalSec=0;entries.forEach(function(e){totalSec+=e.duration_seconds||0});
+ var hourlyCost=Number(app.profile.hourly_cost_dzd||0);
+ var laborDzd=(totalSec/3600)*hourlyCost;
+ var data={user_id:uid(),week_start:weekStart,total_seconds:totalSec,total_labor_dzd:laborDzd,status:'draft'};
+ var r=await SB.from('timesheets').insert(data).select().single();
+ if(r.error){toast('Erreur: '+r.error.message,'err');return null}
+ await loadTimesheets();return r.data;
+}
+async function submitTimesheet(id){await SB.from('timesheets').update({status:'submitted',submitted_at:new Date().toISOString()}).eq('id',id);await loadTimesheets();render();toast('✓ Timesheet soumis')}
+async function approveTimesheet(id){await SB.from('timesheets').update({status:'approved',approved_at:new Date().toISOString(),approved_by:uid()}).eq('id',id);await loadTimesheets();render();toast('✓ Approuve')}
+async function rejectTimesheet(id){var reason=prompt(t('rejectReason')+':');if(reason===null)return;await SB.from('timesheets').update({status:'rejected',rejection_reason:reason}).eq('id',id);await loadTimesheets();render();toast('Rejete')}
+function exportTimesheetCSV(){
+ var role=app.profile.role;var entries=(app.cache.timeEntries||[]).slice();
+ if(role!=='admin')entries=entries.filter(function(e){return e.user_id===uid()});
+ var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+ var rows=[['Date','Membre','Role','Type tache','Description','Duree (h)','Cout horaire (DZD)','Cout total (DZD)']];
+ entries.forEach(function(e){
+  var p=pf[e.user_id]||{};var hours=e.duration_seconds/3600;var cost=hours*Number(p.hourly_cost_dzd||0);
+  rows.push([
+   (e.start_time||'').slice(0,16).replace('T',' '),
+   (p.full_name||e.user_id).replace(/,/g,' '),
+   p.role||'',
+   t('tt_'+e.task_type),
+   (e.description||'').replace(/,/g,' ').replace(/\n/g,' '),
+   hours.toFixed(2),
+   Number(p.hourly_cost_dzd||0).toFixed(2),
+   cost.toFixed(2)
+  ]);
+ });
+ var csv=rows.map(function(r){return r.join(',')}).join('\n');
+ var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+ var link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='timesheet-'+new Date().toISOString().slice(0,10)+'.csv';link.click();
+ setTimeout(function(){URL.revokeObjectURL(link.href)},1000);
+ toast('📥 CSV telecharge');
+}
+function exportTimesheetPDF(){
+ if(typeof html2pdf==='undefined'){toast('Librairie PDF non chargee','err');return}
+ var el=document.getElementById('timesheetTable');if(!el){toast('Tableau introuvable','err');return}
+ var opts={margin:[10,8,10,8],filename:'timesheet-'+new Date().toISOString().slice(0,10)+'.pdf',html2canvas:{scale:2,backgroundColor:'#fff'},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}};
+ toast('📥 Generation PDF...');
+ html2pdf().set(opts).from(el).save().then(function(){toast('✓ PDF telecharge')}).catch(function(e){console.error(e);toast('Erreur PDF','err')});
+}
+function viewTimesheet(){
+ var head='<div class="pghead"><div><h1 class="pg">'+t('timesheetTitle')+'</h1><div class="sub">'+t('timesheetSub')+'</div></div><div class="acts"><button class="btn btn-g" onclick="exportTimesheetCSV()">'+t('exportCsv')+'</button> <button class="btn btn-g" onclick="exportTimesheetPDF()">'+t('exportPdf')+'</button></div></div>';
+ if(app.tsMissingTable)return head+'<div class="card" style="padding:16px;border:1px dashed var(--bad);background:#fef2f2;color:var(--bad);font-weight:700">⚠ Tables timesheet absentes. Demandez a l\'admin d\'appliquer v11_migration.sql.</div>';
+ var role=app.profile.role;var myId=uid();
+ var weekStart=app.tsWeekStart||weekStartISO();
+ var weekEnd=new Date(weekStart+'T23:59:59');weekEnd.setDate(weekEnd.getDate()+6);
+ var entries=(app.cache.timeEntries||[]).filter(function(e){var d=new Date(e.start_time);return d>=new Date(weekStart)&&d<=weekEnd&&(role==='admin'||e.user_id===myId)});
+ var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+ // Build daily totals per user
+ var days=[];for(var i=0;i<7;i++){var d=new Date(weekStart);d.setDate(d.getDate()+i);days.push(d.toISOString().slice(0,10))}
+ var byUserDay={};entries.forEach(function(e){var d=e.start_time.slice(0,10);if(!byUserDay[e.user_id])byUserDay[e.user_id]={};byUserDay[e.user_id][d]=(byUserDay[e.user_id][d]||0)+(e.duration_seconds||0)});
+ var userIds=Object.keys(byUserDay);if(role!=='admin')userIds=[myId];
+ var totalSec=0;var totalLabor=0;
+ var rows=userIds.map(function(uid_){
+  var p=pf[uid_]||{};var ucost=Number(p.hourly_cost_dzd||0);
+  var userTotal=0;
+  var cells=days.map(function(d){var s=(byUserDay[uid_]&&byUserDay[uid_][d])||0;userTotal+=s;return '<td style="text-align:center;font-size:11.5px;'+(s>0?'background:#f0fdf4':'')+'">'+(s?formatDurShort(s):'-')+'</td>'}).join('');
+  var labor=(userTotal/3600)*ucost;
+  totalSec+=userTotal;totalLabor+=labor;
+  return '<tr><td style="font-weight:700">'+esc(p.full_name||uid_.slice(0,8))+'<div style="font-size:10px;color:var(--ink2)">'+(p.role?t('r_'+p.role):'')+(ucost?' · '+fmt(ucost)+' DA/h':' · pas de taux')+'</div></td>'+cells+'<td style="font-weight:800;text-align:end">'+formatDurShort(userTotal)+'</td><td style="font-weight:800;text-align:end;color:#10b981">'+fmt(Math.round(labor))+' DA</td></tr>';
+ }).join('');
+ var navBar='<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap"><button class="btn btn-g btn-s" onclick="var d=new Date(app.tsWeekStart||\''+weekStart+'\');d.setDate(d.getDate()-7);app.tsWeekStart=d.toISOString().slice(0,10);render()">← Sem-1</button><b style="font-size:14px">'+t('weekOf')+' '+weekStart+'</b><button class="btn btn-g btn-s" onclick="var d=new Date(app.tsWeekStart||\''+weekStart+'\');d.setDate(d.getDate()+7);app.tsWeekStart=d.toISOString().slice(0,10);render()">Sem+1 →</button>'+(weekStart!==weekStartISO()?'<button class="btn btn-g btn-s" onclick="app.tsWeekStart=null;render()">Cette sem</button>':'')+'</div>';
+ var dayHeaders=days.map(function(d){var date=new Date(d);return '<th style="font-size:11px;text-align:center">'+['L','M','Me','J','V','S','D'][date.getDay()===0?6:date.getDay()-1]+' '+date.getDate()+'</th>'}).join('');
+ var totalRow='<tr style="background:var(--soft);font-weight:800"><td>TOTAL '+(role==='admin'?'EQUIPE':'')+'</td>'+days.map(function(){return '<td></td>'}).join('')+'<td style="text-align:end">'+formatDurShort(totalSec)+'</td><td style="text-align:end;color:#10b981">'+fmt(Math.round(totalLabor))+' DA</td></tr>';
+ // Timesheet status for current user
+ var myTs=(app.cache.timesheets||[]).find(function(t){return t.user_id===myId&&t.week_start===weekStart});
+ var actions=role==='admin'?'<div style="margin-top:12px"><h3 style="font-size:14px;margin-bottom:9px">'+t('allTimesheets')+' a valider</h3>'+((app.cache.timesheets||[]).filter(function(ts){return ts.status==='submitted'}).map(function(ts){var p=pf[ts.user_id]||{};return '<div class="card" style="padding:11px 13px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px"><div><b>'+esc(p.full_name||ts.user_id.slice(0,8))+'</b> · sem '+esc(ts.week_start)+' · '+formatDurShort(ts.total_seconds)+' · '+fmt(Math.round(ts.total_labor_dzd))+' DA</div><div style="display:flex;gap:5px"><button class="btn btn-p btn-s" onclick="approveTimesheet(\''+ts.id+'\')">'+t('approveTs')+'</button><button class="pill del" onclick="rejectTimesheet(\''+ts.id+'\')">'+t('rejectTs')+'</button></div></div>'}).join('')||'<div class="empty" style="padding:14px">Aucun timesheet en attente</div>')+'</div>':'<div style="margin-top:12px;display:flex;gap:7px;flex-wrap:wrap;align-items:center">'+(myTs?'<span class="badge b-research">'+t('tsStatus_'+myTs.status)+'</span>':'<span class="badge b-todo">Pas encore cree</span>')+(!myTs||myTs.status==='draft'?'<button class="btn btn-p" onclick="ensureTimesheetForWeek(\''+weekStart+'\').then(function(ts){if(ts)submitTimesheet(ts.id)})">'+t('submitTs')+'</button>':'')+(myTs&&myTs.status==='rejected'&&myTs.rejection_reason?'<div style="font-size:12px;color:var(--bad);margin-top:5px;width:100%">⚠ '+esc(myTs.rejection_reason)+'</div>':'')+'</div>';
+ var table='<div id="timesheetTable" class="card scroll-x" style="padding:14px"><table style="font-size:12px"><thead><tr><th style="min-width:160px;text-align:start">Membre</th>'+dayHeaders+'<th style="text-align:end">'+t('totalWeek')+'</th><th style="text-align:end">'+t('laborTotal')+'</th></tr></thead><tbody>'+(rows||'<tr><td colspan="10" style="text-align:center;padding:20px;color:var(--ink2)">Aucune donnee cette semaine</td></tr>')+totalRow+'</tbody></table></div>';
+ return head+navBar+table+actions;
 }
 
 function viewTrash(){
@@ -2609,6 +2919,20 @@ function viewHomeAdmin(){
   hmCard(t('hmAdSpend'),fmt(Math.round(adToday*usd))+' DA','#fef3c7','aujourd\'hui','go(\'kpis\')')+
   hmCard(t('hmForecast'),fmt(Math.round(fc.totalNet))+' DA',fc.totalNet>=0?'#f0fdf4':'#fef2f2',t(fc.conf==='high'?'fcConfHigh':fc.conf==='med'?'fcConfMed':'fcConfLow'),'go(\'cockpit\')')+
  '</div>';
+ // T1 SLA Health row
+ var slaH=computeSlaHealth();
+ var slaCol=slaH.pct>=90?'#10b981':slaH.pct>=70?'#f59e0b':'#ef4444';
+ var slaCard='';
+ if(slaH.total>0){
+  slaCard='<div class="card" style="padding:14px;margin-bottom:14px;background:linear-gradient(135deg,#f5f3ff,#ecfdf5);cursor:pointer" onclick="go(\'orders\')"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px"><div><b style="font-size:14px">⏱ '+t('slaHealth')+'</b><div style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+t('slaHealthSub')+' · '+slaH.total+' commandes</div></div><div style="text-align:end"><div style="font-size:24px;font-weight:800;color:'+slaCol+'">'+slaH.pct+'%</div>'+(slaH.breached>0?'<div style="font-size:11px;color:'+slaCol+';font-weight:700">'+slaH.breached+' depasses</div>':'')+'</div></div></div>';
+ }
+ // T4 Coaching insights (admin only)
+ var coaching=computeCoachingInsights();
+ var coachingCard='';
+ if(coaching&&coaching.outliers.length){
+  var top3=coaching.outliers.slice(0,3);
+  coachingCard='<div class="card" style="padding:14px;margin-bottom:14px"><b style="font-size:14px">'+t('coachingTitle')+'</b><div class="note" style="margin-top:3px">Duree moyenne appel equipe : <b>'+formatDurShort(coaching.teamAvg)+'</b></div><div style="margin-top:10px">'+top3.map(function(o){var col=o.deltaPct>0?'#ef4444':'#10b981';var icon=o.deltaPct>0?'⚠':'🏆';return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:var(--soft);border-radius:7px;margin-bottom:5px;font-size:13px"><div>'+icon+' <b>'+esc(o.user.full_name||'?')+'</b> <span style="font-size:11px;color:var(--ink2)">· '+o.count+' appels</span></div><b style="color:'+col+'">'+(o.deltaPct>0?'+':'')+o.deltaPct+'% '+t('vsAvg')+'</b></div>'}).join('')+'</div></div>';
+ }
  // Alerts panel
  var alertsCard='';
  if(alerts.length){
@@ -2628,7 +2952,7 @@ function viewHomeAdmin(){
   '<button class="btn btn-g" onclick="go(\'orders\')">📞 Commandes</button>'+
   '<button class="btn btn-g" onclick="go(\'clients\')">👤 Clients 360</button>'+
  '</div></div>';
- return kpiGrid+alertsCard+decisionsCard+qaCard;
+ return kpiGrid+slaCard+alertsCard+coachingCard+decisionsCard+qaCard;
 }
 
 /* ---- Confirmatrice Home ---- */
@@ -3101,9 +3425,11 @@ function viewTeam(){
  var rows=(app.cache.profiles||[]).map(function(u){
   var opts=ROLES.map(function(r){return '<option value="'+r+'" '+(u.role===r?'selected':'')+'>'+t('r_'+r)+'</option>'}).join('');
   var waVal=esc(u.whatsapp_phone||'');
-  return '<tr><td><b>'+esc(u.full_name||'-')+'</b></td><td><select class="input sm" style="width:auto" onchange="setRole(\''+u.id+'\',this.value)">'+opts+'</select></td><td><input class="input sm" style="width:160px" placeholder="+213..." value="'+waVal+'" onchange="setProfileWa(\''+u.id+'\',this.value)" '+(isAdmin()||u.id===uid()?'':'readonly')+'></td></tr>';
+  var costVal=esc(u.hourly_cost_dzd||'');
+  var canEditCost=isAdmin();
+  return '<tr><td><b>'+esc(u.full_name||'-')+'</b></td><td><select class="input sm" style="width:auto" onchange="setRole(\''+u.id+'\',this.value)">'+opts+'</select></td><td><input class="input sm" style="width:140px" placeholder="+213..." value="'+waVal+'" onchange="setProfileWa(\''+u.id+'\',this.value)" '+(isAdmin()||u.id===uid()?'':'readonly')+'></td><td><input class="input sm" style="width:110px" type="number" min="0" placeholder="0" value="'+costVal+'" onchange="updateProfileHourlyCost(\''+u.id+'\',this.value)" '+(canEditCost?'':'readonly')+' title="'+t('hourlyCostHint')+'"></td></tr>';
  }).join('');
- return '<div class="pghead"><div><h1 class="pg">👥 '+t('team')+'</h1></div></div><div class="card scroll-x"><table><thead><tr><th>'+t('member')+'</th><th>'+t('role')+'</th><th>'+t('waPhone')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ return '<div class="pghead"><div><h1 class="pg">👥 '+t('team')+'</h1></div></div><div class="card scroll-x"><table><thead><tr><th>'+t('member')+'</th><th>'+t('role')+'</th><th>'+t('waPhone')+'</th><th>'+t('hourlyCost')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
 /* === SETTINGS === */
