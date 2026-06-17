@@ -140,6 +140,11 @@
   .niche-chip{display:inline-block;background:#eef2ff;color:#4f46e5;border-radius:999px;padding:1px 7px;font-size:10.5px;font-weight:700;margin-inline-end:3px}
   .lnk{color:var(--brand);text-decoration:none;font-size:11.5px}
   .lnk:hover{text-decoration:underline}
+  /* Floating timer widget */
+  @keyframes pulse {0%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}70%{box-shadow:0 0 0 10px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+  .time-widget{transition:transform .15s,box-shadow .15s}
+  .time-widget:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.2)}
+  @media(max-width:780px){.time-widget{inset-block-end:78px !important;inset-inline-end:10px !important;max-width:240px !important;padding:7px 10px !important}}
   /* Sidebar collapsed (desktop) */
   .side.collapsed{width:64px;padding:14px 6px}
   .side.collapsed .brand{justify-content:center;padding:6px 0 14px}
@@ -217,14 +222,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['home','cockpit','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
- media_buyer:['home','cockpit','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
- sourcing:['home','pipeline','products','research','sourcing','tasks'],
- production:['home','pipeline','products','sourcing','stock','production','tasks'],
- video_editor:['home','pipeline','products','video','creatives','tasks'],
- confirmatrice:['home','orders','clients','wacrm','tasks']
+ admin:['home','cockpit','time','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ media_buyer:['home','cockpit','time','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
+ sourcing:['home','time','pipeline','products','research','sourcing','tasks'],
+ production:['home','time','pipeline','products','sourcing','stock','production','tasks'],
+ video_editor:['home','time','pipeline','products','video','creatives','tasks'],
+ confirmatrice:['home','time','orders','clients','wacrm','tasks']
 };
-var ICON={home:'🏠',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={home:'🏠',time:'⏱️',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 // Mobile bottom nav (5 icons max, role-specific)
 var MOBILE_NAV={
  admin:['home','cockpit','orders','wacrm','clients'],
@@ -307,6 +312,18 @@ var I18N={
   homeWelcome:'Voici votre journee',homeTodayStats:'Aujourd\'hui',homeWeekStats:'Cette semaine',homeMyTasks:'Mes taches',homeMyQueue:'Ma file',homeAlerts:'Alertes',homeNoAlerts:'Aucune alerte. Tout est OK ✨',homeQuickActions:'Acces rapide',
   hmCashIn:'💰 Encaisse aujourd\'hui',hmOrders:'📦 Commandes',hmAdSpend:'📊 Pub depensee',hmAlerts:'🔴 Urgences',hmForecast:'📈 Prevision 30j',hmConfirmed:'✓ Confirmees',hmDelivered:'✓ Livrees',hmRefused:'✗ Refusees',hmCalls:'📞 Appels',hmAOV:'🛒 Panier moyen',hmRoas:'📈 ROAS',hmEarnings:'💵 Mes gains',hmDailyGoal:'🎯 Objectif jour',hmCallsRemaining:'## restants',hmStartCalling:'▶ Demarrer mode appel',hmTopCrea:'🏆 Top crea',hmKillCrea:'💀 Crea a tuer',hmLastWeek:'Sem -1',hmDay:'Jour',hmRank:'#',hmTeamLeader:'🏆 Leaderboard equipe',hmYou:'Vous',hmDecisionQueue:'📥 File de decisions',hmDecisionPending:'## en attente',hmPending:'En attente',
   hmVideoBriefs:'🎬 Briefs videos',hmStock:'📦 Stock',hmLowStock:'⚠ Stock bas',hmProdSchedule:'🏭 Planning production',hmTrending:'🔥 Tendances du jour',hmMyValidated:'✅ Mes valides',hmQuota:'🎯 Quota',hmInsight:'💡 Insight',
+  nav_time:'Temps',timeTitle:'⏱️ Gestion du temps',timeSub:'Trackez votre temps de travail comme ClickUp. Demarrez un timer ou loggez manuellement.',
+  timeStart:'▶ Demarrer',timeStop:'⏹ Arreter',timePause:'⏸ Pause',timeResume:'▶ Reprendre',timeManual:'+ Entree manuelle',timeRunning:'En cours',timeIdle:'Aucun timer actif',timeNoEntries:'Aucune entree de temps. Demarrez un timer ci-dessus.',
+  timeTaskType:'Type de tache',timeDesc:'Description',timeRelated:'Lie a',timeDuration:'Duree',timeStartedAt:'Demarre a',timeEndedAt:'Termine a',timeBillable:'Facturable',
+  tt_call:'📞 Appel',tt_production:'🏭 Production',tt_video_edit:'🎬 Montage video',tt_sourcing:'🔍 Sourcing',tt_media_buying:'📊 Media buying',tt_workshop:'⚙ Atelier',tt_research:'🔍 Recherche',tt_admin:'📋 Admin',tt_training:'🎓 Formation',tt_meeting:'👥 Reunion',tt_other:'⚡ Autre',
+  timeToday:'Aujourd\'hui',timeWeek:'Cette semaine',timeMonth:'Ce mois',timeAvgPerEntry:'Moyenne/entree',timeEntries:'entrees',timeProductivity:'Productivite',
+  timeHistory:'Historique',timeStats:'Statistiques',timeByTask:'Par type de tache',timeByDay:'Par jour',timeLeader:'🏆 Classement equipe',
+  timeStartTimerTitle:'Demarrer un timer',timeManualEntryTitle:'Entree manuelle',timeEditTitle:'Modifier l\'entree',
+  timeDelete:'Supprimer',timeEdit:'Modifier',timeFilter:'Filtrer',timeFilterRole:'Role',timeFilterUser:'Membre',timeAllUsers:'Tous les membres',timeAllRoles:'Tous les roles',
+  timeAvgCall:'Duree moyenne appel',timeCallsPerHour:'Appels/heure',timeAvgVideo:'Temps moyen montage',timeAvgProduct:'Temps moyen recherche',
+  timeWidgetClick:'Cliquez pour gerer',timeWidgetStart:'Demarrer un timer',
+  timeAutoCall:'⚡ Auto-track activé',timeAutoStarted:'Timer demarre automatiquement',timeAutoStopped:'Timer arrete automatiquement',
+  timeNoTime:'Aucune duree enregistree',timeEstimate:'Estimation',timeActual:'Reel',timeAccuracy:'Precision',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'Broadcasts en masse + agent IA de confirmation. Envoi gratuit via wa.me.',
   wacrmTab_campaigns:'📢 Broadcasts',wacrmTab_inbox:'💬 Inbox',wacrmTab_agent:'🤖 Agent IA',wacrmTab_relay:'🔌 Relais Baileys',
   relayTitle:'Relais Baileys (envoi automatique)',relayDisconnected:'🔴 Deconnecte',relayQR:'📱 Scanner le QR',relayConnecting:'⏳ Connexion...',relayConnected:'🟢 Connecte',relayError:'❌ Erreur',relayUrl:'URL du relais',relayToken:'Token d\'auth',relaySave:'Enregistrer',relayTest:'Tester',relayLogout:'Deconnecter WhatsApp',relayDailySent:'Envoyes aujourd\'hui',relayTotalSent:'Total envoyes',relayTotalFailed:'Total echecs',relayLastSeen:'Derniere activite',relayQrInstructions:'Sur votre telephone : Reglages WhatsApp → Appareils connectes → Lier un appareil',relayNotConfigured:'⚠ Configurez l\'URL du relais et le token dans les Reglages',relaySendMode:'Mode d\'envoi',relayMode_manual:'📲 Manuel (wa.me)',relayMode_baileys:'🤖 Auto (Baileys)',relayWarning:'⚠ Baileys est contre les CGU WhatsApp. Risque de ban. Utilisez un numero dedie.',relaySetup:'Configurer le relais',
@@ -390,6 +407,18 @@ var I18N={
   homeWelcome:'إليك يومك',homeTodayStats:'اليوم',homeWeekStats:'هذا الأسبوع',homeMyTasks:'مهامي',homeMyQueue:'قائمتي',homeAlerts:'التنبيهات',homeNoAlerts:'لا توجد تنبيهات. كل شيء بخير ✨',homeQuickActions:'الوصول السريع',
   hmCashIn:'💰 محصَّل اليوم',hmOrders:'📦 الطلبات',hmAdSpend:'📊 الإنفاق الإعلاني',hmAlerts:'🔴 عاجل',hmForecast:'📈 توقع 30 يوم',hmConfirmed:'✓ مؤكدة',hmDelivered:'✓ مسلَّمة',hmRefused:'✗ مرفوضة',hmCalls:'📞 مكالمات',hmAOV:'🛒 متوسط الطلب',hmRoas:'📈 ROAS',hmEarnings:'💵 مكاسبي',hmDailyGoal:'🎯 هدف اليوم',hmCallsRemaining:'## متبقية',hmStartCalling:'▶ بدء وضع الاتصال',hmTopCrea:'🏆 أفضل إعلان',hmKillCrea:'💀 إعلان لإيقافه',hmLastWeek:'الأسبوع -1',hmDay:'يوم',hmRank:'#',hmTeamLeader:'🏆 ترتيب الفريق',hmYou:'أنت',hmDecisionQueue:'📥 قرارات معلّقة',hmDecisionPending:'## في الانتظار',hmPending:'في الانتظار',
   hmVideoBriefs:'🎬 ملخصات الفيديو',hmStock:'📦 المخزون',hmLowStock:'⚠ مخزون منخفض',hmProdSchedule:'🏭 جدول الإنتاج',hmTrending:'🔥 تريندات اليوم',hmMyValidated:'✅ المعتمدة',hmQuota:'🎯 الكوتا',hmInsight:'💡 رؤية',
+  nav_time:'الوقت',timeTitle:'⏱️ إدارة الوقت',timeSub:'تتبّع وقت عملك مثل ClickUp. ابدأ مؤقتًا أو سجّل يدويًا.',
+  timeStart:'▶ بدء',timeStop:'⏹ إيقاف',timePause:'⏸ إيقاف مؤقت',timeResume:'▶ متابعة',timeManual:'+ إدخال يدوي',timeRunning:'جارٍ',timeIdle:'لا يوجد مؤقت نشط',timeNoEntries:'لا توجد إدخالات. ابدأ مؤقتًا أعلاه.',
+  timeTaskType:'نوع المهمة',timeDesc:'الوصف',timeRelated:'مرتبط بـ',timeDuration:'المدة',timeStartedAt:'بدأ في',timeEndedAt:'انتهى في',timeBillable:'قابل للفوترة',
+  tt_call:'📞 مكالمة',tt_production:'🏭 إنتاج',tt_video_edit:'🎬 مونتاج فيديو',tt_sourcing:'🔍 بحث منتجات',tt_media_buying:'📊 إعلانات',tt_workshop:'⚙ ورشة',tt_research:'🔍 بحث',tt_admin:'📋 إدارة',tt_training:'🎓 تدريب',tt_meeting:'👥 اجتماع',tt_other:'⚡ أخرى',
+  timeToday:'اليوم',timeWeek:'هذا الأسبوع',timeMonth:'هذا الشهر',timeAvgPerEntry:'المتوسط/إدخال',timeEntries:'إدخالات',timeProductivity:'الإنتاجية',
+  timeHistory:'السجل',timeStats:'الإحصائيات',timeByTask:'حسب نوع المهمة',timeByDay:'حسب اليوم',timeLeader:'🏆 ترتيب الفريق',
+  timeStartTimerTitle:'بدء مؤقت',timeManualEntryTitle:'إدخال يدوي',timeEditTitle:'تعديل الإدخال',
+  timeDelete:'حذف',timeEdit:'تعديل',timeFilter:'تصفية',timeFilterRole:'الدور',timeFilterUser:'العضو',timeAllUsers:'كل الأعضاء',timeAllRoles:'كل الأدوار',
+  timeAvgCall:'متوسط مدة المكالمة',timeCallsPerHour:'مكالمات/ساعة',timeAvgVideo:'متوسط زمن المونتاج',timeAvgProduct:'متوسط زمن البحث',
+  timeWidgetClick:'انقر للإدارة',timeWidgetStart:'بدء مؤقت',
+  timeAutoCall:'⚡ التتبّع التلقائي نشط',timeAutoStarted:'بدأ المؤقت تلقائيًا',timeAutoStopped:'تم إيقاف المؤقت تلقائيًا',
+  timeNoTime:'لا توجد مدة مسجلة',timeEstimate:'التقدير',timeActual:'الفعلي',timeAccuracy:'الدقة',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'بث جماعي + وكيل ذكاء اصطناعي للتأكيد. إرسال مجاني عبر wa.me.',
   wacrmTab_campaigns:'📢 البث',wacrmTab_inbox:'💬 الرسائل',wacrmTab_agent:'🤖 الوكيل الذكي',wacrmTab_relay:'🔌 ربط Baileys',
   relayTitle:'مرحّل Baileys (إرسال آلي)',relayDisconnected:'🔴 غير متصل',relayQR:'📱 امسح الرمز',relayConnecting:'⏳ جارٍ الاتصال...',relayConnected:'🟢 متصل',relayError:'❌ خطأ',relayUrl:'رابط المرحّل',relayToken:'رمز المصادقة',relaySave:'حفظ',relayTest:'اختبار',relayLogout:'فصل WhatsApp',relayDailySent:'المرسلة اليوم',relayTotalSent:'إجمالي المرسلة',relayTotalFailed:'إجمالي الفاشلة',relayLastSeen:'آخر نشاط',relayQrInstructions:'في هاتفك: إعدادات WhatsApp → الأجهزة المرتبطة → ربط جهاز',relayNotConfigured:'⚠ اضبط رابط المرحّل والرمز في الإعدادات',relaySendMode:'نمط الإرسال',relayMode_manual:'📲 يدوي (wa.me)',relayMode_baileys:'🤖 آلي (Baileys)',relayWarning:'⚠ Baileys مخالف لشروط WhatsApp. خطر حظر الرقم. استخدم رقمًا مخصصًا.',relaySetup:'إعداد المرحّل',
@@ -579,6 +608,10 @@ async function refresh(){
    app.cache.products=pAll.data||[];app.cache.orders=oAll.data||[];app.cache.kpis=kAll.data||[];app.cache.profiles=pf.data||[];
    if(role==='video_editor'){var vids=await SB.from('video_assets').select('*').order('created_at',{ascending:false});app.cache.videos=vids.data||[]}
    if(role==='media_buyer'||role==='admin'){var creas=await loadCreatives(null);app.cache.creatives=creas||[]}
+  } else if(v==='time'){
+   await loadTimeEntries();
+   var pf2=await SB.from('profiles').select('*');var pd=await SB.from('products').select('id,name');
+   app.cache.profiles=pf2.data||[];app.cache.products=pd.data||[];
   } else if(v==='pipeline'){
    var p=await SB.from('products').select('*').is('deleted_at',null).order('updated_at',{ascending:false});
    var t=await SB.from('tasks').select('id,status,assignee_id');
@@ -903,13 +936,25 @@ async function createOrder(){
 }
 async function claimOrder(id){
  await SB.from('orders').update({assignee_id:uid(),status:'calling',last_call_at:new Date().toISOString()}).eq('id',id);
- await auditLog('orders',id,'claimed',{});refresh();
+ await auditLog('orders',id,'claimed',{});
+ // Auto-track : demarrer timer pour cet appel
+ if(app.profile&&app.profile.role==='confirmatrice'&&!app.timeMissingTable){
+  var ord=(app.cache.orders||[]).find(function(o){return o.id===id});
+  var desc=ord?('Appel '+(ord.customer_name||ord.customer_phone||'')):'';
+  await startTimer({task_type:'call',description:desc,related_table:'orders',related_id:id,source:'auto_call'});
+ }
+ refresh();
 }
 async function setOrderStatus(id,status){
  var u={status:status};
  if(status==='calling'){u.last_call_at=new Date().toISOString()}
  await SB.from('orders').update(u).eq('id',id);
- await auditLog('orders',id,'status_'+status,{});refresh();
+ await auditLog('orders',id,'status_'+status,{});
+ // Auto-track : arreter le timer si l'appel se termine (sortie de 'calling')
+ if(status!=='calling'&&app.activeTimer&&app.activeTimer.related_table==='orders'&&app.activeTimer.related_id===id&&app.activeTimer.source==='auto_call'){
+  await stopTimer();
+ }
+ refresh();
 }
 async function addToBlacklist(phone,reason){
  if(!phone)return;
@@ -967,7 +1012,7 @@ function downloadTemplate(){var csv='produit,date,commandes,confirmees,livrees,r
 /* Realtime */
 var rtDone=false;
 function afterLogin(){
- loadSettings();loadWilayas();refresh();
+ loadSettings();loadWilayas();loadActiveTimer();refresh();
  if(!app.tourDone&&app.tourStep<0){setTimeout(function(){if(app.session&&!app.tourDone)startTour()},1200)}
  if(rtDone)return;rtDone=true;
  SB.channel('rt')
@@ -985,6 +1030,7 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_relay_status'},function(){if(app.view==='wacrm'){loadRelayStatus().then(render)}})
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_conversations'},function(){if(app.view==='wacrm')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'wa_messages'},function(p){if(app.view==='wacrm'&&app.wacConversation){var newRec=p.new||{};if(newRec.conversation_id===app.wacConversation){loadConversation(app.wacConversation).then(render)}}})
+  .on('postgres_changes',{event:'*',schema:'public',table:'time_entries',filter:'user_id=eq.'+uid()},function(p){if(p.eventType==='INSERT'||p.eventType==='UPDATE'){var rec=p.new;if(rec&&!rec.end_time){app.activeTimer=rec;startTimeTicker()}else if(app.activeTimer&&app.activeTimer.id===(rec&&rec.id)){app.activeTimer=null;stopTimeTicker()}if(app.view==='time')refresh();render()}})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -1045,7 +1091,7 @@ function renderShell(inner){
  '<button class="btn btn-g" onclick="toggleDark()" style="padding:6px 9px" title="'+t('darkMode')+'">'+(app.dark?'☀️':'🌙')+'</button>'+
  '<button class="btn btn-g" onclick="toggleLang()" style="padding:6px 10px">🌐 '+(lang==='ar'?'FR':'AR')+'</button>'+
  '<div class="who"><div class="who-info"><div class="nm">'+esc(u.full_name||'')+'</div><div class="rl">'+t('r_'+u.role)+'</div></div><div class="av">'+esc((u.full_name||'?').charAt(0).toUpperCase())+'</div><button class="btn btn-g" onclick="logout()" style="padding:6px 9px" title="'+t('logout')+'">⎋</button></div></header>'+
- '<main class="content"><div class="inner">'+inner+'</div></main></div>'+mobBottom+'</div>'+(app.modal?renderModal():'')+(app.tourStep>=0?renderTour():'');
+ '<main class="content"><div class="inner">'+inner+'</div></main></div>'+mobBottom+'</div>'+renderTimerWidget()+(app.modal?renderModal():'')+(app.tourStep>=0?renderTour():'');
 }
 function toggleSide(){app.sideCollapsed=!app.sideCollapsed;localStorage.setItem('cod_side_collapsed',app.sideCollapsed?'1':'0');render()}
 
@@ -1058,6 +1104,7 @@ function renderTour(){
 function renderView(){
  switch(app.view){
   case 'home':return viewHome();
+  case 'time':return viewTime();
   case 'products':return viewProducts();
   case 'research':return viewResearch();
   case 'validate':return viewValidate();
@@ -2305,6 +2352,194 @@ function viewWacAgent(){
  return head+rows;
 }
 
+/* =================================================================
+   TIME TRACKING — module gestion du temps style ClickUp
+   ================================================================= */
+var TASK_TYPES=['call','production','video_edit','sourcing','media_buying','workshop','research','admin','training','meeting','other'];
+// Suggested task type per role (default when starting a timer)
+var ROLE_DEFAULT_TASK={
+ admin:'admin',media_buyer:'media_buying',confirmatrice:'call',
+ video_editor:'video_edit',sourcing:'sourcing',production:'workshop'
+};
+var TIME_TICKER=null;  // setInterval handle for live widget updates
+
+function formatHMS(seconds){
+ seconds=Math.max(0,Math.floor(Number(seconds)||0));
+ var h=Math.floor(seconds/3600);
+ var m=Math.floor((seconds%3600)/60);
+ var s=seconds%60;
+ if(h>0)return h+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+ return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function formatDurShort(seconds){
+ seconds=Math.max(0,Math.floor(Number(seconds)||0));
+ var h=Math.floor(seconds/3600);var m=Math.floor((seconds%3600)/60);
+ if(h>0)return h+'h'+String(m).padStart(2,'0');
+ if(m>0)return m+'min';
+ return seconds+'s';
+}
+function liveDuration(entry){
+ if(!entry)return 0;
+ if(entry.end_time)return entry.duration_seconds||0;
+ // Running: compute from start_time to now
+ return Math.max(0,Math.floor((Date.now()-new Date(entry.start_time).getTime())/1000));
+}
+async function loadActiveTimer(){
+ if(!app.session)return;
+ var r=await SB.from('time_entries').select('*').eq('user_id',uid()).is('end_time',null).order('start_time',{ascending:false}).limit(1);
+ if(r.error&&r.error.code==='42P01'){app.timeMissingTable=true;app.activeTimer=null;return}
+ app.timeMissingTable=false;
+ app.activeTimer=(r.data&&r.data[0])||null;
+ startTimeTicker();
+}
+function startTimeTicker(){
+ stopTimeTicker();
+ if(!app.activeTimer)return;
+ TIME_TICKER=setInterval(function(){
+  var el=document.getElementById('time_widget_value');
+  if(!el)return;
+  el.textContent=formatHMS(liveDuration(app.activeTimer));
+ },1000);
+}
+function stopTimeTicker(){if(TIME_TICKER){clearInterval(TIME_TICKER);TIME_TICKER=null}}
+
+async function startTimer(opts){
+ if(app.timeMissingTable){toast('Migration v10 absente. Demandez a l\'admin.','err');return null}
+ if(app.activeTimer){
+  if(!confirm('Un timer est deja en cours. L\'arreter d\'abord ?'))return null;
+  await stopTimer();
+ }
+ opts=opts||{};
+ var role=app.profile&&app.profile.role||'';
+ var taskType=opts.task_type||ROLE_DEFAULT_TASK[role]||'other';
+ var data={user_id:uid(),role:role,task_type:taskType,description:opts.description||'',
+  related_table:opts.related_table||'',related_id:opts.related_id||null,
+  start_time:new Date().toISOString(),end_time:null,is_manual:false,
+  source:opts.source||'manual',billable:opts.billable!==false};
+ var r=await SB.from('time_entries').insert(data).select().single();
+ if(r.error){toast('Erreur timer: '+r.error.message,'err');return null}
+ app.activeTimer=r.data;
+ startTimeTicker();
+ if(opts.source!=='auto_call'&&opts.source!=='auto_status')toast('▶ Timer demarre: '+t('tt_'+taskType));
+ render();
+ return r.data;
+}
+async function stopTimer(){
+ if(!app.activeTimer)return null;
+ var id=app.activeTimer.id;
+ var endTime=new Date().toISOString();
+ var duration=Math.max(0,Math.floor((Date.now()-new Date(app.activeTimer.start_time).getTime())/1000));
+ var r=await SB.from('time_entries').update({end_time:endTime,duration_seconds:duration}).eq('id',id);
+ if(r.error){toast('Erreur arret: '+r.error.message,'err');return null}
+ var stoppedEntry=Object.assign({},app.activeTimer,{end_time:endTime,duration_seconds:duration});
+ app.activeTimer=null;
+ stopTimeTicker();
+ toast('⏹ Timer arrete: '+formatDurShort(duration));
+ render();
+ return stoppedEntry;
+}
+async function deleteTimeEntry(id){
+ if(!confirm('Supprimer cette entree ?'))return;
+ await SB.from('time_entries').delete().eq('id',id);
+ if(app.activeTimer&&app.activeTimer.id===id){app.activeTimer=null;stopTimeTicker()}
+ await loadTimeEntries();render();
+}
+async function loadTimeEntries(){
+ var role=app.profile&&app.profile.role;
+ // Admin sees all, others see own
+ var q=SB.from('time_entries').select('*').order('start_time',{ascending:false}).limit(200);
+ if(role!=='admin')q=q.eq('user_id',uid());
+ var r=await q;
+ if(r.error&&r.error.code==='42P01'){app.timeMissingTable=true;return}
+ app.timeMissingTable=false;
+ app.cache.timeEntries=r.data||[];
+}
+async function createManualEntry(){
+ var taskType=val('te_task');var desc=val('te_desc');
+ var dateStr=val('te_date');var startHM=val('te_start');var durMin=Number(val('te_dur'))||0;
+ if(!taskType||!dateStr||!startHM||durMin<=0){toast('Tous les champs requis','err');return}
+ var startISO=new Date(dateStr+'T'+startHM+':00').toISOString();
+ var endISO=new Date(new Date(startISO).getTime()+durMin*60000).toISOString();
+ var data={user_id:uid(),role:app.profile.role||'',task_type:taskType,description:desc,
+  start_time:startISO,end_time:endISO,duration_seconds:durMin*60,is_manual:true,source:'manual'};
+ var r=await SB.from('time_entries').insert(data);
+ if(r.error){toast('Erreur: '+r.error.message,'err');return}
+ app.modal=null;await loadTimeEntries();render();toast('✓ Entree ajoutee');
+}
+
+/* === Widget flottant timer (toujours visible) === */
+function renderTimerWidget(){
+ if(app.timeMissingTable)return '';
+ var hasTimer=!!app.activeTimer;
+ var taskLabel=hasTimer?t('tt_'+app.activeTimer.task_type):t('timeWidgetStart');
+ var taskDesc=hasTimer?(app.activeTimer.description||''):'';
+ var liveTime=hasTimer?formatHMS(liveDuration(app.activeTimer)):'00:00';
+ var col=hasTimer?'#10b981':'#6b7280';
+ var pulse=hasTimer?'box-shadow:0 0 0 0 rgba(16,185,129,.5);animation:pulse 2s infinite':'';
+ return '<div id="time_widget" class="time-widget" style="position:fixed;inset-block-end:14px;inset-inline-end:14px;z-index:75;background:#fff;border:2px solid '+col+';border-radius:14px;padding:9px 13px;box-shadow:0 8px 24px rgba(0,0,0,.15);display:flex;align-items:center;gap:10px;cursor:pointer;max-width:280px;'+pulse+'" onclick="openTimeWidget()">'+
+  '<div style="width:38px;height:38px;border-radius:9px;background:'+(hasTimer?'#dcfce7':'#f3f4f6')+';display:flex;align-items:center;justify-content:center;font-size:18px;flex:none">'+(hasTimer?'⏱️':'▶')+'</div>'+
+  '<div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--ink2);font-weight:600;text-transform:uppercase;letter-spacing:.04em">'+esc(hasTimer?t('timeRunning'):t('timeIdle'))+'</div><div style="font-weight:800;font-size:14px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(hasTimer?'<span id="time_widget_value">'+liveTime+'</span>  ·  '+esc(taskLabel):esc(taskLabel))+'</div>'+(taskDesc?'<div style="font-size:10.5px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(taskDesc)+'</div>':'')+'</div>'+
+  (hasTimer?'<button onclick="event.stopPropagation();stopTimer()" style="background:#ef4444;color:#fff;border:none;border-radius:8px;width:34px;height:34px;font-size:14px;cursor:pointer;flex:none">⏹</button>':'<button onclick="event.stopPropagation();openTimeWidget()" style="background:var(--brand);color:#fff;border:none;border-radius:8px;width:34px;height:34px;font-size:14px;cursor:pointer;flex:none">+</button>')+
+ '</div>';
+}
+function openTimeWidget(){
+ if(app.activeTimer){go('time');return}
+ openModal('startTimer');
+}
+
+/* === Vue principale Temps === */
+function viewTime(){
+ var head='<div class="pghead"><div><h1 class="pg">'+t('timeTitle')+'</h1><div class="sub">'+t('timeSub')+'</div></div><div class="acts"><button class="btn btn-p" onclick="openModal(\'startTimer\')">'+t('timeStart')+'</button> <button class="btn btn-g" onclick="openModal(\'manualEntry\')">'+t('timeManual')+'</button></div></div>';
+ if(app.timeMissingTable)return head+'<div class="card" style="padding:16px;border:1px dashed var(--bad);background:#fef2f2;color:var(--bad);font-weight:700">⚠ Table time_entries absente. Demandez a l\'admin d\'appliquer v10_migration.sql.</div>';
+ var entries=app.cache.timeEntries||[];
+ var role=app.profile&&app.profile.role;
+ var myId=uid();
+ // Filter: admin can filter by user; others only own
+ var myEntries=role==='admin'?entries:entries.filter(function(e){return e.user_id===myId});
+ // Today/week/month stats
+ var todayR=todayRange();var weekR=thisWeekRange();
+ var monthStart=new Date();monthStart.setDate(1);monthStart.setHours(0,0,0,0);
+ var inToday=myEntries.filter(function(e){return new Date(e.start_time)>=todayR.from});
+ var inWeek=myEntries.filter(function(e){return new Date(e.start_time)>=weekR.from});
+ var inMonth=myEntries.filter(function(e){return new Date(e.start_time)>=monthStart});
+ var sumDur=function(arr){var s=0;arr.forEach(function(e){s+=liveDuration(e)});return s};
+ var totalToday=sumDur(inToday);var totalWeek=sumDur(inWeek);var totalMonth=sumDur(inMonth);
+ var avgEntry=inMonth.length?Math.floor(totalMonth/inMonth.length):0;
+ var kpiGrid='<div class="grid g4" style="margin-bottom:16px">'+
+  hmCard('⏱ '+t('timeToday'),formatDurShort(totalToday),'#ecfdf5',inToday.length+' '+t('timeEntries'))+
+  hmCard('📅 '+t('timeWeek'),formatDurShort(totalWeek),'#eff6ff',inWeek.length+' '+t('timeEntries'))+
+  hmCard('📊 '+t('timeMonth'),formatDurShort(totalMonth),'#fef3c7',inMonth.length+' '+t('timeEntries'))+
+  hmCard(t('timeAvgPerEntry'),formatDurShort(avgEntry),'#fdf2f8','sur ce mois')+
+ '</div>';
+ // By task type (this month)
+ var byTask={};inMonth.forEach(function(e){var k=e.task_type||'other';byTask[k]=(byTask[k]||0)+liveDuration(e)});
+ var maxTask=Math.max.apply(null,Object.values(byTask).concat([1]));
+ var taskRows=Object.keys(byTask).sort(function(a,b){return byTask[b]-byTask[a]}).map(function(k){var v=byTask[k];var pct=Math.round(v/maxTask*100);return '<div style="display:grid;grid-template-columns:140px 1fr 80px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f1f2f5;font-size:12.5px"><span>'+t('tt_'+k)+'</span><div style="height:10px;background:#f1f2f5;border-radius:5px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div><b style="text-align:end">'+formatDurShort(v)+'</b></div>'}).join('');
+ var byTaskCard=Object.keys(byTask).length?'<div class="card" style="padding:14px;margin-bottom:14px"><b>'+t('timeByTask')+' — '+t('timeMonth').toLowerCase()+'</b><div style="margin-top:9px">'+taskRows+'</div></div>':'';
+ // Admin leaderboard
+ var leaderCard='';
+ if(role==='admin'){
+  var byUser={};entries.filter(function(e){return new Date(e.start_time)>=weekR.from}).forEach(function(e){byUser[e.user_id]=(byUser[e.user_id]||0)+liveDuration(e)});
+  var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+  var leader=Object.keys(byUser).sort(function(a,b){return byUser[b]-byUser[a]}).slice(0,10).map(function(uid_){var p=pf[uid_]||{};return {user:p,total:byUser[uid_]}});
+  if(leader.length){
+   leaderCard='<div class="card" style="padding:14px;margin-bottom:14px"><b>'+t('timeLeader')+' ('+t('timeWeek')+')</b><div style="margin-top:9px">'+leader.map(function(L,i){var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'  ';var isMe=L.user.id===myId;return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:'+(isMe?'#fef3c7':'transparent')+';border-radius:6px;font-size:13px;font-weight:'+(isMe?'700':'500')+'"><span>'+medal+' '+esc(L.user.full_name||'?')+(L.user.role?' · '+t('r_'+L.user.role):'')+(isMe?' ('+t('hmYou')+')':'')+'</span><b>'+formatDurShort(L.total)+'</b></div>'}).join('')+'</div></div>';
+  }
+ }
+ // History table
+ var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+ var prods={};(app.cache.products||[]).forEach(function(p){prods[p.id]=p.name});
+ var historyRows=myEntries.slice(0,50).map(function(e){
+  var dur=liveDuration(e);
+  var running=!e.end_time;
+  var relLabel=e.related_table?'<span class="badge b-todo" style="margin-inline-start:6px">'+esc(e.related_table)+(e.related_id&&prods[e.related_id]?' · '+esc(prods[e.related_id].slice(0,20)):'')+'</span>':'';
+  var userLab=role==='admin'?'<div style="font-size:11px;color:var(--ink2)">👤 '+esc((pf[e.user_id]&&pf[e.user_id].full_name)||e.user_id.slice(0,8))+'</div>':'';
+  return '<tr><td style="font-size:11.5px;color:var(--ink2)">'+esc(new Date(e.start_time).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}))+userLab+'</td><td><span class="badge b-research">'+t('tt_'+e.task_type)+'</span>'+relLabel+(e.is_manual?' <span class="badge b-arch">manuel</span>':'')+(running?' <span class="badge b-doing">⏱ '+t('timeRunning')+'</span>':'')+'</td><td style="font-size:12.5px">'+esc(e.description||'-')+'</td><td style="font-weight:700;font-family:monospace">'+formatDurShort(dur)+'</td><td>'+(running?'<button class="pill" onclick="stopTimer()">⏹</button>':'')+'<button class="pill del" onclick="deleteTimeEntry(\''+e.id+'\')">✕</button></td></tr>';
+ }).join('');
+ var historyCard='<div class="card" style="padding:0"><div style="padding:11px 14px;border-bottom:1px solid var(--line);font-weight:800">📋 '+t('timeHistory')+' ('+myEntries.length+')</div>'+(myEntries.length?'<div class="scroll-x"><table><thead><tr><th>'+t('timeStartedAt')+'</th><th>Type</th><th>'+t('timeDesc')+'</th><th>'+t('timeDuration')+'</th><th></th></tr></thead><tbody>'+historyRows+'</tbody></table></div>':'<div class="empty" style="padding:24px">'+t('timeNoEntries')+'</div>')+'</div>';
+ return head+kpiGrid+byTaskCard+leaderCard+historyCard;
+}
+
 function viewTrash(){
  var items=app.cache.trash||[];
  var head='<div class="pghead"><div><h1 class="pg">🗑️ '+t('trashTitle')+'</h1><div class="sub">Produits supprimes (restaurables).</div></div></div>';
@@ -2998,6 +3233,20 @@ function renderModal(){
    (w.step>1?'<button class="btn btn-g" onclick="wacWizardBack()">'+t('wacBack')+'</button>':'')+
    (w.step<4?'<button class="btn btn-p" onclick="wacWizardNext()">'+t('wacNext')+'</button>':'<button class="btn btn-p" onclick="wacLaunch()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':t('wacLaunch'))+'</button>');
   return '<div class="modal" onclick="if(event.target===this)closeModal()"><div class="bx" style="max-width:640px"><div class="mh"><b>'+t('wacNew')+' — '+t('wacStep'+w.step)+'</b><button class="x" onclick="closeModal()">×</button></div><div class="mb">'+stepBar+body+'</div><div class="mf">'+foot+'</div></div></div>';
+ }
+ if(app.modal==='startTimer'){
+  var defType=ROLE_DEFAULT_TASK[app.profile&&app.profile.role]||'other';
+  b='<div><label class="lb">'+t('timeTaskType')+' *</label><select id="ts_task" class="input" autofocus>'+TASK_TYPES.map(function(tt){return '<option value="'+tt+'"'+(tt===defType?' selected':'')+'>'+t('tt_'+tt)+'</option>'}).join('')+'</select></div>'+
+   '<div style="margin-top:10px"><label class="lb">'+t('timeDesc')+'</label><input id="ts_desc" class="input" placeholder="Sur quoi travaillez-vous ?"></div>';
+  return '<div class="modal" onclick="if(event.target===this)closeModal()"><div class="bx"><div class="mh"><b>'+t('timeStartTimerTitle')+'</b><button class="x" onclick="closeModal()">×</button></div><div class="mb">'+b+'</div><div class="mf"><button class="btn btn-g" onclick="closeModal()">'+t('cancel')+'</button><button class="btn btn-p" onclick="startTimer({task_type:val(\'ts_task\'),description:val(\'ts_desc\')});closeModal()">'+t('timeStart')+'</button></div></div></div>';
+ }
+ if(app.modal==='manualEntry'){
+  var today=new Date().toISOString().slice(0,10);
+  var defType2=ROLE_DEFAULT_TASK[app.profile&&app.profile.role]||'other';
+  b='<div class="row2"><div><label class="lb">'+t('timeTaskType')+' *</label><select id="te_task" class="input" autofocus>'+TASK_TYPES.map(function(tt){return '<option value="'+tt+'"'+(tt===defType2?' selected':'')+'>'+t('tt_'+tt)+'</option>'}).join('')+'</select></div><div><label class="lb">'+t('timeDuration')+' (min) *</label><input id="te_dur" type="number" min="1" class="input" placeholder="60"></div></div>'+
+   '<div class="row2" style="margin-top:10px"><div><label class="lb">'+t('date')+' *</label><input id="te_date" type="date" class="input" value="'+today+'"></div><div><label class="lb">'+t('timeStartedAt')+' *</label><input id="te_start" type="time" class="input" value="09:00"></div></div>'+
+   '<div style="margin-top:10px"><label class="lb">'+t('timeDesc')+'</label><textarea id="te_desc" class="input" style="min-height:60px"></textarea></div>';
+  return modalWrap(t('timeManualEntryTitle'),b,'createManualEntry()');
  }
  if(app.modal==='wacNewConv'){
   var clients=buildClients(app.cache.orders||[],app.cache.blacklist||[]).slice(0,30);
