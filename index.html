@@ -222,14 +222,14 @@ var TOUR_STEPS=[
 ];
 
 var NAV={
- admin:['home','cockpit','time','timesheet','capacity','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
+ admin:['home','cockpit','time','timesheet','comp','capacity','report','pipeline','products','research','validate','sourcing','tests','creatives','orders','clients','wacrm','stock','tasks','kpis','perf','team','wilayas','blacklist','trash','settings'],
  media_buyer:['home','cockpit','time','timesheet','pipeline','products','research','tests','creatives','orders','clients','wacrm','tasks','kpis','perf'],
  sourcing:['home','time','timesheet','pipeline','products','research','sourcing','tasks'],
  production:['home','time','timesheet','pipeline','products','sourcing','stock','production','tasks'],
  video_editor:['home','time','timesheet','pipeline','products','video','creatives','tasks'],
- confirmatrice:['home','time','timesheet','orders','clients','wacrm','tasks']
+ confirmatrice:['home','time','timesheet','comp','orders','clients','wacrm','tasks']
 };
-var ICON={home:'🏠',time:'⏱️',timesheet:'📋',capacity:'⚙',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
+var ICON={home:'🏠',time:'⏱️',timesheet:'📋',comp:'💸',capacity:'⚙',cockpit:'💰',report:'📑',pipeline:'🔥',products:'📦',research:'🔍',validate:'✓',sourcing:'🏭',tests:'🧪',creatives:'🎨',orders:'📞',clients:'👤',wacrm:'📲',stock:'📦',production:'⚙',video:'🎬',tasks:'📋',kpis:'📈',perf:'🏆',team:'👥',wilayas:'🗺️',blacklist:'⛔',trash:'🗑️',settings:'⚙'};
 // Mobile bottom nav (5 icons max, role-specific)
 var MOBILE_NAV={
  admin:['home','cockpit','orders','wacrm','clients'],
@@ -336,6 +336,13 @@ var I18N={
   pomodoro:'🍅 Pomodoro',pomoStart:'Demarrer Pomodoro 25/5',pomoFocus:'Concentration',pomoBreak:'Pause',pomoCycleN:'Cycle',pomoSkip:'Sauter',pomoDone:'Pomodoro complete ! 🎉',pomoNextBreak:'Pause dans',pomoNextFocus:'Reprise dans',dailyCapTitle:'⚠ Limite quotidienne atteinte',dailyCapMsg:'Vous avez depasse votre cap journalier. Pensez a vous reposer.',breakReminder:'☕ 90min de travail. Une pause ferait du bien.',
   /* T6 Timesheet */
   nav_timesheet:'Timesheet',timesheetTitle:'📋 Timesheet hebdomadaire',timesheetSub:'Suivi des heures pour validation et paie.',weekOf:'Semaine du',totalWeek:'Total semaine',laborTotal:'Total paie',submitTs:'Soumettre',approveTs:'Approuver',rejectTs:'Rejeter',tsStatus_draft:'📝 Brouillon',tsStatus_submitted:'⏳ Soumis',tsStatus_approved:'✓ Approuve',tsStatus_rejected:'✗ Rejete',exportCsv:'📥 Export CSV',exportPdf:'📥 Export PDF',rejectReason:'Raison du rejet',allTimesheets:'Tous les timesheets',myTimesheets:'Mes timesheets',
+  /* Variable rémunération confirmatrices */
+  nav_comp:'Compensation',compTitle:'💸 Variable rémunération',compSub:'Calcul automatique mensuel pour les confirmatrices : 80% fixe + 20% variable.',compPeriod:'Période',compMember:'Membre',compBase:'Salaire base',compFixed:'Fixe (80%)',compVarMax:'Variable max',compVarPaid:'Variable obtenu',compTotal:'Total paye',compStatus:'Statut',compRun:'⚡ Recalculer',compRunAll:'⚡ Recalculer tous',compApprove:'Approuver',compMarkPaid:'Marquer paye',compReject:'Rejeter',compExport:'📥 Export CSV',compThresholdsTitle:'Réglages des seuils',compEditThresholds:'⚙ Editer les seuils',
+  crit_volume:'Volume commandes confirmées',crit_fpy:'Taux conf 1er appel (FPY)',crit_delivery_rate:'Taux livraison',crit_fake_quality:'Qualité (erreurs fake)',crit_sla_punctuality:'Ponctualité SLA',
+  compWeight:'Poids',compCount:'Compte',compRate:'Taux',compPayPct:'% payé',compPayout:'Montant',compBreakdown:'Détail mensuel',compTier:'Palier atteint',
+  compMonth_label:'Mois',compNoData:'Aucun calcul. Cliquez « Recalculer » pour générer.',compMustHaveBase:'⚠ Définissez le salaire de base dans Équipe avant de recalculer.',compStatus_draft:'📝 Brouillon',compStatus_computed:'⚡ Calculé',compStatus_approved:'✓ Approuvé',compStatus_paid:'💰 Payé',compStatus_rejected:'✗ Rejeté',
+  compHowItWorks:'Comment ça marche',compHowItWorksText:'5 critères pondérés. Volume 35%, FPY 25%, Livraison 20%, Qualité 10%, Ponctualité 10%. Chaque critère a 4 paliers chiffrés. Recalcul à la demande, basé sur les commandes du mois.',
+  compMonthlySalary:'Salaire de référence (mensuel)',compVariablePct:'% variable',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'Broadcasts en masse + agent IA de confirmation. Envoi gratuit via wa.me.',
   wacrmTab_campaigns:'📢 Broadcasts',wacrmTab_inbox:'💬 Inbox',wacrmTab_agent:'🤖 Agent IA',wacrmTab_relay:'🔌 Relais Baileys',
   relayTitle:'Relais Baileys (envoi automatique)',relayDisconnected:'🔴 Deconnecte',relayQR:'📱 Scanner le QR',relayConnecting:'⏳ Connexion...',relayConnected:'🟢 Connecte',relayError:'❌ Erreur',relayUrl:'URL du relais',relayToken:'Token d\'auth',relaySave:'Enregistrer',relayTest:'Tester',relayLogout:'Deconnecter WhatsApp',relayDailySent:'Envoyes aujourd\'hui',relayTotalSent:'Total envoyes',relayTotalFailed:'Total echecs',relayLastSeen:'Derniere activite',relayQrInstructions:'Sur votre telephone : Reglages WhatsApp → Appareils connectes → Lier un appareil',relayNotConfigured:'⚠ Configurez l\'URL du relais et le token dans les Reglages',relaySendMode:'Mode d\'envoi',relayMode_manual:'📲 Manuel (wa.me)',relayMode_baileys:'🤖 Auto (Baileys)',relayWarning:'⚠ Baileys est contre les CGU WhatsApp. Risque de ban. Utilisez un numero dedie.',relaySetup:'Configurer le relais',
@@ -443,6 +450,13 @@ var I18N={
   pomodoro:'🍅 بومودورو',pomoStart:'ابدأ Pomodoro 25/5',pomoFocus:'تركيز',pomoBreak:'استراحة',pomoCycleN:'الدورة',pomoSkip:'تخطّ',pomoDone:'Pomodoro مكتمل ! 🎉',pomoNextBreak:'استراحة بعد',pomoNextFocus:'استئناف بعد',dailyCapTitle:'⚠ تم بلوغ الحد اليومي',dailyCapMsg:'لقد تجاوزت حدّك اليومي. خذ قسطًا من الراحة.',breakReminder:'☕ 90 دقيقة عمل. استراحة قصيرة ستفيدك.',
   /* T6 Timesheet */
   nav_timesheet:'كشف ساعات',timesheetTitle:'📋 كشف الساعات الأسبوعي',timesheetSub:'تتبّع الساعات للمصادقة والرواتب.',weekOf:'أسبوع',totalWeek:'إجمالي الأسبوع',laborTotal:'إجمالي الراتب',submitTs:'إرسال',approveTs:'موافقة',rejectTs:'رفض',tsStatus_draft:'📝 مسودة',tsStatus_submitted:'⏳ مُرسل',tsStatus_approved:'✓ موافق',tsStatus_rejected:'✗ مرفوض',exportCsv:'📥 تصدير CSV',exportPdf:'📥 تصدير PDF',rejectReason:'سبب الرفض',allTimesheets:'كل الكشوف',myTimesheets:'كشوفاتي',
+  /* Compensation variable */
+  nav_comp:'الأجر المتغير',compTitle:'💸 الأجر المتغير',compSub:'حساب شهري تلقائي للمؤكِّدات: 80% ثابت + 20% متغير.',compPeriod:'الفترة',compMember:'العضو',compBase:'الراتب المرجعي',compFixed:'الثابت (80%)',compVarMax:'المتغير الأقصى',compVarPaid:'المتغير المحقَّق',compTotal:'الإجمالي المدفوع',compStatus:'الحالة',compRun:'⚡ إعادة الحساب',compRunAll:'⚡ احسب الكل',compApprove:'موافقة',compMarkPaid:'تأشير كمدفوع',compReject:'رفض',compExport:'📥 تصدير CSV',compThresholdsTitle:'إعدادات العتبات',compEditThresholds:'⚙ تعديل العتبات',
+  crit_volume:'حجم الطلبات المؤكَّدة',crit_fpy:'نسبة التأكيد من المكالمة الأولى',crit_delivery_rate:'نسبة التسليم',crit_fake_quality:'الجودة (أخطاء fake)',crit_sla_punctuality:'الالتزام بالمواعيد',
+  compWeight:'الوزن',compCount:'العدد',compRate:'النسبة',compPayPct:'% مدفوع',compPayout:'المبلغ',compBreakdown:'التفاصيل الشهرية',compTier:'المستوى المحقَّق',
+  compMonth_label:'الشهر',compNoData:'لا توجد حسابات. اضغط « إعادة الحساب » للتوليد.',compMustHaveBase:'⚠ حدّد الراتب المرجعي في فريق العمل قبل الحساب.',compStatus_draft:'📝 مسودة',compStatus_computed:'⚡ محسوب',compStatus_approved:'✓ موافق',compStatus_paid:'💰 مدفوع',compStatus_rejected:'✗ مرفوض',
+  compHowItWorks:'كيف يعمل النظام',compHowItWorksText:'5 معايير موزونة. الحجم 35%، FPY 25%، التسليم 20%، الجودة 10%، الالتزام 10%. كل معيار يحتوي على 4 مستويات رقمية. إعادة الحساب عند الطلب من طلبات الشهر.',
+  compMonthlySalary:'الراتب المرجعي (شهري)',compVariablePct:'% المتغير',
   nav_wacrm:'WhatsApp CRM',wacrmTitle:'📲 WhatsApp CRM',wacrmSub:'بث جماعي + وكيل ذكاء اصطناعي للتأكيد. إرسال مجاني عبر wa.me.',
   wacrmTab_campaigns:'📢 البث',wacrmTab_inbox:'💬 الرسائل',wacrmTab_agent:'🤖 الوكيل الذكي',wacrmTab_relay:'🔌 ربط Baileys',
   relayTitle:'مرحّل Baileys (إرسال آلي)',relayDisconnected:'🔴 غير متصل',relayQR:'📱 امسح الرمز',relayConnecting:'⏳ جارٍ الاتصال...',relayConnected:'🟢 متصل',relayError:'❌ خطأ',relayUrl:'رابط المرحّل',relayToken:'رمز المصادقة',relaySave:'حفظ',relayTest:'اختبار',relayLogout:'فصل WhatsApp',relayDailySent:'المرسلة اليوم',relayTotalSent:'إجمالي المرسلة',relayTotalFailed:'إجمالي الفاشلة',relayLastSeen:'آخر نشاط',relayQrInstructions:'في هاتفك: إعدادات WhatsApp → الأجهزة المرتبطة → ربط جهاز',relayNotConfigured:'⚠ اضبط رابط المرحّل والرمز في الإعدادات',relaySendMode:'نمط الإرسال',relayMode_manual:'📲 يدوي (wa.me)',relayMode_baileys:'🤖 آلي (Baileys)',relayWarning:'⚠ Baileys مخالف لشروط WhatsApp. خطر حظر الرقم. استخدم رقمًا مخصصًا.',relaySetup:'إعداد المرحّل',
@@ -640,6 +654,10 @@ async function refresh(){
    await loadTimeEntries();await loadTimesheets();
    var pf3=await SB.from('profiles').select('*');
    app.cache.profiles=pf3.data||[];
+  } else if(v==='comp'){
+   await loadCompRuns();await loadCompThresholds();
+   var pfC=await SB.from('profiles').select('*');
+   app.cache.profiles=pfC.data||[];
   } else if(v==='capacity'){
    await loadTimeEntries();
    var pf4=await SB.from('profiles').select('*');
@@ -1067,6 +1085,7 @@ function afterLogin(){
   .on('postgres_changes',{event:'*',schema:'public',table:'time_entries',filter:'user_id=eq.'+uid()},function(p){if(p.eventType==='INSERT'||p.eventType==='UPDATE'){var rec=p.new;if(rec&&!rec.end_time){app.activeTimer=rec;startTimeTicker()}else if(app.activeTimer&&app.activeTimer.id===(rec&&rec.id)){app.activeTimer=null;stopTimeTicker()}if(app.view==='time'||app.view==='timesheet'||app.view==='capacity')refresh();render()}})
   .on('postgres_changes',{event:'*',schema:'public',table:'timesheets'},function(){if(app.view==='timesheet')refresh()})
   .on('postgres_changes',{event:'*',schema:'public',table:'sla_definitions'},function(){loadSlaDefinitions().then(render)})
+  .on('postgres_changes',{event:'*',schema:'public',table:'comp_runs'},function(){if(app.view==='comp')loadCompRuns().then(render)})
   .on('postgres_changes',{event:'*',schema:'public',table:'comments'},function(){if(app.view==='product')refresh()})
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'user_id=eq.'+uid()},async function(p){await loadNotifs();toast('🔔 '+(p.new&&p.new.title||'Nouvelle notification'));render()})
   .subscribe();
@@ -1142,6 +1161,7 @@ function renderView(){
   case 'home':return viewHome();
   case 'time':return viewTime();
   case 'timesheet':return viewTimesheet();
+  case 'comp':return viewCompensation();
   case 'capacity':return viewCapacity();
   case 'products':return viewProducts();
   case 'research':return viewResearch();
@@ -2850,6 +2870,157 @@ function viewTimesheet(){
  return head+navBar+table+actions;
 }
 
+/* =================================================================
+   COMPENSATION VARIABLE — Calcul mensuel automatique
+   ================================================================= */
+function monthStartISO(d){d=d||new Date();var m=new Date(d.getFullYear(),d.getMonth(),1);return m.toISOString().slice(0,10)}
+function monthLabel(iso){var d=new Date(iso+'T00:00:00');return d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}
+
+async function loadCompThresholds(){
+ var r=await SB.from('comp_thresholds').select('*').eq('active',true).order('criterion').order('tier_order');
+ if(r.error&&r.error.code==='42P01'){app.compMissingTable=true;return}
+ app.compMissingTable=false;
+ app.cache.compThresholds=r.data||[];
+}
+async function loadCompRuns(){
+ var role=app.profile&&app.profile.role;
+ var q=SB.from('comp_runs').select('*').order('period_month',{ascending:false}).limit(100);
+ if(role!=='admin')q=q.eq('user_id',uid());
+ var r=await q;
+ if(r.error&&r.error.code==='42P01'){app.compMissingTable=true;return}
+ app.compMissingTable=false;
+ app.cache.compRuns=r.data||[];
+}
+async function computeCompForUser(userId,periodIso){
+ var r=await SB.rpc('compute_monthly_comp',{p_user_id:userId,p_period:periodIso});
+ if(r.error){toast('Erreur calcul: '+r.error.message,'err');return null}
+ await loadCompRuns();render();
+ return r.data;
+}
+async function computeAllConfirmatrices(periodIso){
+ var confs=(app.cache.profiles||[]).filter(function(p){return p.role==='confirmatrice'&&Number(p.base_salary_dzd||0)>0});
+ if(!confs.length){toast(t('compMustHaveBase'),'warn');return}
+ toast('⚡ Calcul en cours pour '+confs.length+' confirmatrice(s)...');
+ for(var i=0;i<confs.length;i++){await computeCompForUser(confs[i].id,periodIso)}
+ toast('✓ Calculs terminés');
+}
+async function approveCompRun(id){
+ await SB.from('comp_runs').update({status:'approved',approved_at:new Date().toISOString(),approved_by:uid()}).eq('id',id);
+ await loadCompRuns();render();toast('✓ Approuvé');
+}
+async function markCompPaid(id){
+ await SB.from('comp_runs').update({status:'paid',paid_at:new Date().toISOString()}).eq('id',id);
+ await loadCompRuns();render();toast('💰 Marqué payé');
+}
+async function rejectCompRun(id){
+ var reason=prompt(t('rejectReason')+':');if(reason===null)return;
+ await SB.from('comp_runs').update({status:'rejected',notes:reason}).eq('id',id);
+ await loadCompRuns();render();toast('Rejeté');
+}
+async function updateProfileBaseSalary(id,salary){
+ await SB.from('profiles').update({base_salary_dzd:Number(salary)||0}).eq('id',id);
+ refresh();
+}
+function exportCompCSV(){
+ var rows=[['Période','Membre','Rôle','Salaire base','Fixe (80%)','Volume cmd','% volume','Vol payout','FPY %','FPY payout','Livraison %','Livr payout','Erreurs fake','Fake payout','SLA %','SLA payout','Variable total','Total payé','Statut']];
+ var pf={};(app.cache.profiles||[]).forEach(function(p){pf[p.id]=p});
+ (app.cache.compRuns||[]).forEach(function(r){
+  var p=pf[r.user_id]||{};
+  rows.push([
+   r.period_month,(p.full_name||r.user_id).replace(/,/g,' '),p.role||'',
+   r.base_salary_dzd,r.fixed_paid_dzd,r.volume_count,r.volume_payout_pct+'%',r.volume_payout_dzd,
+   r.fpy_rate+'%',r.fpy_payout_dzd,r.dr_rate+'%',r.dr_payout_dzd,
+   r.fq_errors,r.fq_payout_dzd,r.sla_rate+'%',r.sla_payout_dzd,
+   r.total_variable_dzd,r.total_paid_dzd,r.status
+  ]);
+ });
+ var csv=rows.map(function(row){return row.join(',')}).join('\n');
+ var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='compensation-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+ setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+ toast('📥 CSV téléchargé');
+}
+
+function viewCompensation(){
+ var head='<div class="pghead"><div><h1 class="pg">'+t('compTitle')+'</h1><div class="sub">'+t('compSub')+'</div></div></div>';
+ if(app.compMissingTable)return head+'<div class="card" style="padding:16px;border:1px dashed var(--bad);background:#fef2f2;color:var(--bad);font-weight:700">⚠ Migration v12 absente. Demandez à l\'admin d\'appliquer v12_migration.sql.</div>';
+ var role=app.profile.role;var myId=uid();
+ var isAd=isAdmin();
+ var period=app.compPeriod||monthStartISO();
+ var profiles=app.cache.profiles||[];
+ var pf={};profiles.forEach(function(p){pf[p.id]=p});
+ var runs=app.cache.compRuns||[];
+ var thisMonthRuns=runs.filter(function(r){return r.period_month===period});
+ var confs=profiles.filter(function(p){return p.role==='confirmatrice'});
+ // Period navigation
+ var nav='<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap"><button class="btn btn-g btn-s" onclick="var d=new Date(app.compPeriod||\''+period+'\');d.setMonth(d.getMonth()-1);app.compPeriod=monthStartISO(d);render()">← Mois-1</button><b style="font-size:14px">'+t('compMonth_label')+' : '+monthLabel(period)+'</b><button class="btn btn-g btn-s" onclick="var d=new Date(app.compPeriod||\''+period+'\');d.setMonth(d.getMonth()+1);app.compPeriod=monthStartISO(d);render()">Mois+1 →</button>'+(period!==monthStartISO()?'<button class="btn btn-g btn-s" onclick="app.compPeriod=null;render()">Ce mois</button>':'')+'</div>';
+
+ // How it works card (always visible)
+ var howCard='<div class="card" style="padding:14px;margin-bottom:14px;background:linear-gradient(135deg,#f5f3ff,#fef3c7)"><b>'+t('compHowItWorks')+'</b><div style="font-size:13px;color:var(--ink);margin-top:5px;line-height:1.55">'+t('compHowItWorksText')+'</div></div>';
+
+ // Actions bar
+ var actionsBar='';
+ if(isAd){
+  actionsBar='<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-p" onclick="computeAllConfirmatrices(\''+period+'\')">'+t('compRunAll')+'</button> <button class="btn btn-g" onclick="exportCompCSV()">'+t('compExport')+'</button></div>';
+ }
+
+ // Main grid : 1 row per confirmer
+ var displayList=isAd?confs:confs.filter(function(p){return p.id===myId});
+ if(!isAd&&role!=='confirmatrice'){
+  return head+nav+howCard+'<div class="empty" style="padding:24px">Module réservé aux confirmatrices et admin.</div>';
+ }
+ if(!displayList.length){
+  return head+nav+howCard+'<div class="empty" style="padding:24px">Aucune confirmatrice configurée. Définissez le rôle dans Équipe.</div>';
+ }
+
+ var rows=displayList.map(function(p){
+  var run=thisMonthRuns.find(function(r){return r.user_id===p.id});
+  var base=Number(p.base_salary_dzd||0);
+  var varMax=base*(Number(p.variable_pct||20))/100;
+  var fixed=base-varMax;
+  var baseConfigMsg=base===0?'<span style="color:var(--bad);font-weight:600">⚠ Salaire base non défini — Équipe</span>':'';
+  if(!run){
+   return '<tr><td><b>'+esc(p.full_name||p.id.slice(0,8))+'</b>'+(baseConfigMsg?'<br>'+baseConfigMsg:'')+'</td><td>'+fmt(base)+' DA</td><td>'+fmt(fixed)+' DA</td><td>'+fmt(varMax)+' DA</td><td colspan="3" style="text-align:center;color:var(--ink2)">'+t('compNoData')+'</td><td>'+(isAd&&base>0?'<button class="pill" onclick="computeCompForUser(\''+p.id+'\',\''+period+'\')">'+t('compRun')+'</button>':'')+'</td></tr>';
+  }
+  var totalCol=run.total_variable_dzd>=varMax*0.8?'var(--good)':run.total_variable_dzd>=varMax*0.5?'#f59e0b':'var(--bad)';
+  var statusBadge='<span class="badge '+(run.status==='paid'?'b-validated':run.status==='approved'?'b-validated':run.status==='computed'?'b-doing':run.status==='rejected'?'b-killed':'b-todo')+'">'+t('compStatus_'+run.status)+'</span>';
+  var actions='';
+  if(isAd){
+   if(run.status==='computed')actions='<button class="pill" onclick="approveCompRun(\''+run.id+'\')">'+t('compApprove')+'</button>';
+   else if(run.status==='approved')actions='<button class="pill" onclick="markCompPaid(\''+run.id+'\')">'+t('compMarkPaid')+'</button>';
+   if(run.status!=='paid')actions+='<button class="pill" onclick="computeCompForUser(\''+p.id+'\',\''+period+'\')" title="Recalculer">⟳</button>';
+   if(run.status==='computed')actions+='<button class="pill del" onclick="rejectCompRun(\''+run.id+'\')" title="'+t('compReject')+'">✕</button>';
+  }
+  return '<tr><td><b>'+esc(p.full_name||p.id.slice(0,8))+'</b><div style="font-size:10.5px;color:var(--ink2)">'+t('r_'+p.role)+'</div></td>'+
+   '<td>'+fmt(run.base_salary_dzd)+' DA</td>'+
+   '<td>'+fmt(run.fixed_paid_dzd)+' DA</td>'+
+   '<td>'+fmt(run.max_variable_dzd)+' DA</td>'+
+   '<td style="font-weight:700;color:'+totalCol+'">'+fmt(run.total_variable_dzd)+' DA<div style="font-size:10px;color:var(--ink2)">'+Math.round(run.total_variable_dzd/Math.max(1,run.max_variable_dzd)*100)+'% du max</div></td>'+
+   '<td style="font-weight:800;color:#10b981">'+fmt(run.total_paid_dzd)+' DA</td>'+
+   '<td>'+statusBadge+'</td>'+
+   '<td>'+actions+'</td>'+
+  '</tr>';
+ }).join('');
+
+ var table='<div class="card scroll-x" style="padding:0"><table style="font-size:12.5px"><thead><tr><th>'+t('compMember')+'</th><th>'+t('compBase')+'</th><th>'+t('compFixed')+'</th><th>'+t('compVarMax')+'</th><th>'+t('compVarPaid')+'</th><th>'+t('compTotal')+'</th><th>'+t('compStatus')+'</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+
+ // Detailed breakdown per run (this month, expanded)
+ var breakdown=thisMonthRuns.map(function(run){
+  var p=pf[run.user_id]||{};
+  var critCard=function(title,weight,count,rate,payPct,payout,unit){return '<div style="background:var(--soft);border-radius:7px;padding:10px 13px"><div style="font-size:10.5px;color:var(--ink2);font-weight:700;text-transform:uppercase;letter-spacing:.04em">'+title+' · poids '+weight+'%</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:5px"><b style="font-size:15px">'+count+(unit?'<span style="font-size:11px;color:var(--ink2)">'+unit+'</span>':'')+'</b><span style="font-size:11px;color:var(--ink2)">'+payPct+'% du max</span></div><div style="font-weight:800;font-size:14px;color:'+(payout>0?'#10b981':'var(--ink2)')+';margin-top:3px">'+fmt(payout)+' DA</div></div>'};
+  return '<div class="card" style="padding:14px;margin-top:9px"><div style="font-weight:800;margin-bottom:10px">📊 '+t('compBreakdown')+' — '+esc(p.full_name||run.user_id.slice(0,8))+'</div><div class="grid g3" style="gap:8px">'+
+   critCard(t('crit_volume'),35,run.volume_count,null,run.volume_payout_pct,run.volume_payout_dzd,' cmd')+
+   critCard(t('crit_fpy'),25,run.fpy_rate+'%',null,run.fpy_payout_pct,run.fpy_payout_dzd,'')+
+   critCard(t('crit_delivery_rate'),20,run.dr_rate+'%',null,run.dr_payout_pct,run.dr_payout_dzd,'')+
+   critCard(t('crit_fake_quality'),10,run.fq_errors,null,run.fq_payout_pct,run.fq_payout_dzd,' err.')+
+   critCard(t('crit_sla_punctuality'),10,run.sla_rate+'%',null,run.sla_payout_pct,run.sla_payout_dzd,'')+
+   '<div style="background:#ecfdf5;border-radius:7px;padding:10px 13px"><div style="font-size:10.5px;color:var(--ink2);font-weight:700;text-transform:uppercase;letter-spacing:.04em">TOTAL</div><div style="font-size:20px;font-weight:800;color:#10b981;margin-top:5px">'+fmt(run.total_variable_dzd)+' DA</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">Variable obtenue · '+Math.round(run.total_variable_dzd/Math.max(1,run.max_variable_dzd)*100)+'% du max</div></div>'+
+  '</div></div>';
+ }).join('');
+
+ return head+nav+howCard+actionsBar+table+breakdown;
+}
+
 function viewTrash(){
  var items=app.cache.trash||[];
  var head='<div class="pghead"><div><h1 class="pg">🗑️ '+t('trashTitle')+'</h1><div class="sub">Produits supprimes (restaurables).</div></div></div>';
@@ -3426,10 +3597,11 @@ function viewTeam(){
   var opts=ROLES.map(function(r){return '<option value="'+r+'" '+(u.role===r?'selected':'')+'>'+t('r_'+r)+'</option>'}).join('');
   var waVal=esc(u.whatsapp_phone||'');
   var costVal=esc(u.hourly_cost_dzd||'');
+  var baseVal=esc(u.base_salary_dzd||'');
   var canEditCost=isAdmin();
-  return '<tr><td><b>'+esc(u.full_name||'-')+'</b></td><td><select class="input sm" style="width:auto" onchange="setRole(\''+u.id+'\',this.value)">'+opts+'</select></td><td><input class="input sm" style="width:140px" placeholder="+213..." value="'+waVal+'" onchange="setProfileWa(\''+u.id+'\',this.value)" '+(isAdmin()||u.id===uid()?'':'readonly')+'></td><td><input class="input sm" style="width:110px" type="number" min="0" placeholder="0" value="'+costVal+'" onchange="updateProfileHourlyCost(\''+u.id+'\',this.value)" '+(canEditCost?'':'readonly')+' title="'+t('hourlyCostHint')+'"></td></tr>';
+  return '<tr><td><b>'+esc(u.full_name||'-')+'</b></td><td><select class="input sm" style="width:auto" onchange="setRole(\''+u.id+'\',this.value)">'+opts+'</select></td><td><input class="input sm" style="width:130px" placeholder="+213..." value="'+waVal+'" onchange="setProfileWa(\''+u.id+'\',this.value)" '+(isAdmin()||u.id===uid()?'':'readonly')+'></td><td><input class="input sm" style="width:90px" type="number" min="0" placeholder="0" value="'+costVal+'" onchange="updateProfileHourlyCost(\''+u.id+'\',this.value)" '+(canEditCost?'':'readonly')+' title="'+t('hourlyCostHint')+'"></td><td><input class="input sm" style="width:100px" type="number" min="0" placeholder="0" value="'+baseVal+'" onchange="updateProfileBaseSalary(\''+u.id+'\',this.value)" '+(canEditCost?'':'readonly')+' title="Salaire mensuel de référence pour le calcul 80/20"></td></tr>';
  }).join('');
- return '<div class="pghead"><div><h1 class="pg">👥 '+t('team')+'</h1></div></div><div class="card scroll-x"><table><thead><tr><th>'+t('member')+'</th><th>'+t('role')+'</th><th>'+t('waPhone')+'</th><th>'+t('hourlyCost')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ return '<div class="pghead"><div><h1 class="pg">👥 '+t('team')+'</h1></div></div><div class="card scroll-x"><table><thead><tr><th>'+t('member')+'</th><th>'+t('role')+'</th><th>'+t('waPhone')+'</th><th>'+t('hourlyCost')+'</th><th>'+t('compMonthlySalary')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
 /* === SETTINGS === */
