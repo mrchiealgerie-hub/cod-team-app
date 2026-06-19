@@ -1,0 +1,6 @@
+.env
+.env.local
+.env.*.local
+node_modules
+.local-storage
+*.log

@@ -1,0 +1,95 @@
+# =====================================================================
+# Twenty CRM — Self-host docker-compose (production-ready)
+# Source : https://github.com/twentyhq/twenty
+# Adapté pour deploy sur Railway / Hostinger Cloud / DigitalOcean
+# =====================================================================
+name: twenty
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: twenty-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_DATABASE_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_DATABASE_PASSWORD:?Set a strong password}
+      POSTGRES_DB: ${PG_DATABASE_NAME:-default}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${PG_DATABASE_USER:-postgres}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: twenty-redis
+    restart: always
+    command: ['redis-server', '--maxmemory-policy', 'noeviction']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    image: twentycrm/twenty:latest
+    container_name: twenty-server
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      SERVER_URL: ${SERVER_URL:?Set SERVER_URL (your domain)}
+      FRONT_BASE_URL: ${SERVER_URL}
+      DATABASE_URL: postgres://${PG_DATABASE_USER:-postgres}:${PG_DATABASE_PASSWORD}@postgres:5432/${PG_DATABASE_NAME:-default}
+      REDIS_URL: redis://redis:6379
+      APP_SECRET: ${APP_SECRET:?Set a 32+ char random APP_SECRET}
+      DISABLE_DB_MIGRATIONS: 'false'
+      STORAGE_TYPE: local
+      STORAGE_LOCAL_PATH: /app/.local-storage
+      SIGN_IN_PREFILLED: 'true'
+      MESSAGING_PROVIDER_GMAIL_ENABLED: 'false'
+      MUTATION_MAXIMUM_AFFECTED_RECORDS: 100
+      AUTH_PASSWORD_ENABLED: 'true'
+    volumes:
+      - server_storage:/app/.local-storage
+    ports:
+      - "${PORT:-3000}:3000"
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/healthz || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  worker:
+    image: twentycrm/twenty:latest
+    container_name: twenty-worker
+    restart: always
+    command: ['yarn', 'worker:prod']
+    depends_on:
+      server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      SERVER_URL: ${SERVER_URL}
+      FRONT_BASE_URL: ${SERVER_URL}
+      DATABASE_URL: postgres://${PG_DATABASE_USER:-postgres}:${PG_DATABASE_PASSWORD}@postgres:5432/${PG_DATABASE_NAME:-default}
+      REDIS_URL: redis://redis:6379
+      APP_SECRET: ${APP_SECRET}
+      STORAGE_TYPE: local
+      STORAGE_LOCAL_PATH: /app/.local-storage
+    volumes:
+      - server_storage:/app/.local-storage
+
+volumes:
+  postgres_data:
+  server_storage:
