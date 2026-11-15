@@ -180,13 +180,19 @@
 
 <script>
 /* ===== Supabase ===== */
-var SUPABASE_URL='https://sfsnyppydvhvnjiqjgjt.supabase.co';
-var SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNmc255cHB5ZHZodm5qaXFqZ2p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMDk4MzIsImV4cCI6MjA5NTU4NTgzMn0.Ffd1KiM6J4yeCcZjCK5EGOnX5wv5vX6qWpj_Jqsab0Q';
+var SUPABASE_URL='https://pqnauwlwyrqftgywgoxi.supabase.co';
+var SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxbmF1d2x3eXJxZnRneXdnb3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3Njc0ODQsImV4cCI6MjExMDM0MzQ4NH0.n8DKbVYosNHRXNDr7KlZ63LSwpHdRxWOEYuzr0udmck';
 var SB=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+function friendlyErr(e){
+  var m=String(e&&e.message||e||'');
+  if(m.indexOf('Failed to fetch')>=0||m.indexOf('NetworkError')>=0||m.indexOf('Load failed')>=0||m.indexOf('ERR_NAME_NOT_RESOLVED')>=0)
+    return 'Serveur Supabase injoignable. Le projet est peut-etre en pause - contactez l\'administrateur.';
+  return m;
+}
 
 var ROLES=['admin','media_buyer','video_editor','confirmatrice','production','sourcing'];
 
-/* Pipeline stages (11 etapes) */
+/* Pipeline stages (12 etapes) */
 var STAGES=['idea','research','tovalidate','sourcing','workshop','testing','validated','production','scaling','video','live','killed'];
 var SCOLOR={idea:'b-idea',research:'b-research',tovalidate:'b-tovalidate',sourcing:'b-sourcing',workshop:'b-workshop',testing:'b-testing',validated:'b-validated',production:'b-production',scaling:'b-scaling',video:'b-video',live:'b-live',killed:'b-killed'};
 
@@ -247,7 +253,7 @@ var I18N={
   appName:'COD Team',sub:'Pipeline e-commerce ultra-avance',connected:'Connecte a votre base — donnees partagees en temps reel.',
   signin:'Se connecter',signup:'Creer un compte',email:'E-mail',password:'Mot de passe',fullName:'Nom complet',role:'Role',
   toSignup:'Pas de compte ? Creer un compte',toSignin:'Deja un compte ? Se connecter',signinTitle:'Connexion',signupTitle:'Creer votre compte',
-  firstAdmin:'Le 1er compte devient automatiquement Admin.',logout:'Deconnexion',
+  firstAdmin:'Inscription en Confirmatrice. Un admin peut modifier votre role ensuite.',logout:'Deconnexion',
   nav_pipeline:'Pipeline',nav_products:'Produits',nav_research:'Recherche produit',nav_validate:'Validation admin',nav_sourcing:'Sourcing ateliers',nav_tests:'Tests pubs',nav_tasks:'Mes taches',nav_kpis:'KPI',nav_team:'Equipe',nav_settings:'Parametres',nav_production:'Production',nav_video:'Videos',
   r_admin:'Admin',r_media_buyer:'Media buyer',r_video_editor:'Monteur',r_confirmatrice:'Confirmatrice',r_production:'Atelier',r_sourcing:'Recherche',
   s_idea:'Idee',s_research:'Recherche',s_tovalidate:'A valider',s_sourcing:'Sourcing',s_workshop:'Atelier choisi',s_testing:'En test',s_validated:'Test valide',s_production:'Production',s_scaling:'Scaling',s_video:'Edit video',s_live:'Live',s_killed:'Tue',
@@ -361,7 +367,7 @@ var I18N={
   appName:'COD Team',sub:'منصة التجارة الإلكترونية المتقدمة',connected:'متصل بقاعدة البيانات — مشاركة فورية.',
   signin:'تسجيل الدخول',signup:'إنشاء حساب',email:'البريد الإلكتروني',password:'كلمة المرور',fullName:'الاسم الكامل',role:'الدور',
   toSignup:'ليس لديك حساب؟',toSignin:'لديك حساب؟ سجّل الدخول',signinTitle:'تسجيل الدخول',signupTitle:'إنشاء الحساب',
-  firstAdmin:'أول حساب يصبح مديرًا تلقائيًا.',logout:'تسجيل الخروج',
+  firstAdmin:'يتم إنشاء الحساب بدور مؤكدة الطلبات. يمكن للمشرف تغيير دورك لاحقاً.',logout:'تسجيل الخروج',
   nav_pipeline:'مسار الإنتاج',nav_products:'المنتجات',nav_research:'بحث المنتجات',nav_validate:'مصادقة المدير',nav_sourcing:'الورشات',nav_tests:'اختبارات الإعلانات',nav_tasks:'مهامي',nav_kpis:'المؤشرات',nav_team:'الفريق',nav_settings:'الإعدادات',nav_production:'الإنتاج',nav_video:'الفيديوهات',
   r_admin:'مدير',r_media_buyer:'مشتري إعلانات',r_video_editor:'مونتاج',r_confirmatrice:'مؤكّدة',r_production:'ورشة',r_sourcing:'بحث',
   s_idea:'فكرة',s_research:'بحث',s_tovalidate:'بانتظار المصادقة',s_sourcing:'بحث ورشة',s_workshop:'ورشة مختارة',s_testing:'قيد الاختبار',s_validated:'اختبار مُعتمد',s_production:'إنتاج',s_scaling:'توسيع',s_video:'مونتاج فيديو',s_live:'مباشر',s_killed:'موقوف',
@@ -614,21 +620,21 @@ async function loadSettings(){
  var r=await SB.from('settings').select('*');var s={};(r.data||[]).forEach(function(x){s[x.key]=x.value});app.cache.settings=s;
 }
 async function doAuth(){
- var email=val('f_email'),pass=val('f_pass'),name=val('f_name'),role=val('f_role')||'sourcing';
+ var email=val('f_email'),pass=val('f_pass'),name=val('f_name');
  app.err='';app.info='';app.busy=true;render();
  try{
   if(app.authMode==='in'){
    var r=await SB.auth.signInWithPassword({email:email,password:pass});
-   if(r.error){app.err=r.error.message;app.busy=false;return render()}
+   if(r.error){app.err=friendlyErr(r.error);app.busy=false;return render()}
   }else{
    if(!name||!email||!pass){app.err='Champs requis';app.busy=false;return render()}
-   var s=await SB.auth.signUp({email:email,password:pass,options:{data:{full_name:name,role:role,lang:lang}}});
-   if(s.error){app.err=s.error.message;app.busy=false;return render()}
+   var s=await SB.auth.signUp({email:email,password:pass,options:{data:{full_name:name,role:'confirmatrice',lang:lang}}});
+   if(s.error){app.err=friendlyErr(s.error);app.busy=false;return render()}
    if(!s.data.session){var si=await SB.auth.signInWithPassword({email:email,password:pass});if(si.error){app.info='Compte cree. Connectez-vous.';app.authMode='in';app.busy=false;return render()}}
   }
   app.session=(await SB.auth.getSession()).data.session;
   await loadProfile();app.busy=false;app.view='home';render();afterLogin();
- }catch(e){app.err=String(e&&e.message||e);app.busy=false;render()}
+ }catch(e){app.err=friendlyErr(e);app.busy=false;render()}
 }
 async function logout(){await SB.auth.signOut();app.session=null;app.profile=null;render()}
 
@@ -1113,7 +1119,7 @@ function renderLogin(){
  (up?'<div class="row"><label class="lb">'+t('fullName')+'</label><input id="f_name" class="input"></div>':'')+
  '<div class="row"><label class="lb">'+t('email')+'</label><input id="f_email" class="input" type="email"></div>'+
  '<div class="row"><label class="lb">'+t('password')+'</label><input id="f_pass" class="input" type="password"></div>'+
- (up?'<div class="row"><label class="lb">'+t('role')+'</label><select id="f_role" class="input">'+ROLES.map(function(r){return '<option value="'+r+'">'+t('r_'+r)+'</option>'}).join('')+'</select></div><div class="note">'+t('firstAdmin')+'</div>':'')+
+ (up?'<div class="note">'+t('firstAdmin')+'</div>':'')+
  '<button class="btn btn-p" style="width:100%" onclick="doAuth()" '+(app.busy?'disabled':'')+'>'+(app.busy?'<span class="spin"></span>':t(up?'signup':'signin'))+'</button>'+
  '<button class="link" onclick="app.authMode=\''+(up?'in':'up')+'\';app.err=\'\';app.info=\'\';render()">'+t(up?'toSignin':'toSignup')+'</button>'+
  '</div></div></div>';
@@ -1340,13 +1346,13 @@ async function createCreative(){
  app.busy=true;render();
  var data={product_id:pid,creative_name:nm,creative_url:val('cr_url'),thumbnail_url:val('cr_thumb'),platform:val('cr_platform')||'meta',hook_type:val('cr_hook')||'ugc',notes:val('cr_notes'),created_by:uid()};
  var r=await SB.from('creative_tests').insert(data);
- if(r.error){toast('Erreur: '+r.error.message,'err');app.busy=false;render();return}
+ if(r.error){toast('Erreur: '+friendlyErr(r.error),'err');app.busy=false;render();return}
  app.busy=false;app.modal=null;await refresh();toast('🎨 Crea ajoutee');
 }
 async function updateCreativeField(id,field,value){
  var u={};u[field]=value;
  var r=await SB.from('creative_tests').update(u).eq('id',id);
- if(r.error){toast('Erreur: '+r.error.message,'err');return}
+ if(r.error){toast('Erreur: '+friendlyErr(r.error),'err');return}
  await refresh();
 }
 async function setCreativeStatus(id,status){await SB.from('creative_tests').update({status:status}).eq('id',id);await refresh();toast('Statut: '+t('ct_'+status))}
@@ -1642,7 +1648,7 @@ async function wacLaunch(){
  app.busy=true;render();
  var camp={name:w.name,message_template:w.message_template,audience_type:w.audience_type,audience_filter:w.audience_filter,status:'running',send_mode:w.send_mode||'manual',total_recipients:aud.length,created_by:uid(),started_at:new Date().toISOString()};
  var cr=await SB.from('wa_campaigns').insert(camp).select().single();
- if(cr.error){toast('Erreur: '+cr.error.message,'err');app.busy=false;render();return}
+ if(cr.error){toast('Erreur: '+cfriendlyErr(r.error),'err');app.busy=false;render();return}
  var cid=cr.data.id;
  var recs=aud.map(function(c,i){
   var lastOrder=(c.orders&&c.orders[0])||{};
@@ -1654,7 +1660,7 @@ async function wacLaunch(){
  for(var i=0;i<recs.length;i+=batchSize){
   var batch=recs.slice(i,i+batchSize);
   var ir=await SB.from('wa_campaign_recipients').insert(batch);
-  if(ir.error){toast('Erreur dest: '+ir.error.message,'err');break}
+  if(ir.error){toast('Erreur dest: '+ifriendlyErr(r.error),'err');break}
  }
  app.busy=false;app.modal=null;app.wacWizard=null;
  await loadWacrm();openCampaign(cid);
@@ -1690,7 +1696,7 @@ async function createFlow(){
  app.busy=true;render();
  var data={name:nm,trigger_type:'keyword',trigger_value:tv,match_type:val('fl_match')||'contains',response_template:resp,suggested_action:val('fl_action')||'',priority:Number(val('fl_priority'))||5,active:true,created_by:uid()};
  var r=await SB.from('wa_agent_flows').insert(data);
- if(r.error){toast('Erreur: '+r.error.message,'err');app.busy=false;render();return}
+ if(r.error){toast('Erreur: '+friendlyErr(r.error),'err');app.busy=false;render();return}
  app.busy=false;app.modal=null;await loadWacrm();toast('✓ Flow cree')
 }
 async function toggleFlow(id,active){await SB.from('wa_agent_flows').update({active:!active}).eq('id',id);await loadWacrm();render()}
@@ -1759,7 +1765,7 @@ async function createConversation(phone,name){
  app.busy=true;render();
  var r=await SB.from('wa_conversations').insert({phone:cleanedPhone,customer_name:name||'',status:'open'}).select().single();
  app.busy=false;
- if(r.error){toast('Erreur: '+r.error.message,'err');render();return}
+ if(r.error){toast('Erreur: '+friendlyErr(r.error),'err');render();return}
  app.modal=null;await loadWacrm();await openConv(r.data.id);
 }
 async function logInbound(){
@@ -2487,7 +2493,7 @@ async function startTimer(opts){
   start_time:new Date().toISOString(),end_time:null,is_manual:false,
   source:opts.source||'manual',billable:opts.billable!==false};
  var r=await SB.from('time_entries').insert(data).select().single();
- if(r.error){toast('Erreur timer: '+r.error.message,'err');return null}
+ if(r.error){toast('Erreur timer: '+friendlyErr(r.error),'err');return null}
  app.activeTimer=r.data;
  startTimeTicker();
  if(opts.source!=='auto_call'&&opts.source!=='auto_status')toast('▶ Timer demarre: '+t('tt_'+taskType));
@@ -2500,7 +2506,7 @@ async function stopTimer(){
  var endTime=new Date().toISOString();
  var duration=Math.max(0,Math.floor((Date.now()-new Date(app.activeTimer.start_time).getTime())/1000));
  var r=await SB.from('time_entries').update({end_time:endTime,duration_seconds:duration}).eq('id',id);
- if(r.error){toast('Erreur arret: '+r.error.message,'err');return null}
+ if(r.error){toast('Erreur arret: '+friendlyErr(r.error),'err');return null}
  var stoppedEntry=Object.assign({},app.activeTimer,{end_time:endTime,duration_seconds:duration});
  app.activeTimer=null;
  stopTimeTicker();
@@ -2533,7 +2539,7 @@ async function createManualEntry(){
  var data={user_id:uid(),role:app.profile.role||'',task_type:taskType,description:desc,
   start_time:startISO,end_time:endISO,duration_seconds:durMin*60,is_manual:true,source:'manual'};
  var r=await SB.from('time_entries').insert(data);
- if(r.error){toast('Erreur: '+r.error.message,'err');return}
+ if(r.error){toast('Erreur: '+friendlyErr(r.error),'err');return}
  app.modal=null;await loadTimeEntries();render();toast('✓ Entree ajoutee');
 }
 
@@ -2802,7 +2808,7 @@ async function ensureTimesheetForWeek(weekStart){
  var laborDzd=(totalSec/3600)*hourlyCost;
  var data={user_id:uid(),week_start:weekStart,total_seconds:totalSec,total_labor_dzd:laborDzd,status:'draft'};
  var r=await SB.from('timesheets').insert(data).select().single();
- if(r.error){toast('Erreur: '+r.error.message,'err');return null}
+ if(r.error){toast('Erreur: '+friendlyErr(r.error),'err');return null}
  await loadTimesheets();return r.data;
 }
 async function submitTimesheet(id){await SB.from('timesheets').update({status:'submitted',submitted_at:new Date().toISOString()}).eq('id',id);await loadTimesheets();render();toast('✓ Timesheet soumis')}
@@ -2893,7 +2899,7 @@ async function loadCompRuns(){
 }
 async function computeCompForUser(userId,periodIso){
  var r=await SB.rpc('compute_monthly_comp',{p_user_id:userId,p_period:periodIso});
- if(r.error){toast('Erreur calcul: '+r.error.message,'err');return null}
+ if(r.error){toast('Erreur calcul: '+friendlyErr(r.error),'err');return null}
  await loadCompRuns();render();
  return r.data;
 }
@@ -3794,7 +3800,7 @@ async function init(){
   if(app.session){await loadProfile();await loadSettings();await loadNotifs()}
   render();
   if(app.session)afterLogin();
- }catch(e){console.error(e);render()}
+ }catch(e){console.error(e);app.err=friendlyErr(e);render()}
  SB.auth.onAuthStateChange(async function(_e,sess){app.session=sess;if(sess){await loadProfile();await loadSettings();await loadNotifs();render();afterLogin()}else{app.profile=null;render()}});
  document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(app.modal){closeModal()}else if(app.notifsOpen){app.notifsOpen=false;render()}}});
 }

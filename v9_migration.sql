@@ -8,6 +8,16 @@ alter table public.wa_campaigns add column if not exists send_mode text default 
 alter table public.wa_campaign_recipients add column if not exists last_error_at timestamptz;
 alter table public.wa_campaign_recipients add column if not exists retry_count int default 0;
 
+-- La vue v8 a été créée avant send_mode : on la reconstruit pour exposer
+-- la nouvelle colonne (sinon la vue reste figée sur l'ancienne liste).
+drop view if exists public.wa_campaigns_with_progress;
+create view public.wa_campaigns_with_progress as
+select
+  c.*,
+  case when c.total_recipients>0 then round((c.sent_count::numeric/c.total_recipients)*100,1) else 0 end as progress_pct,
+  c.total_recipients - c.sent_count - c.failed_count as remaining_count
+from public.wa_campaigns c;
+
 -- 2) Statut du relais Baileys (1 ligne globale)
 create table if not exists public.wa_relay_status (
   id text primary key default 'singleton' check (id='singleton'),

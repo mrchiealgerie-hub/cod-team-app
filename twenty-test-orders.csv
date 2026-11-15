@@ -1,0 +1,31 @@
+reference,client,telephone,wilaya,produit,quantite,montant_dzd,statut_confirmation,statut_livraison,source,confirmatrice,date_commande
+CMD-0001,Amine B.,0550000001,Alger,Lampe LED,1,3900,Confirmé,Livré,Meta,Amina,2026-11-01
+CMD-0002,Sara K.,0550000002,Oran,Mini blender,1,4500,Confirmé,Expédié,TikTok,Nadia,2026-11-01
+CMD-0003,Yacine M.,0550000003,Constantine,Correcteur de posture,2,5800,Nouveau,Non expédié,Meta,Sofia,2026-11-02
+CMD-0004,Lina T.,0550000004,Blida,Organisateur de cuisine,1,2900,Confirmé,Livré,Snap,Amina,2026-11-02
+CMD-0005,Karim Z.,0550000005,Sétif,Montre connectée,1,6900,Reporté,Non expédié,TikTok,Nadia,2026-11-02
+CMD-0006,Nour H.,0550000006,Annaba,Tapis de yoga,1,3500,Confirmé,Expédié,Meta,Sofia,2026-11-03
+CMD-0007,Rayan A.,0550000007,Tizi Ouzou,Brosse chauffante,1,4200,Annulé,Non expédié,Snap,Amina,2026-11-03
+CMD-0008,Ines D.,0550000008,Béjaïa,Sac à dos antivol,1,5200,Confirmé,Livré,Meta,Nadia,2026-11-03
+CMD-0009,Mehdi L.,0550000009,Batna,Lampe LED,2,7800,Nouveau,Non expédié,TikTok,Sofia,2026-11-04
+CMD-0010,Rania S.,0550000010,Djelfa,Mini blender,1,4500,Confirmé,Expédié,Meta,Amina,2026-11-04
+CMD-0011,Sofiane B.,0550000011,Alger,Correcteur de posture,1,2900,Confirmé,Retour,Snap,Nadia,2026-11-04
+CMD-0012,Maya G.,0550000012,Oran,Organisateur de cuisine,2,5800,Nouveau,Non expédié,TikTok,Sofia,2026-11-05
+CMD-0013,Adam C.,0550000013,Constantine,Montre connectée,1,6900,Reporté,Non expédié,Meta,Amina,2026-11-05
+CMD-0014,Yasmine R.,0550000014,Blida,Tapis de yoga,1,3500,Confirmé,Livré,Snap,Nadia,2026-11-05
+CMD-0015,Bilal F.,0550000015,Sétif,Sac à dos antivol,1,5200,Confirmé,Expédié,TikTok,Sofia,2026-11-06
+CMD-0016,Asma N.,0550000016,Annaba,Brosse chauffante,1,4200,Annulé,Non expédié,Meta,Amina,2026-11-06
+CMD-0017,Walid E.,0550000017,Tizi Ouzou,Lampe LED,1,3900,Nouveau,Non expédié,Snap,Nadia,2026-11-06
+CMD-0018,Salma J.,0550000018,Béjaïa,Mini blender,1,4500,Confirmé,Livré,Meta,Sofia,2026-11-07
+CMD-0019,Ilyes P.,0550000019,Batna,Correcteur de posture,2,5800,Confirmé,Expédié,TikTok,Amina,2026-11-07
+CMD-0020,Meriem O.,0550000020,Djelfa,Organisateur de cuisine,1,2900,Nouveau,Non expédié,Meta,Nadia,2026-11-07
+CMD-0021,Anis V.,0550000021,Alger,Montre connectée,1,6900,Confirmé,Livré,Snap,Sofia,2026-11-08
+CMD-0022,Kenza I.,0550000022,Oran,Tapis de yoga,2,7000,Confirmé,Expédié,TikTok,Amina,2026-11-08
+CMD-0023,Hicham U.,0550000023,Constantine,Sac à dos antivol,1,5200,Annulé,Non expédié,Meta,Nadia,2026-11-08
+CMD-0024,Sabrina Y.,0550000024,Blida,Brosse chauffante,1,4200,Nouveau,Non expédié,Snap,Sofia,2026-11-09
+CMD-0025,Fouad X.,0550000025,Sétif,Lampe LED,1,3900,Confirmé,Retour,Meta,Amina,2026-11-09
+CMD-0026,Amina Q.,0550000026,Annaba,Mini blender,1,4500,Confirmé,Livré,TikTok,Nadia,2026-11-09
+CMD-0027,Zakaria W.,0550000027,Tizi Ouzou,Correcteur de posture,1,2900,Reporté,Non expédié,Snap,Sofia,2026-11-10
+CMD-0028,Lydia M.,0550000028,Béjaïa,Organisateur de cuisine,1,2900,Confirmé,Expédié,Meta,Amina,2026-11-10
+CMD-0029,Sami K.,0550000029,Batna,Montre connectée,1,6900,Nouveau,Non expédié,TikTok,Nadia,2026-11-10
+CMD-0030,Nesrine B.,0550000030,Djelfa,Tapis de yoga,1,3500,Confirmé,Livré,Meta,Sofia,2026-11-10

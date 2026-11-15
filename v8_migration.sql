@@ -136,7 +136,10 @@ insert into public.wa_agent_flows (name,trigger_type,trigger_value,match_type,la
 on conflict do nothing;
 
 -- 9) Vue: campagnes avec progress
-create or replace view public.wa_campaigns_with_progress as
+-- drop + create : la vue fige la liste des colonnes de c.* ; un simple
+-- "create or replace" échoue si une migration ultérieure ajoute une colonne.
+drop view if exists public.wa_campaigns_with_progress;
+create view public.wa_campaigns_with_progress as
 select
   c.*,
   case when c.total_recipients>0 then round((c.sent_count::numeric/c.total_recipients)*100,1) else 0 end as progress_pct,
